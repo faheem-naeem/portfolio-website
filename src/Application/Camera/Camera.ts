@@ -138,7 +138,7 @@ export default class Camera extends EventEmitter {
         this.on('enterMonitor', () => {
             this.transition(
                 CameraKey.MONITOR,
-                2000,
+                1000,
                 BezierEasing(0.13, 0.99, 0, 1)
             );
             UIEventBus.dispatch('enterMonitor', {});

@@ -69,7 +69,7 @@ export default class MonitorScreen extends EventEmitter {
                 }
 
                 // @ts-ignore
-                this.inComputer = event.inComputer;
+                this.inComputer = Boolean(event.inComputer);
 
                 if (this.inComputer && !this.prevInComputer) {
                     this.camera.trigger('enterMonitor');
@@ -182,9 +182,9 @@ export default class MonitorScreen extends EventEmitter {
             }
         };
 
-        // Set iframe attributes
-        // PROD
-        iframe.src = '/faheem-portfolio.html';
+        // Set iframe attributes. Keep the original desktop OS, including its
+        // apps, games, taskbar, and closable/minimizable windows.
+        iframe.src = 'https://os.henryheffernan.com/';
         /**
          * Use dev server is query params are present
          *
@@ -204,7 +204,17 @@ export default class MonitorScreen extends EventEmitter {
         iframe.className = 'jitter';
         iframe.id = 'computer-screen';
         iframe.frameBorder = '0';
-        iframe.title = 'Faheem Naeem Portfolio';
+        iframe.title = 'Interactive Portfolio Desktop';
+
+        // Pointer events inside an iframe do not bubble to the parent document.
+        // Listen at the frame boundary so a single hover focuses the monitor.
+        iframe.addEventListener('mouseenter', () => {
+            if (!this.inComputer) {
+                this.inComputer = true;
+                this.prevInComputer = true;
+                this.camera.trigger('enterMonitor');
+            }
+        });
 
         // Add iframe to container
         container.appendChild(iframe);
