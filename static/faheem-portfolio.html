@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#164d50">
+  <title>Faheem Naeem — Software Developer</title>
+  <style>
+    :root { color-scheme: light; --ink: #252b2b; --muted: #667170; --paper: #f2f1e9; --line: #c9cbc2; --teal: #164d50; --green: #83a77d; --blue: #274c8d; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #d6ddd5; color: var(--ink); font: 14px/1.55 "Courier New", monospace; }
+    a { color: var(--blue); }
+    .desktop { min-height: 100vh; padding: clamp(12px, 3vw, 34px); background: radial-gradient(ellipse at 12% 0%, #e7e9dc 0, transparent 42%), linear-gradient(135deg, #cad7cc, #e7e3d7); }
+    .window { max-width: 1120px; min-height: calc(100vh - 68px); margin: auto; background: var(--paper); border: 1px solid #fff; box-shadow: 0 14px 44px #1d292733, inset 0 0 0 1px #afb7ad; display: flex; flex-direction: column; }
+    .titlebar { min-height: 38px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, #164d50, #287b78); color: #fff; font-weight: bold; letter-spacing: .02em; }
+    .titlebar small { color: #d7e9d9; font-weight: normal; }
+    .window-controls { display: flex; gap: 5px; }
+    .window-controls span { width: 19px; height: 18px; display: grid; place-items: center; border: 1px solid #d5e5da; background: #dce7db; color: #254448; line-height: 1; }
+    .toolbar { padding: 8px 14px; display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); background: #e7e7dc; }
+    .toolbar a { padding: 4px 9px; color: #303b39; text-decoration: none; border: 1px solid transparent; }
+    .toolbar a:hover, .toolbar a:focus-visible { border-color: #8d9d92; background: #f7f7ef; outline: none; }
+    main { flex: 1; }
+    .hero { padding: clamp(24px, 5vw, 54px); background: linear-gradient(110deg, #e9eee4 0%, #e9eee4 62%, #dce6d6 62%); border-bottom: 1px solid var(--line); }
+    .eyebrow { margin: 0 0 12px; color: #47705d; text-transform: uppercase; letter-spacing: .13em; font-size: 11px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 720px; margin-bottom: 8px; font: bold clamp(32px, 6vw, 62px)/1.04 Georgia, "Times New Roman", serif; letter-spacing: -.04em; }
+    .hero h2 { margin: 0 0 18px; color: #42615c; font: normal clamp(16px, 2.5vw, 21px)/1.4 "Courier New", monospace; }
+    .hero-copy { max-width: 720px; margin-bottom: 23px; color: #4d5854; font-size: 15px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .button { display: inline-block; padding: 9px 13px; border: 1px solid var(--teal); background: var(--teal); color: white; text-decoration: none; }
+    .button.secondary { background: transparent; color: var(--teal); }
+    .button:hover, .button:focus-visible { filter: brightness(1.12); }
+    .quickfacts { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); background: #f8f7f0; }
+    .fact { padding: 16px 22px; border-right: 1px solid var(--line); }
+    .fact:last-child { border: 0; }
+    .fact strong { display: block; margin-bottom: 3px; color: var(--teal); font: bold 20px Georgia, serif; }
+    .fact span { color: var(--muted); font-size: 11px; }
+    section { padding: clamp(23px, 4vw, 40px); border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
+    .section-heading { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
+    .section-heading h2 { margin: 0; color: var(--teal); font: bold 25px Georgia, serif; }
+    .section-heading span { color: #8a9188; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 30px; }
+    .about-grid p { max-width: 650px; margin-bottom: 0; color: #4d5854; }
+    .focus-list { margin: 0; padding: 0; list-style: none; }
+    .focus-list li { padding: 7px 0; border-bottom: 1px dotted #b9c1b7; }
+    .focus-list li::before { content: "+ "; color: #538060; font-weight: bold; }
+    .timeline { display: grid; gap: 0; }
+    .role { display: grid; grid-template-columns: 155px 1fr; gap: 22px; padding: 18px 0; border-top: 1px dotted #b9c1b7; }
+    .role:first-child { padding-top: 0; border-top: 0; }
+    .dates { color: #537367; font-weight: bold; }
+    .role h3 { margin: 0 0 3px; font: bold 18px Georgia, serif; }
+    .company { margin-bottom: 8px; color: var(--muted); }
+    .role ul { margin: 0; padding-left: 18px; color: #4d5854; }
+    .role li + li { margin-top: 4px; }
+    .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .work-card { padding: 17px; border: 1px solid #c8cec3; background: #f8f7f0; }
+    .work-card .number { color: #6c9276; font-size: 11px; }
+    .work-card h3 { margin: 7px 0; font: bold 17px Georgia, serif; }
+    .work-card p { margin-bottom: 12px; color: #56615d; }
+    .tags { color: #52716a; font-size: 11px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skills span { padding: 6px 10px; border: 1px solid #b9c8b9; background: #e8eee4; color: #385a4c; }
+    .education-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .education-card { padding: 16px; border-left: 3px solid #6e9677; background: #f8f7f0; }
+    .education-card h3 { margin-bottom: 5px; font: bold 16px Georgia, serif; }
+    .education-card p { margin-bottom: 4px; color: #56615d; }
+    .education-card small { color: var(--muted); }
+    .contact { display: flex; align-items: center; justify-content: space-between; gap: 22px; background: #e8eee4; }
+    .contact p { max-width: 530px; margin-bottom: 0; color: #56615d; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    footer { padding: 11px 16px; display: flex; justify-content: space-between; gap: 10px; background: #dfe4da; color: #5c6860; font-size: 11px; }
+    @media (max-width: 700px) {
+      .desktop { padding: 0; }
+      .window { min-height: 100vh; border: 0; }
+      .quickfacts { grid-template-columns: 1fr; }
+      .fact { padding: 11px 18px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .about-grid, .work-grid, .education-grid { grid-template-columns: 1fr; }
+      .role { grid-template-columns: 1fr; gap: 5px; }
+      .contact { align-items: flex-start; flex-direction: column; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="desktop">
+    <div class="window">
+      <div class="titlebar"><span>FAHEEM.NAEEM — Portfolio</span><small>Calgary, AB</small><div class="window-controls" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div></div>
+      <nav class="toolbar" aria-label="Portfolio sections">
+        <a href="#about">ABOUT</a><a href="#experience">EXPERIENCE</a><a href="#work">SELECTED WORK</a><a href="#skills">SKILLS</a><a href="#education">EDUCATION</a><a href="#contact">CONTACT</a>
+      </nav>
+      <main>
+        <header class="hero">
+          <p class="eyebrow">Software Developer · Calgary, Alberta</p>
+          <h1>Faheem Naeem</h1>
+          <h2>Building thoughtful software, from reliable systems to AI-powered products.</h2>
+          <p class="hero-copy">Full-stack developer with 8 years of experience creating scalable web applications, backend platforms and practical AI features. I care about clean architecture, dependable integrations and technology that solves real problems.</p>
+          <div class="hero-actions"><a class="button" href="#work">Explore my work ↓</a><a class="button secondary" href="mailto:faheem.naeem017@gmail.com">Get in touch</a><a class="button secondary" href="https://www.linkedin.com/in/faheem-naeem/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
+        </header>
+        <div class="quickfacts" aria-label="Career highlights"><div class="fact"><strong>8 years</strong><span>Building software products</span></div><div class="fact"><strong>AI + Full stack</strong><span>Product-minded engineering</span></div><div class="fact"><strong>Calgary, AB</strong><span>Canada</span></div></div>
+        <section id="about">
+          <div class="section-heading"><h2>A little about me</h2><span>01 / profile</span></div>
+          <div class="about-grid"><p>I’m a software developer who enjoys taking a product from a challenging idea to a stable, maintainable application. My experience spans modernizing legacy systems, building APIs and data-driven platforms, integrating third-party services, and bringing LLM capabilities into real workflows. I work comfortably across teams and value clear communication, thoughtful design and steady improvement.</p><ul class="focus-list"><li>Full-stack web application development</li><li>LLM workflows and AI product integration</li><li>APIs, data platforms and integrations</li><li>Cloud deployment, testing and mentoring</li></ul></div>
+        </section>
+        <section id="experience">
+          <div class="section-heading"><h2>Experience</h2><span>02 / career</span></div>
+          <div class="timeline">
+            <article class="role"><div class="dates">2025–2026</div><div><h3>Full Stack Developer</h3><p class="company">Eligeo.ai · Calgary, AB</p><ul><li>Built OCR and document-ingestion pipelines for scanned files and PDFs.</li><li>Developed an LLM-powered bid-comparison engine and schedule intelligence using Python, FastAPI, LangChain, Fireworks AI and Pydantic.</li><li>Integrated Monday.com, Stripe and HubSpot with secure authentication and dependable data synchronization.</li><li>Improved API response times by 20% through query optimization, caching and MySQL schema design.</li></ul></div></article>
+            <article class="role"><div class="dates">2021–2025</div><div><h3>Senior Software Engineer</h3><p class="company">Folio3 · Pakistan</p><ul><li>Modernized a legacy PHP/Yii application on a MERN stack.</li><li>Built REST APIs for 300+ vending machines and 7,000+ daily transactions across 5+ partner systems.</li><li>Delivered a PostgreSQL-backed SaaS platform managing 10,000+ student and case records.</li><li>Deployed services on AWS with Docker, raised automated test coverage to 80%, and mentored teammates through reviews and design discussions.</li></ul></div></article>
+            <article class="role"><div class="dates">2020–2021</div><div><h3>Software Engineer</h3><p class="company">Olive Digital · Pakistan</p><ul><li>Maintained a Laravel CRM used by 300+ users and delivered 25+ enhancements.</li><li>Handled production support, monitoring and root-cause analysis; collaborated with clients on requirements and training.</li></ul></div></article>
+            <article class="role"><div class="dates">2017–2020</div><div><h3>Software Engineer</h3><p class="company">WebDroid Solutions · Pakistan</p><ul><li>Delivered custom web applications across e-commerce, finance, real estate and healthcare.</li><li>Built a Django-based Freelancer.com bidding tool and managed projects from client discussions through deployment and support.</li></ul></div></article>
+          </div>
+        </section>
+        <section id="work">
+          <div class="section-heading"><h2>Selected work</h2><span>03 / highlights</span></div>
+          <div class="work-grid">
+            <article class="work-card"><span class="number">01 — AI / DOCUMENTS</span><h3>Intelligent bid comparison</h3><p>Built an LLM-powered workflow to compare bids, supported by document ingestion, OCR and structured outputs.</p><div class="tags">Python · FastAPI · LangChain · Fireworks AI · Pydantic</div></article>
+            <article class="work-card"><span class="number">02 — AI / OPERATIONS</span><h3>Schedule intelligence</h3><p>Designed AI-driven checks to flag schedule risks, worker conflicts and dependency violations.</p><div class="tags">LLM orchestration · Prompt engineering · Python</div></article>
+            <article class="work-card"><span class="number">03 — PLATFORM / INTEGRATIONS</span><h3>Connected vending platform</h3><p>Delivered APIs supporting 300+ machines and more than 7,000 daily transactions across partner systems.</p><div class="tags">REST APIs · PHP · MySQL · Integrations</div></article>
+            <article class="work-card"><span class="number">04 — CLOUD / SAAS</span><h3>Scalable case-management SaaS</h3><p>Built a data platform for 10,000+ student and case records and supported production deployment on AWS.</p><div class="tags">PostgreSQL · AWS · Docker · Testing</div></article>
+          </div>
+        </section>
+        <section id="skills">
+          <div class="section-heading"><h2>Tools of the trade</h2><span>04 / toolkit</span></div>
+          <div class="skills"><span>Python</span><span>PHP</span><span>JavaScript</span><span>React.js</span><span>Laravel</span><span>Django</span><span>FastAPI</span><span>LangChain</span><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span><span>SQL Server</span><span>AWS</span><span>Docker</span><span>REST APIs</span><span>Prompt engineering</span><span>Unit testing</span><span>Agile / Scrum</span></div>
+        </section>
+        <section id="education">
+          <div class="section-heading"><h2>Education & learning</h2><span>05 / development</span></div>
+          <div class="education-grid">
+            <article class="education-card"><h3>M.S. in Data Science</h3><p>NED University of Engineering and Technology</p><small>2020–2022 · Assessed by IQAS</small></article>
+            <article class="education-card"><h3>B.S. in Computer Science</h3><p>University of Karachi</p><small>2013–2016 · Assessed by IQAS</small></article>
+            <article class="education-card"><h3>Applied Information Technology Certificate</h3><p>Southern Alberta Institute of Technology (SAIT)</p><small>2026 · Calgary, AB</small></article>
+            <article class="education-card"><h3>Machine Learning Specialization</h3><p>Stanford University & DeepLearning.AI</p><small>2024</small></article>
+          </div>
+        </section>
+        <section class="contact" id="contact">
+          <div><div class="section-heading"><h2>Let’s connect</h2><span>06 / contact</span></div><p>For software opportunities, collaborations or a good conversation about building useful technology, feel free to reach out.</p></div>
+          <div class="contact-links"><a class="button" href="mailto:faheem.naeem017@gmail.com">Email Faheem ↗</a><a class="button secondary" href="https://www.linkedin.com/in/faheem-naeem/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a class="button secondary" href="tel:+12269703456">Call ↗</a></div>
+        </section>
+      </main>
+      <footer><span>© <span id="year"></span> Faheem Naeem</span><span>Made with care in Calgary, Alberta.</span></footer>
+    </div>
+  </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

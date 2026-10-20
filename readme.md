@@ -1,29 +1,25 @@
-# henryheffernan.com
+# Faheem Naeem — Portfolio
 
-This is one of two repositories created for my portfolio website <a href="https://henryheffernan.com/"><samp>henryheffernan.com</samp></a>. If you are looking for the 2D OS repository you can find it <a href="https://github.com/henryjeff/portfolio-inner-site"><samp>here</samp></a>! Thanks for taking the time to check this out. If you have any questions of comments, feel free to shoot me an email at <samp><a href="mailto:henryheffernan@gmail.com">henryheffernan@gmail.com</a></samp> or you can DM me on twitter <a href="https://twitter.com/henryheffernan"><samp>@henryheffernan</samp></a>.
+A personal portfolio for Faheem Naeem, a Calgary-based software developer with experience in full-stack applications, cloud platforms and AI-powered product features. The site preserves the original interactive 3D desktop experience and now presents Faheem’s resume-backed profile, experience, selected work, skills, education and contact links.
 
-<br>
+## Run locally
 
-To setup a dev environment:
-
-```bash
-# Clone the repository
-
-# Install dependencies 
-npm i
-
-# Run the local dev server
+```sh
+npm install
 npm run dev
 ```
 
-To serve a production build:
+## Production build
 
-```bash
-# Install dependencies if not already done - 'npi i'
-
-# Build for production
+```sh
 npm run build
-
-# Serve the build using express
 npm start
 ```
+
+The portfolio displayed on the 3D computer monitor is served from `static/faheem-portfolio.html` and copied into the production build.
+
+## Contact
+
+- Email: [faheem.naeem017@gmail.com](mailto:faheem.naeem017@gmail.com)
+- LinkedIn: [linkedin.com/in/faheem-naeem](https://www.linkedin.com/in/faheem-naeem/)
+- Location: Calgary, Alberta, Canada
