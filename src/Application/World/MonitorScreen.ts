@@ -182,9 +182,9 @@ export default class MonitorScreen extends EventEmitter {
             }
         };
 
-        // Set iframe attributes. Keep the original desktop OS, including its
-        // apps, games, taskbar, and closable/minimizable windows.
-        iframe.src = 'https://os.henryheffernan.com/';
+        // Keep the personalized desktop local so its content and app windows
+        // remain part of this portfolio deployment.
+        iframe.src = '/faheem-portfolio.html';
         /**
          * Use dev server is query params are present
          *
@@ -204,7 +204,7 @@ export default class MonitorScreen extends EventEmitter {
         iframe.className = 'jitter';
         iframe.id = 'computer-screen';
         iframe.frameBorder = '0';
-        iframe.title = 'Interactive Portfolio Desktop';
+        iframe.title = 'Faheem Naeem Interactive Portfolio Desktop';
 
         // Pointer events inside an iframe do not bubble to the parent document.
         // Listen at the frame boundary so a single hover focuses the monitor.

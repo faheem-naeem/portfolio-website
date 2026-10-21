@@ -9,18 +9,48 @@
     :root { color-scheme: light; --ink: #252b2b; --muted: #667170; --paper: #f2f1e9; --line: #c9cbc2; --teal: #164d50; --green: #83a77d; --blue: #274c8d; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; background: #d6ddd5; color: var(--ink); font: 14px/1.55 "Courier New", monospace; }
+    body { margin: 0; background: #008080; color: var(--ink); font: 14px/1.55 "Courier New", monospace; }
     a { color: var(--blue); }
-    .desktop { min-height: 100vh; padding: clamp(12px, 3vw, 34px); background: radial-gradient(ellipse at 12% 0%, #e7e9dc 0, transparent 42%), linear-gradient(135deg, #cad7cc, #e7e3d7); }
-    .window { max-width: 1120px; min-height: calc(100vh - 68px); margin: auto; background: var(--paper); border: 1px solid #fff; box-shadow: 0 14px 44px #1d292733, inset 0 0 0 1px #afb7ad; display: flex; flex-direction: column; }
+    .desktop { position: relative; height: 100vh; overflow: hidden; padding: 20px 22px 46px 92px; background: #008080; }
+    .window { width: 100%; max-width: 1120px; height: min(80vh, 800px); max-height: calc(100vh - 72px); margin: 0 auto; background: var(--paper); border: 3px outset #eee; box-shadow: 2px 2px 0 #222; display: flex; flex-direction: column; }
     .titlebar { min-height: 38px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(90deg, #164d50, #287b78); color: #fff; font-weight: bold; letter-spacing: .02em; }
     .titlebar small { color: #d7e9d9; font-weight: normal; }
     .window-controls { display: flex; gap: 5px; }
-    .window-controls span { width: 19px; height: 18px; display: grid; place-items: center; border: 1px solid #d5e5da; background: #dce7db; color: #254448; line-height: 1; }
+    .window-controls button { width: 22px; height: 20px; padding: 0; display: grid; place-items: center; border: 1px solid #d5e5da; background: #dce7db; color: #254448; font: bold 14px "Courier New", monospace; cursor: pointer; }
+    .window-controls button:hover { background: #fff; }
+    .desktop-shortcuts { position: absolute; top: 14px; left: 5px; z-index: 5; display: grid; gap: 5px; }
+    .shortcut { width: 78px; min-height: 66px; padding: 4px 2px; border: 1px solid transparent; background: transparent; color: #173b3b; text-align: center; font: 11px/1.2 "Courier New", monospace; text-shadow: 1px 1px #fff; cursor: pointer; }
+    .shortcut:hover, .shortcut:focus-visible { border-color: #e5f1e8; background: #a9c7bf88; outline: 1px dotted #24524d; }
+    .shortcut-icon { display: block; margin-bottom: 4px; font: 25px/1 sans-serif; text-shadow: 1px 1px #fff; }
+    .taskbar { position: fixed; z-index: 100; right: 0; bottom: 0; left: 0; height: 36px; padding: 3px; display: flex; align-items: center; gap: 5px; border-top: 1px solid #fff; background: #c7cbc3; box-shadow: 0 -2px 7px #1d292722; }
+    .taskbar button { max-width: 240px; height: 28px; padding: 3px 9px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 1px solid #fff; border-right-color: #646b67; border-bottom-color: #646b67; background: #d6d9d1; color: #263230; font: 12px "Courier New", monospace; cursor: pointer; }
+    .taskbar button.active, .taskbar button:active { border: 1px solid #707771; border-right-color: #fff; border-bottom-color: #fff; background: #bec5bc; }
+    .taskbar .start-button { font-weight: bold; }
+    .task-spacer { flex: 1; }
+    .clock { padding: 5px 9px; border: 1px solid #929a93; color: #35423e; font-size: 11px; }
+    .start-menu { position: fixed; z-index: 110; bottom: 36px; left: 4px; width: 225px; padding: 7px; border: 2px outset #eee; background: #d6d9d1; box-shadow: 2px 2px 8px #0005; }
+    .start-menu[hidden], .app-window[hidden], .window[hidden] { display: none; }
+    .start-menu button { width: 100%; padding: 9px; border: 0; background: transparent; text-align: left; font: 13px "Courier New", monospace; cursor: pointer; }
+    .start-menu button:hover { background: #164d50; color: #fff; }
+    .app-window { position: fixed; z-index: 80; top: 8vh; left: 12vw; width: min(800px, 76vw); height: min(610px, 78vh); display: flex; flex-direction: column; border: 2px outset #eee; background: var(--paper); box-shadow: 0 12px 40px #1118; }
+    .app-title { min-height: 31px; padding: 4px 7px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(90deg, #164d50, #287b78); color: #fff; cursor: move; }
+    .app-controls { display: flex; gap: 4px; }
+    .app-controls button { width: 22px; height: 20px; border: 1px solid white; color: #164d50; cursor: pointer; }
+    .app-body { flex: 1; overflow: auto; padding: 18px; background: var(--paper); }
+    .app-body iframe { width: 100%; height: 100%; min-height: 300px; border: 0; }
+    .game-launch { max-width: 680px; margin: auto; padding: 18px; text-align: center; }
+    .game-launch h2 { color: var(--teal); font: bold 26px Georgia, serif; }
+    .game-launch button, .game-action { padding: 8px 12px; border: 1px solid var(--teal); background: var(--teal); color: white; font: 13px "Courier New", monospace; cursor: pointer; }
+    .game-launch input { max-width: 100%; padding: 8px; border: 1px solid #9ca99e; font: 14px "Courier New", monospace; }
+    .trail-status, .game-status { min-height: 32px; padding: 8px; background: #e6ecdf; }
+    .board { display: grid; grid-template-columns: repeat(5, minmax(44px, 64px)); justify-content: center; gap: 5px; margin: 18px auto; }
+    .board button { height: 54px; border: 1px solid #84948a; background: #fff; color: #22332e; font: bold 24px "Courier New", monospace; cursor: pointer; }
+    .board button.selected { background: #c7dbca; }
+    .doom-canvas { display: block; width: 100%; max-width: 600px; margin: 12px auto; background: #111; image-rendering: pixelated; }
     .toolbar { padding: 8px 14px; display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); background: #e7e7dc; }
     .toolbar a { padding: 4px 9px; color: #303b39; text-decoration: none; border: 1px solid transparent; }
     .toolbar a:hover, .toolbar a:focus-visible { border-color: #8d9d92; background: #f7f7ef; outline: none; }
-    main { flex: 1; }
+    main { flex: 1; min-height: 0; overflow-y: auto; }
     .hero { padding: clamp(24px, 5vw, 54px); background: linear-gradient(110deg, #e9eee4 0%, #e9eee4 62%, #dce6d6 62%); border-bottom: 1px solid var(--line); }
     .eyebrow { margin: 0 0 12px; color: #47705d; text-transform: uppercase; letter-spacing: .13em; font-size: 11px; }
     h1, h2, h3, p { margin-top: 0; }
@@ -71,8 +101,12 @@
     .contact-links { display: flex; flex-wrap: wrap; gap: 8px; }
     footer { padding: 11px 16px; display: flex; justify-content: space-between; gap: 10px; background: #dfe4da; color: #5c6860; font-size: 11px; }
     @media (max-width: 700px) {
-      .desktop { padding: 0; }
-      .window { min-height: 100vh; border: 0; }
+      .desktop { padding: 5px 4px 42px; }
+      .window { height: calc(100vh - 120px); max-height: none; border-width: 2px; }
+      .desktop-shortcuts { position: relative; top: auto; left: auto; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0; margin-bottom: 5px; }
+      .shortcut { width: 100%; min-height: 64px; padding: 3px 0; font-size: 9px; overflow-wrap: anywhere; }
+      .shortcut-icon { font-size: 19px; }
+      .app-window { top: 8px; left: 2vw; width: 96vw; height: calc(100vh - 52px); }
       .quickfacts { grid-template-columns: 1fr; }
       .fact { padding: 11px 18px; border-right: 0; border-bottom: 1px solid var(--line); }
       .about-grid, .work-grid, .education-grid { grid-template-columns: 1fr; }
@@ -84,8 +118,17 @@
 </head>
 <body>
   <div class="desktop">
-    <div class="window">
-      <div class="titlebar"><span>FAHEEM.NAEEM — Portfolio</span><small>Calgary, AB</small><div class="window-controls" aria-hidden="true"><span>_</span><span>□</span><span>×</span></div></div>
+    <div class="desktop-shortcuts" aria-label="Desktop applications">
+      <button class="shortcut" data-open="portfolio"><span class="shortcut-icon">🖥️</span>My Portfolio</button>
+      <button class="shortcut" data-open="resume"><span class="shortcut-icon">📄</span>Resume</button>
+      <button class="shortcut" data-open="trail"><span class="shortcut-icon">🐎</span>Oregon Trail</button>
+      <button class="shortcut" data-open="doom"><span class="shortcut-icon">🎮</span>Doom</button>
+      <button class="shortcut" data-open="scrabble"><span class="shortcut-icon">🔠</span>Scrabble</button>
+      <button class="shortcut" data-open="wordgame"><span class="shortcut-icon">🟩</span>Henordle</button>
+      <button class="shortcut" data-open="credits"><span class="shortcut-icon">ℹ️</span>Credits</button>
+    </div>
+    <div class="window" id="portfolioWindow">
+      <div class="titlebar"><span>FAHEEM.NAEEM — Portfolio</span><small>Calgary, AB</small><div class="window-controls"><button type="button" data-action="minimize" aria-label="Minimize">_</button><button type="button" data-action="maximize" aria-label="Maximize">□</button><button type="button" data-action="close" aria-label="Close">×</button></div></div>
       <nav class="toolbar" aria-label="Portfolio sections">
         <a href="#about">ABOUT</a><a href="#experience">EXPERIENCE</a><a href="#work">SELECTED WORK</a><a href="#skills">SKILLS</a><a href="#education">EDUCATION</a><a href="#contact">CONTACT</a>
       </nav>
@@ -122,7 +165,7 @@
         </section>
         <section id="skills">
           <div class="section-heading"><h2>Tools of the trade</h2><span>04 / toolkit</span></div>
-          <div class="skills"><span>Python</span><span>PHP</span><span>JavaScript</span><span>React.js</span><span>Laravel</span><span>Django</span><span>FastAPI</span><span>LangChain</span><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span><span>SQL Server</span><span>AWS</span><span>Docker</span><span>REST APIs</span><span>Prompt engineering</span><span>Unit testing</span><span>Agile / Scrum</span></div>
+          <div class="skills"><span>Python</span><span>PHP</span><span>JavaScript</span><span>React.js</span><span>Laravel</span><span>Django</span><span>FastAPI</span><span>LangChain</span><span>Pydantic</span><span>Eloquent</span><span>MySQL</span><span>PostgreSQL</span><span>MongoDB</span><span>SQL Server</span><span>AWS</span><span>Docker</span><span>REST APIs</span><span>Prompt engineering</span><span>Prompt injection defense</span><span>Unit testing</span><span>Agile / Scrum</span></div>
         </section>
         <section id="education">
           <div class="section-heading"><h2>Education & learning</h2><span>05 / development</span></div>
@@ -131,6 +174,7 @@
             <article class="education-card"><h3>B.S. in Computer Science</h3><p>University of Karachi</p><small>2013–2016 · Assessed by IQAS</small></article>
             <article class="education-card"><h3>Applied Information Technology Certificate</h3><p>Southern Alberta Institute of Technology (SAIT)</p><small>2026 · Calgary, AB</small></article>
             <article class="education-card"><h3>Machine Learning Specialization</h3><p>Stanford University & DeepLearning.AI</p><small>2024</small></article>
+            <article class="education-card"><h3>CCIS IT Bridging Program</h3><p>Employment Skills Training</p><small>2026</small></article>
           </div>
         </section>
         <section class="contact" id="contact">
@@ -140,7 +184,156 @@
       </main>
       <footer><span>© <span id="year"></span> Faheem Naeem</span><span>Made with care in Calgary, Alberta.</span></footer>
     </div>
+    <div class="start-menu" id="startMenu" hidden>
+      <button data-open="portfolio">🖥️ &nbsp; My Portfolio</button>
+      <button data-open="resume">📄 &nbsp; Resume</button>
+      <button data-open="trail">🐎 &nbsp; Oregon Trail</button>
+      <button data-open="doom">🎮 &nbsp; Doom</button>
+      <button data-open="scrabble">🔠 &nbsp; Scrabble</button>
+      <button data-open="wordgame">🟩 &nbsp; Henordle</button>
+      <button data-open="credits">ℹ️ &nbsp; Credits</button>
+      <button id="shutdownButton">⏻ &nbsp; Close all windows</button>
+    </div>
+    <div class="taskbar"><button class="start-button" id="startButton">⊞ Start</button><button id="portfolioTask" class="active" data-task="portfolio">Faheem Naeem — Portfolio</button><button id="appTask" data-task="app" hidden></button><span class="task-spacer"></span><span class="clock" id="clock"></span></div>
+    <section class="app-window" id="appWindow" hidden aria-label="Application window">
+      <div class="app-title" id="appTitle"><strong id="appTitleText">Application</strong><span class="app-controls"><button data-action="minimize" aria-label="Minimize">_</button><button data-action="maximize" aria-label="Maximize">□</button><button data-action="close" aria-label="Close">×</button></span></div>
+      <div class="app-body" id="appBody"></div>
+    </section>
   </div>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const portfolioWindow = document.getElementById('portfolioWindow');
+    const appWindow = document.getElementById('appWindow');
+    const appBody = document.getElementById('appBody');
+    const appTitleText = document.getElementById('appTitleText');
+    const appTask = document.getElementById('appTask');
+    let activeApp = 'portfolio';
+    let topLayer = 80;
+
+    function openApp(name) {
+      document.getElementById('startMenu').hidden = true;
+      if (name === 'portfolio') {
+        portfolioWindow.hidden = false;
+        portfolioWindow.style.zIndex = ++topLayer;
+        appWindow.hidden = true;
+        appTask.hidden = true;
+        document.getElementById('portfolioTask').classList.add('active');
+        activeApp = name;
+        return;
+      }
+      activeApp = name;
+      appWindow.hidden = false;
+      appWindow.style.zIndex = ++topLayer;
+      appTitleText.textContent = ({ resume: 'Faheem Naeem — Profile', games: 'Games & Classic Desktop', trail: 'The Oregon Trail', doom: 'Doom', scrabble: 'Scrabble', wordgame: 'Henordle', credits: 'Credits' })[name] || 'Application';
+      appTask.textContent = appTitleText.textContent;
+      appTask.hidden = false;
+      document.getElementById('portfolioTask').classList.remove('active');
+      appTask.classList.add('active');
+      if (name === 'resume') {
+        appBody.innerHTML = '<h2>Faheem Naeem</h2><p>Software Developer · Calgary, Alberta</p><p>8 years of experience building scalable web applications, cloud services and AI-powered product features.</p><p><strong>Core technologies</strong><br>Python, PHP, JavaScript, React, Laravel, Django, FastAPI, LangChain, MySQL, PostgreSQL, MongoDB, SQL Server, AWS and Docker.</p><p><strong>Education</strong><br>M.S. Data Science — NED University (2020–2022)<br>B.S. Computer Science — University of Karachi (2013–2016)<br>Applied Information Technology Certificate — SAIT (2026)<br>Machine Learning Specialization — Stanford University &amp; DeepLearning.AI (2024)</p><p><strong>Professional development</strong><br>CCIS IT Bridging Program Employment Skills Training (2026); business analysis, project management, Agile, Python and data analytics.</p><p><strong>Contact</strong><br><a href="mailto:faheem.naeem017@gmail.com">faheem.naeem017@gmail.com</a><br><a href="https://www.linkedin.com/in/faheem-naeem/" target="_blank" rel="noopener noreferrer">LinkedIn profile ↗</a></p>';
+      } else if (name === 'credits') {
+        appBody.innerHTML = '<h2>Faheem Naeem</h2><p>Software Developer · Calgary, Alberta</p><p>This portfolio preserves the original interactive 3D desktop showcase, with profile and career details updated from Faheem’s resume.</p><p><a href="https://www.linkedin.com/in/faheem-naeem/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></p>';
+      } else if (name === 'trail') {
+        appBody.innerHTML = '<div class="game-launch"><h2>The Oregon Trail</h2><p>Guide your party west. Each decision uses supplies but brings you closer to the next landmark.</p><p class="trail-status" id="trailStatus">Distance: 0 miles · Food: 100 lb · Health: 100%</p><button class="game-action" id="trailTravel">Travel to the next landmark</button><button class="game-action" id="trailRest">Rest and recover</button></div>';
+        let distance = 0, food = 100, health = 100;
+        const status = document.getElementById('trailStatus');
+        const updateTrail = (message) => { status.textContent = message + ' · Distance: ' + distance + ' miles · Food: ' + food + ' lb · Health: ' + health + '%'; };
+        document.getElementById('trailTravel').onclick = () => { distance += 100; food = Math.max(0, food - 12); health = Math.max(0, health - (food === 0 ? 25 : 3)); updateTrail(distance >= 500 ? 'You reached the destination!' : 'The party made good progress.'); };
+        document.getElementById('trailRest').onclick = () => { food = Math.max(0, food - 8); health = Math.min(100, health + 12); updateTrail('The party rested for a day.'); };
+      } else if (name === 'wordgame') {
+        const answer = ['BRAVE', 'CLOUD', 'PLANT', 'RIVER', 'SOLID'][Math.floor(Math.random() * 5)];
+        let guesses = 0;
+        appBody.innerHTML = '<div class="game-launch"><h2>Henordle</h2><p>Guess the five-letter word in six tries. Green means right letter and place; yellow means the letter is elsewhere.</p><div id="wordBoard"></div><form id="wordForm"><input id="wordInput" maxlength="5" minlength="5" aria-label="Five-letter guess" autocomplete="off" required><button class="game-action">Guess</button></form><p id="wordStatus" class="game-status">6 tries remaining</p></div>';
+        document.getElementById('wordForm').onsubmit = (event) => { event.preventDefault(); const input = document.getElementById('wordInput'); const guess = input.value.toUpperCase(); if (!/^[A-Z]{5}$/.test(guess)) return; guesses++; const row = document.createElement('p'); row.textContent = guess.split('').map((letter, index) => letter === answer[index] ? '🟩' : answer.includes(letter) ? '🟨' : '⬛').join(' '); document.getElementById('wordBoard').appendChild(row); const won = guess === answer; document.getElementById('wordStatus').textContent = won ? 'Solved! Nice work.' : guesses >= 6 ? 'The word was ' + answer + '.' : (6 - guesses) + ' tries remaining'; input.value = ''; input.disabled = won || guesses >= 6; };
+      } else if (name === 'scrabble') {
+        const letters = 'AEIILNORTS';
+        let selected = '';
+        appBody.innerHTML = '<div class="game-launch"><h2>Scrabble Tiles</h2><p>Build a word from your letter rack. Score uses classic letter values.</p><div class="board" id="letterRack"></div><p>Word: <strong id="scrabbleWord"></strong></p><button class="game-action" id="scoreWord">Score word</button><button class="game-action" id="clearRack">Clear rack</button><p id="scrabbleScore" class="game-status">Select tiles to make a word.</p></div>';
+        const rack = document.getElementById('letterRack');
+        [...letters].sort(() => Math.random() - 0.5).forEach((letter) => { const tile = document.createElement('button'); tile.type = 'button'; tile.textContent = letter; tile.onclick = () => { selected += letter; document.getElementById('scrabbleWord').textContent = selected; tile.disabled = true; }; rack.appendChild(tile); });
+        document.getElementById('scoreWord').onclick = () => { const points = { A:1,E:1,I:1,L:1,N:1,O:1,R:1,S:1,T:1,D:2,G:2,B:3,C:3,M:3,P:3,F:4,H:4,V:4,W:4,Y:4,K:5,J:8,X:8,Q:10,Z:10 }; const score = [...selected].reduce((total, letter) => total + (points[letter] || 0), 0); document.getElementById('scrabbleScore').textContent = selected ? selected + ' scores ' + score + ' points.' : 'Choose some tiles first.'; };
+        document.getElementById('clearRack').onclick = () => { selected = ''; document.getElementById('scrabbleWord').textContent = ''; document.getElementById('scrabbleScore').textContent = 'Select tiles to make a word.'; rack.querySelectorAll('button').forEach((tile) => { tile.disabled = false; }); };
+      } else if (name === 'doom') {
+        appBody.innerHTML = '<div class="game-launch"><h2>Doom Arcade</h2><p>Click the targets to clear the room and score points.</p><canvas class="doom-canvas" id="arcadeCanvas" width="640" height="360" aria-label="Doom-inspired arcade target game"></canvas><p class="game-status" id="arcadeStatus">Targets remaining: 5 · Score: 0</p></div>';
+        const canvas = document.getElementById('arcadeCanvas'), ctx = canvas.getContext('2d');
+        let score = 0, targets = Array.from({length: 5}, (_, index) => ({x: 100 + index * 110, y: 120 + Math.random() * 100, alive: true}));
+        const drawArcade = () => { ctx.fillStyle = '#111'; ctx.fillRect(0,0,640,360); ctx.fillStyle = '#493c35'; ctx.fillRect(0,210,640,150); ctx.fillStyle = '#71645a'; ctx.fillRect(0,0,640,210); ctx.fillStyle = '#29727a'; ctx.fillRect(0,0,640,70); targets.forEach((target) => { if (!target.alive) return; ctx.fillStyle = '#c54d38'; ctx.beginPath(); ctx.arc(target.x,target.y,18,0,Math.PI*2); ctx.fill(); ctx.fillStyle = '#f1d2a1'; ctx.fillRect(target.x-5,target.y-5,10,10); }); ctx.strokeStyle = '#fff'; ctx.beginPath(); ctx.moveTo(310,180); ctx.lineTo(330,180); ctx.moveTo(320,170); ctx.lineTo(320,190); ctx.stroke(); };
+        canvas.onclick = (event) => { const rect = canvas.getBoundingClientRect(), x = (event.clientX-rect.left)*canvas.width/rect.width, y = (event.clientY-rect.top)*canvas.height/rect.height; const target = targets.find((item) => item.alive && Math.hypot(item.x-x,item.y-y)<28); if (target) { target.alive=false; score += 100; } const remaining=targets.filter((item)=>item.alive).length; document.getElementById('arcadeStatus').textContent = remaining ? 'Targets remaining: ' + remaining + ' · Score: ' + score : 'Room clear! Final score: ' + score; drawArcade(); };
+        drawArcade();
+      } else {
+        appBody.innerHTML = '<p>Choose an app from the desktop.</p>';
+      }
+    }
+
+    document.querySelectorAll('[data-open]').forEach((button) => button.addEventListener('click', () => openApp(button.dataset.open)));
+    document.getElementById('portfolioTask').addEventListener('click', () => {
+      if (activeApp === 'portfolio' && !portfolioWindow.hidden) portfolioWindow.hidden = true;
+      else openApp('portfolio');
+    });
+    appTask.addEventListener('click', () => {
+      if (!appWindow.hidden && activeApp !== 'portfolio') appWindow.hidden = true;
+      else appWindow.hidden = false;
+      activeApp = 'app';
+      appWindow.style.zIndex = ++topLayer;
+      appTask.classList.add('active');
+    });
+    document.getElementById('startButton').addEventListener('click', () => {
+      const menu = document.getElementById('startMenu');
+      menu.hidden = !menu.hidden;
+    });
+    document.getElementById('shutdownButton').addEventListener('click', () => {
+      portfolioWindow.hidden = true;
+      appWindow.hidden = true;
+      document.getElementById('startMenu').hidden = true;
+    });
+    document.querySelectorAll('[data-action="close"]').forEach((button) => button.addEventListener('click', () => {
+      if (button.closest('#portfolioWindow')) {
+        portfolioWindow.hidden = true;
+        document.getElementById('portfolioTask').classList.remove('active');
+      } else {
+        appWindow.hidden = true;
+        appTask.hidden = true;
+      }
+    }));
+    document.querySelectorAll('[data-action="minimize"]').forEach((button) => button.addEventListener('click', () => {
+      if (button.closest('#portfolioWindow')) {
+        portfolioWindow.hidden = true;
+        document.getElementById('portfolioTask').classList.remove('active');
+      } else {
+        appWindow.hidden = true;
+        appTask.classList.remove('active');
+      }
+    }));
+    document.querySelectorAll('[data-action="maximize"]').forEach((button) => button.addEventListener('click', () => {
+      const target = button.closest('#portfolioWindow') || appWindow;
+      if (!target.dataset.normalStyle) target.dataset.normalStyle = target.getAttribute('style') || '';
+      if (target.dataset.maximized === 'true') {
+        target.setAttribute('style', target.dataset.normalStyle);
+        target.dataset.maximized = 'false';
+      } else {
+        target.style.cssText += ';position:fixed;inset:4px 4px 40px;width:auto;height:auto;max-width:none;min-height:0;z-index:90;margin:0;overflow:auto';
+        target.dataset.maximized = 'true';
+      }
+    }));
+    const titleBar = document.getElementById('appTitle');
+    let drag = null;
+    titleBar.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('button') || appWindow.dataset.maximized === 'true') return;
+      const rect = appWindow.getBoundingClientRect();
+      drag = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+      titleBar.setPointerCapture(event.pointerId);
+    });
+    titleBar.addEventListener('pointermove', (event) => {
+      if (!drag) return;
+      appWindow.style.left = Math.max(0, event.clientX - drag.x) + 'px';
+      appWindow.style.top = Math.max(0, event.clientY - drag.y) + 'px';
+    });
+    titleBar.addEventListener('pointerup', () => { drag = null; });
+    function updateClock() {
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    }
+    updateClock();
+    setInterval(updateClock, 15000);
+  </script>
 </body>
 </html>
