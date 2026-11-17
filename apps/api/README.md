@@ -97,7 +97,8 @@ Tests use Vitest with `app.fetch(req, env, ctx)`. D1 is faked with real SQLite (
     - In `wrangler.jsonc`, set `vars.NOTIFY_EMAIL` to that verified address.
     - `NOTIFY_FROM` (`api@faheemnaeem.dev`) must be on the Email Routing domain.
     - Optional: lock the binding with `"send_email": [{ "name": "SEND_EMAIL", "destination_address": "<YOUR_EMAIL>" }]`.
-6. **Deploy**: `npx wrangler deploy` from `apps/api`. The custom domain `api.faheemnaeem.dev` is created from `routes`.
+6. **CTF flag** (for the ctf.faheemnaeem.dev puzzle hunt): run `node apps/ctf/scripts/make-flag.mjs` from the repo root, then `npx wrangler secret put CTF_FLAG` and paste the printed flag, `<CTF_FLAG>`. Set its hash on the ctf Worker as `FLAG_HASH` (see `apps/ctf/README.md`). Without it the hidden CTF route answers 503.
+7. **Deploy**: `npx wrangler deploy` from `apps/api`. The custom domain `api.faheemnaeem.dev` is created from `routes`.
 
 Free-plan notes:
 

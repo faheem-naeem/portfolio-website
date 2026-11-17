@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `wrangler dev`. Never commit .dev.vars.
+# Generate a flag + hash with: node scripts/make-flag.mjs
+FLAG_HASH=<FLAG_SHA256_HEX>
+IP_HASH_SALT=<RANDOM_STRING>
