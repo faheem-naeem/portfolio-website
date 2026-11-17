@@ -1,0 +1,53 @@
+---
+import { getCareer, getResume } from '@faheem/data';
+import { buildReleases, currentRelease } from '../lib/changelog';
+
+interface Props {
+    view: 'notes' | 'graph';
+}
+
+const { view } = Astro.props;
+const career = getCareer();
+const { name } = getResume();
+const current = currentRelease(buildReleases(career));
+const stripped = career.note?.replace(/^SAMPLE:\s*/i, '') ?? '';
+const sampleNote = stripped
+    ? stripped.charAt(0).toUpperCase() + stripped.slice(1)
+    : 'The release framing on this page is placeholder content.';
+---
+
+<header class="intro">
+    <h1 class="intro__title">
+        Changelog
+        <span class="version-badge">
+            <span class="version-badge__key">current version</span>
+            <span class="version-badge__value">v{current.version}</span>
+        </span>
+    </h1>
+    <p class="intro__lede">
+        {name}'s career, written up as release notes. Semver applies: a major
+        version is a breaking change (new role, new city), a minor version adds
+        features, a patch fixes things.
+    </p>
+    {
+        career.sample && (
+            <p class="notice" role="note">
+                <strong>Sample data.</strong>{' '}
+                {sampleNote}
+            </p>
+        )
+    }
+    <nav class="view-switch" aria-label="Changelog views">
+        <ul>
+            <li>
+                <a href="/" aria-current={view === 'notes' ? 'page' : undefined}>Release notes</a>
+            </li>
+            <li>
+                <a href="/graph/" aria-current={view === 'graph' ? 'page' : undefined}>Commit graph</a>
+            </li>
+        </ul>
+        <p class="feeds">
+            Feeds: <a href="/rss.xml">RSS</a> · <a href="/changelog.json">JSON</a>
+        </p>
+    </nav>
+</header>
