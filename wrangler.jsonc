@@ -1,0 +1,19 @@
+// Cloudflare Worker config for the main site (faheemnaeem.dev).
+// Workers Builds runs the build command (pnpm turbo run build --filter=web)
+// and then `npx wrangler deploy`, which uploads the static files below.
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    // Must match the existing Worker's name, or Cloudflare creates a new Worker.
+    "name": "portfolio-website",
+    "compatibility_date": "2026-10-01",
+    // Static-assets-only Worker: no script, just serve the webpack output.
+    "assets": {
+        "directory": "./apps/web/public"
+    },
+    // Required by `npx wrangler preview`, which Workers Builds runs for
+    // non-production branches. Empty = reuse the top-level settings above.
+    "previews": {}
+    // No "routes" on purpose: the custom domains (faheemnaeem.dev + 1 other)
+    // are managed in the dashboard, and leaving them out here means a deploy
+    // does not change them.
+}

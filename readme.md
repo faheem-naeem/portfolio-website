@@ -2,21 +2,29 @@
 
 A personal portfolio for Faheem Naeem, a Calgary-based software developer with experience in full-stack applications, cloud platforms and AI-powered product features. The site preserves the original interactive 3D desktop experience and now presents Faheem’s resume-backed profile, experience, selected work, skills, education and contact links.
 
+## Repository layout
+
+This is a pnpm + Turborepo monorepo. Each subdomain of faheemnaeem.dev is its own app.
+
+| Path | What it is |
+|---|---|
+| `apps/web` | The main site (faheemnaeem.dev): interactive 3D desktop, Three.js + React + webpack |
+| `packages/config` | Shared TypeScript, ESLint and Prettier config |
+
 ## Run locally
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm --filter web dev
 ```
 
 ## Production build
 
 ```sh
-npm run build
-npm start
+pnpm turbo run build --filter=web   # output: apps/web/public
 ```
 
-The portfolio displayed on the 3D computer monitor is served from `static/faheem-portfolio.html` and copied into the production build.
+The portfolio displayed on the 3D computer monitor is served from `apps/web/static/faheem-portfolio.html` and copied into the production build.
 
 ## Contact
 
