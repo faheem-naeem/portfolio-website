@@ -1,0 +1,50 @@
+---
+import '@faheem/ui/tokens.css';
+import '@faheem/ui/base.css';
+import '../styles/changelog.css';
+import { getResume } from '@faheem/data';
+import { renderFooter, renderHeader } from '@faheem/ui';
+
+interface Props {
+    title: string;
+    description: string;
+}
+
+const { title, description } = Astro.props;
+const { name } = getResume();
+const fullTitle = `${title} · ${name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title={`${name} changelog (RSS)`}
+            href="/rss.xml"
+        />
+        <link
+            rel="alternate"
+            type="application/json"
+            title={`${name} changelog (JSON)`}
+            href="/changelog.json"
+        />
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+        <Fragment set:html={renderHeader('changelog')} />
+        <main id="main" class="site-main" tabindex="-1">
+            <slot />
+        </main>
+        <Fragment set:html={renderFooter()} />
+    </body>
+</html>

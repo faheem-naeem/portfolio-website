@@ -1,0 +1,20 @@
+{
+    "$schema": "../../node_modules/wrangler/config-schema.json",
+    "name": "faheemnaeem-status",
+    "main": "src/index.ts",
+    "compatibility_date": "2026-10-01",
+    "routes": [{ "pattern": "status.faheemnaeem.dev", "custom_domain": true }],
+    // ONE cron for the whole app (the account only has 5). Every run does the
+    // health checks; the 03:00 UTC run also deletes rows older than 90 days.
+    "triggers": { "crons": ["*/10 * * * *"] },
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "faheemnaeem-status",
+            // TODO: replace after `wrangler d1 create faheemnaeem-status`
+            "database_id": "00000000-0000-0000-0000-000000000000",
+            "migrations_dir": "migrations"
+        }
+    ],
+    "observability": { "enabled": true }
+}

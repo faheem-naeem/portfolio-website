@@ -1,0 +1,9 @@
+{
+    "extends": "@faheem/config/tsconfig.base.json",
+    "compilerOptions": {
+        "lib": ["ES2022", "DOM"],
+        "types": ["astro/client"]
+    },
+    "include": [".astro/types.d.ts", "src", "test", "astro.config.mjs"],
+    "exclude": ["dist", "node_modules"]
+}

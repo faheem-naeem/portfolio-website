@@ -1,0 +1,8 @@
+{
+    "extends": [
+        "astro/tsconfigs/strict",
+        "@faheem/config/tsconfig.base.json"
+    ],
+    "include": [".astro/types.d.ts", "src", "test", "astro.config.mjs"],
+    "exclude": ["dist"]
+}

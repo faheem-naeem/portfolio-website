@@ -1,0 +1,52 @@
+---
+import ExhibitCard from '../components/ExhibitCard.astro';
+import FilterNav from '../components/FilterNav.astro';
+import Gallery from '../components/Gallery.astro';
+import Stats from '../components/Stats.astro';
+import Layout from '../layouts/Layout.astro';
+import { getExhibits, getFeatured } from '../lib/exhibits';
+
+const exhibits = getExhibits();
+const featured = getFeatured(exhibits);
+const hasSamples = exhibits.some((e) => e.sample);
+---
+
+<Layout
+    title="The Bug Museum"
+    description="A museum of memorable bugs: what broke, how it was found, the root cause, the fix and the lesson."
+    scripts={['/filter.js']}
+>
+    <header class="museum-intro">
+        <p class="eyebrow">Open daily · Free admission</p>
+        <h1>The Bug Museum</h1>
+        <p class="lede">
+            Memorable bugs, preserved behind glass. Each exhibit covers the
+            symptom, the investigation, the root cause, the fix and the lesson.
+        </p>
+        {
+            hasSamples && (
+                <p class="notice">
+                    Exhibits marked <strong>Sample exhibit</strong> are
+                    placeholders, not real incidents.
+                </p>
+            )
+        }
+        <Stats exhibits={exhibits} />
+    </header>
+
+    {
+        featured && (
+            <section class="hero" aria-labelledby="hero-heading">
+                <h2 id="hero-heading">Exhibit of the month</h2>
+                <ul class="cards cards--hero" role="list">
+                    <ExhibitCard exhibit={featured} />
+                </ul>
+            </section>
+        )
+    }
+
+    <div class="museum-layout">
+        <FilterNav exhibits={exhibits} />
+        <Gallery exhibits={exhibits} heading="All exhibits" />
+    </div>
+</Layout>

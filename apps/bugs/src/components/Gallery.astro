@@ -1,0 +1,29 @@
+---
+import type { Exhibit } from '../lib/exhibits';
+import ExhibitCard from './ExhibitCard.astro';
+
+interface Props {
+    exhibits: Exhibit[];
+    heading: string;
+}
+
+const { exhibits, heading } = Astro.props;
+---
+
+<section class="gallery" aria-labelledby="gallery-heading" data-gallery>
+    <h2 id="gallery-heading" data-gallery-heading>{heading}</h2>
+    <p class="gallery__count" role="status" data-gallery-count>
+        Showing {exhibits.length} {exhibits.length === 1 ? 'exhibit' : 'exhibits'}.
+    </p>
+    {
+        exhibits.length > 0 ? (
+            <ul class="cards" role="list">
+                {exhibits.map((exhibit) => (
+                    <ExhibitCard exhibit={exhibit} />
+                ))}
+            </ul>
+        ) : (
+            <p>No exhibits match this filter yet.</p>
+        )
+    }
+</section>

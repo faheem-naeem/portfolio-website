@@ -1,0 +1,41 @@
+---
+import {
+    filterData,
+    formatDate,
+    formatNumber,
+    type Exhibit,
+} from '../lib/exhibits';
+import SampleBadge from './SampleBadge.astro';
+import SeverityBadge from './SeverityBadge.astro';
+
+interface Props {
+    exhibit: Exhibit;
+}
+
+const { exhibit } = Astro.props;
+---
+
+<li
+    class="card"
+    data-tag={filterData(exhibit, 'tag')}
+    data-stack={filterData(exhibit, 'stack')}
+    data-severity={filterData(exhibit, 'severity')}
+>
+    <article>
+        <p class="card__meta">
+            <span class="card__number">Exhibit {formatNumber(exhibit.number)}</span>
+            <time datetime={exhibit.date}>{formatDate(exhibit.date)}</time>
+        </p>
+        <h3 class="card__title">
+            <a href={`/exhibits/${exhibit.slug}/`}>{exhibit.title}</a>
+        </h3>
+        <p class="card__hook">{exhibit.hook}</p>
+        <p class="card__badges">
+            <SeverityBadge severity={exhibit.severity} />
+            {exhibit.sample && <SampleBadge />}
+        </p>
+        <ul class="chips" aria-label="Habitat">
+            {exhibit.stack.map((s) => <li class="chip">{s}</li>)}
+        </ul>
+    </article>
+</li>
