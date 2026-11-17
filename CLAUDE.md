@@ -9,13 +9,13 @@ This repository contains a personal developer portfolio for **faheemnaeem.dev**.
 - Framework: plain TypeScript/React application, with Three.js and a custom webpack build
 - Build tool: webpack 5
 - Package manager: pnpm 9 workspaces (`pnpm-lock.yaml` at the repo root, converted from the old npm lockfile)
-- Node: no `.nvmrc` on purpose (Cloudflare Pages would read it and change the production Node version)
-- Deployment: **Cloudflare Pages via the dashboard Git integration** (see commit 62b40c4). There is no config file in the repo; build settings live in the Cloudflare dashboard. Pages rejects any single file over 25 MB.
-- `apps/web/server/index.ts` is only a local Express static server for `public/`. It is not deployed. `buildspec.yaml` (AWS CodeBuild) is legacy and not used by the Pages deploy.
+- Node: no `.nvmrc` on purpose (Cloudflare builds would read it and change the production Node version)
+- Deployment: **Cloudflare Workers (static assets) via Workers Builds Git integration**. Worker name `portfolio-website`, config in root `wrangler.jsonc` (assets dir `apps/web/public`). Custom domains (faheemnaeem.dev + 1 other) are managed in the dashboard, so `wrangler.jsonc` has no `routes`. Static assets have a 25 MiB per-file limit.
+- `apps/web/server/index.ts` is only a local Express static server for `public/`. It is not deployed. `buildspec.yaml` (AWS CodeBuild) is legacy and not used by the Cloudflare deploy.
 - Build command (repo root): `pnpm turbo run build --filter=web`
 - Development command: `pnpm --filter web dev`
 - Production output directory: `apps/web/public/`
-- Cloudflare Pages settings for the monorepo are documented in `MIGRATION.md` (root directory = repo root, not `apps/web`).
+- Cloudflare build settings for the monorepo are documented in `MIGRATION.md` (root directory = repo root, not `apps/web`).
 
 ## Target structure
 
