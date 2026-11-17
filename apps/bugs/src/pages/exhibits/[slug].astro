@@ -1,0 +1,94 @@
+---
+import SampleBadge from '../../components/SampleBadge.astro';
+import SeverityBadge from '../../components/SeverityBadge.astro';
+import Layout from '../../layouts/Layout.astro';
+import {
+    formatDate,
+    formatNumber,
+    getExhibits,
+    slugify,
+    type Exhibit,
+} from '../../lib/exhibits';
+import { renderMarkdown } from '../../lib/markdown';
+
+export function getStaticPaths() {
+    return getExhibits().map((exhibit) => ({
+        params: { slug: exhibit.slug },
+        props: { exhibit },
+    }));
+}
+
+interface Props {
+    exhibit: Exhibit;
+}
+
+const { exhibit } = Astro.props;
+const html = await renderMarkdown(exhibit.body);
+---
+
+<Layout
+    title={`${exhibit.title} · The Bug Museum`}
+    description={exhibit.hook}
+    type="article"
+>
+    <p class="breadcrumb"><a href="/">The Bug Museum</a></p>
+    <article class="exhibit">
+        <header class="placard">
+            <p class="placard__number">Exhibit {formatNumber(exhibit.number)}</p>
+            <h1 class="placard__title">{exhibit.title}</h1>
+            {exhibit.sample && <p><SampleBadge /></p>}
+            <dl class="placard__facts">
+                <div>
+                    <dt>Date discovered</dt>
+                    <dd>
+                        <time datetime={exhibit.date}>{formatDate(exhibit.date)}</time>
+                    </dd>
+                </div>
+                <div>
+                    <dt>Habitat</dt>
+                    <dd>
+                        <ul class="chips" role="list">
+                            {
+                                exhibit.stack.map((s) => (
+                                    <li>
+                                        <a class="chip" href={`/stack/${slugify(s)}/`}>
+                                            {s}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </dd>
+                </div>
+                <div>
+                    <dt>Danger level</dt>
+                    <dd>
+                        <a href={`/severity/${exhibit.severity}/`} class="badge-link">
+                            <SeverityBadge severity={exhibit.severity} long />
+                        </a>
+                    </dd>
+                </div>
+                {
+                    exhibit.tags.length > 0 && (
+                        <div>
+                            <dt>Tags</dt>
+                            <dd>
+                                <ul class="chips" role="list">
+                                    {exhibit.tags.map((t) => (
+                                        <li>
+                                            <a class="chip" href={`/tag/${slugify(t)}/`}>
+                                                {t}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </dd>
+                        </div>
+                    )
+                }
+            </dl>
+        </header>
+        <div class="prose" set:html={html} />
+    </article>
+    <p><a href="/">Back to all exhibits</a></p>
+</Layout>

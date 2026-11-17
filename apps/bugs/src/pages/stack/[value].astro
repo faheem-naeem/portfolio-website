@@ -1,0 +1,16 @@
+---
+import FilterPage from '../../components/FilterPage.astro';
+import { getExhibits, getFilterOptions } from '../../lib/exhibits';
+
+export function getStaticPaths() {
+    return getFilterOptions(getExhibits(), 'stack').map((o) => ({
+        params: { value: o.value },
+        props: { label: o.label },
+    }));
+}
+
+const { value } = Astro.params;
+const { label } = Astro.props;
+---
+
+<FilterPage kind="stack" value={value} label={label} />

@@ -1,0 +1,16 @@
+---
+import { DANGER_LABELS, type Severity } from '../lib/exhibits';
+
+interface Props {
+    severity: Severity;
+    /** Show the long museum wording instead of the level alone. */
+    long?: boolean;
+}
+
+const { severity, long = false } = Astro.props;
+---
+
+<span class={`badge badge--${severity}${long ? ' badge--long' : ''}`}>
+    <span class="visually-hidden">Danger level: </span>
+    {long ? DANGER_LABELS[severity] : severity}
+</span>

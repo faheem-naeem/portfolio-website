@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+    FILTER_TITLES,
+    filterExhibits,
+    getExhibits,
+    type FilterKind,
+} from '../lib/exhibits';
+import FilterNav from './FilterNav.astro';
+import Gallery from './Gallery.astro';
+
+interface Props {
+    kind: FilterKind;
+    value: string;
+    label: string;
+}
+
+const { kind, value, label } = Astro.props;
+const all = getExhibits();
+const matches = filterExhibits(all, kind, value);
+const title = `${FILTER_TITLES[kind]}: ${label}`;
+---
+
+<Layout
+    title={`${title} · The Bug Museum`}
+    description={`Bug museum exhibits filtered by ${FILTER_TITLES[kind].toLowerCase()} "${label}".`}
+>
+    <p class="breadcrumb"><a href="/">The Bug Museum</a></p>
+    <h1>{title}</h1>
+    <div class="museum-layout">
+        <FilterNav exhibits={all} active={{ kind, value }} />
+        <Gallery exhibits={matches} heading={`Exhibits in “${label}”`} />
+    </div>
+</Layout>
