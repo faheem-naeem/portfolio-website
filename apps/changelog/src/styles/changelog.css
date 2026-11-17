@@ -1,0 +1,334 @@
+/* changelog.faheemnaeem.dev styles. Builds on @faheem/ui tokens.css + base.css.
+   Extra colours are local and checked for WCAG 2.2 AA (4.5:1 text) in both schemes. */
+:root {
+    --cl-breaking: #9b1c1c;
+    --cl-perf: #5b2d8e;
+    --cl-learning: #5b2d8e;
+    --cl-terminal-bg: #1b2524;
+    --cl-terminal-text: #e6e9e3;
+    --cl-terminal-link: #a6d8d3;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cl-breaking: #ff9b9b;
+        --cl-perf: #c9a8f0;
+        --cl-learning: #c9a8f0;
+        --cl-terminal-bg: #0b1110;
+    }
+}
+
+code,
+pre {
+    font-family: var(--font-mono);
+}
+
+/* ------------------------------------------------------------- intro --- */
+.intro {
+    margin-bottom: var(--space-6);
+}
+
+.intro__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-2xl);
+}
+
+.intro__lede {
+    max-width: 60ch;
+}
+
+.version-badge {
+    display: inline-flex;
+    border: 1px solid var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.version-badge__key,
+.version-badge__value {
+    padding: 0 var(--space-2);
+}
+
+.version-badge__key {
+    background: var(--color-surface-alt);
+    color: var(--color-text);
+}
+
+.version-badge__value {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-weight: bold;
+}
+
+.notice {
+    max-width: 60ch;
+    padding: var(--space-3) var(--space-4);
+    border: 1px dashed var(--color-border);
+    border-left: 4px solid var(--color-accent-strong);
+    background: var(--color-surface);
+    font-size: var(--font-size-sm);
+}
+
+.view-switch {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.view-switch ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.view-switch ul a {
+    display: inline-block;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid transparent;
+    border-bottom: 0;
+    text-decoration: none;
+}
+
+.view-switch ul a:hover {
+    text-decoration: underline;
+}
+
+.view-switch ul a[aria-current='page'] {
+    border-color: var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-weight: bold;
+    box-shadow: inset 0 3px 0 var(--color-accent);
+}
+
+.feeds {
+    margin: 0;
+    font-size: var(--font-size-sm);
+}
+
+/* ---------------------------------------------------------- git log --- */
+.log {
+    margin-bottom: var(--space-6);
+}
+
+.terminal {
+    margin: 0;
+    border: 1px solid var(--color-border);
+    background: var(--cl-terminal-bg);
+    color: var(--cl-terminal-text);
+}
+
+.terminal__prompt {
+    padding: var(--space-2) var(--space-4);
+    border-bottom: 1px solid #34413f;
+    color: var(--cl-terminal-text);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+}
+
+.terminal__body {
+    margin: 0;
+    padding: var(--space-3) var(--space-4);
+    overflow-x: auto;
+    font-size: var(--font-size-sm);
+    line-height: 1.7;
+}
+
+.terminal__body a {
+    color: var(--cl-terminal-link);
+}
+
+.terminal__body:focus-visible {
+    outline-color: var(--cl-terminal-link);
+    outline-offset: -3px;
+}
+
+/* --------------------------------------------------------- releases --- */
+.releases {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.release {
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: var(--space-4);
+}
+
+.release:target {
+    background: var(--color-surface);
+    box-shadow: -1rem 0 0 var(--color-surface), 1rem 0 0 var(--color-surface);
+}
+
+.release__title {
+    font-size: var(--font-size-xl);
+    overflow-wrap: anywhere;
+}
+
+.release__tag {
+    margin-right: var(--space-2);
+    font-family: var(--font-mono);
+}
+
+.release__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+}
+
+.release__hash {
+    font-family: var(--font-mono);
+}
+
+.badge,
+.label {
+    display: inline-block;
+    padding: 0 var(--space-2);
+    border: 1px solid currentColor;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: bold;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.badge--latest {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.label--breaking {
+    color: var(--cl-breaking);
+}
+
+.label--feat {
+    color: var(--color-accent);
+}
+
+.label--fix {
+    color: var(--color-link);
+}
+
+.label--chore {
+    color: var(--color-muted);
+}
+
+.label--perf {
+    color: var(--cl-perf);
+}
+
+.notes {
+    margin: 0;
+    padding-left: var(--space-5);
+}
+
+.notes li + li {
+    margin-top: var(--space-2);
+}
+
+/* ------------------------------------------------------------ graph --- */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+}
+
+.legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.legend__swatch {
+    display: inline-block;
+    width: 1.5rem;
+    height: 4px;
+}
+
+.legend__swatch--main {
+    background: var(--color-accent);
+}
+
+.legend__swatch--learning {
+    background: var(--cl-learning);
+}
+
+.graph__canvas {
+    margin-bottom: var(--space-6);
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+}
+
+.graph__svg {
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+}
+
+.edge {
+    fill: none;
+    stroke-width: 3;
+}
+
+.edge--main {
+    stroke: var(--color-accent);
+}
+
+.edge--learning {
+    stroke: var(--cl-learning);
+}
+
+.node circle {
+    stroke: var(--color-surface);
+    stroke-width: 3;
+}
+
+.node--main circle {
+    fill: var(--color-accent);
+}
+
+.node--learning circle {
+    fill: var(--cl-learning);
+}
+
+.node__tag {
+    fill: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.node__date {
+    fill: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+.graph-list li + li {
+    margin-top: var(--space-2);
+}
+
+.graph-list__hash {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+}

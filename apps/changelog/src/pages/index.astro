@@ -1,0 +1,68 @@
+---
+import { getCareer } from '@faheem/data';
+import Intro from '../components/Intro.astro';
+import Base from '../layouts/Base.astro';
+import { buildReleases, formatMonth, gitLogLines } from '../lib/changelog';
+
+const releases = buildReleases(getCareer());
+const log = gitLogLines(releases).map((line, i) => ({
+    release: releases[i]!,
+    rest: line.slice(releases[i]!.hash.length),
+}));
+---
+
+<Base
+    title="Changelog"
+    description="Career history written as release notes: versions, dates and changes."
+>
+    <Intro view="notes" />
+
+    <section aria-labelledby="log-heading" class="log">
+        <h2 id="log-heading">Summary</h2>
+        <figure class="terminal">
+            <figcaption class="terminal__prompt">
+                <span aria-hidden="true">$ </span>git log --oneline --decorate
+            </figcaption>
+            <pre
+                class="terminal__body"
+                tabindex="0"
+                aria-label="git log of all versions"><code>{log.map(({ release, rest }) => (<><a href={`#${release.anchor}`}>{release.hash}</a>{rest}{'\n'}</>))}</code></pre>
+        </figure>
+    </section>
+
+    <section aria-labelledby="releases-heading">
+        <h2 id="releases-heading">Releases</h2>
+        <ol class="releases" reversed>
+            {
+                releases.map((r) => (
+                    <li class="release" id={r.anchor}>
+                        <article aria-labelledby={`${r.anchor}-title`}>
+                            <header class="release__header">
+                                <h3 id={`${r.anchor}-title`} class="release__title">
+                                    <a href={`#${r.anchor}`} class="release__tag">{r.tag}</a>{' '}
+                                    <span class="release__name">{r.title}</span>
+                                </h3>
+                                <p class="release__meta">
+                                    {r.latest && <span class="badge badge--latest">Latest</span>}
+                                    <span class={`label label--${r.label.toLowerCase()}`}>{r.label}</span>
+                                    <time datetime={r.date}>{formatMonth(r.date)}</time>
+                                    <span class="release__hash">
+                                        <span class="visually-hidden">commit </span>{r.hash}
+                                    </span>
+                                </p>
+                            </header>
+                            <ul class="notes">
+                                {r.notes.map((n) => (
+                                    <li>
+                                        <span class={`label label--${n.label.toLowerCase()}`}>{n.label}</span>{' '}
+                                        {n.text}
+                                    </li>
+                                ))}
+                            </ul>
+                        </article>
+                    </li>
+                ))
+            }
+        </ol>
+    </section>
+</Base>

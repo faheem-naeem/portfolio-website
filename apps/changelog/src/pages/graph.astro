@@ -1,0 +1,78 @@
+---
+import { getCareer } from '@faheem/data';
+import Intro from '../components/Intro.astro';
+import Base from '../layouts/Base.astro';
+import { buildReleases, formatMonth, layoutGraph } from '../lib/changelog';
+
+const releases = buildReleases(getCareer());
+const graph = layoutGraph(releases);
+const branches = [...new Set(releases.map((r) => r.branch))];
+---
+
+<Base
+    title="Commit graph"
+    description="Career history drawn as a git commit graph, with learning milestones on a side branch."
+>
+    <Intro view="graph" />
+
+    <section aria-labelledby="graph-heading" class="graph">
+        <h2 id="graph-heading">Commit graph</h2>
+        <p>
+            Newest commit at the top. Roles land on <code>main</code>; degrees and
+            courses are developed on a <code>learning</code> branch and merged back.
+            The same commits are listed in text below the drawing.
+        </p>
+        <ul class="legend" aria-label="Branches">
+            {
+                branches.map((b) => (
+                    <li>
+                        <span class={`legend__swatch legend__swatch--${b}`} aria-hidden="true" />
+                        <code>{b}</code>
+                    </li>
+                ))
+            }
+        </ul>
+        <div class="graph__canvas">
+            <svg
+                viewBox={`0 0 ${graph.width} ${graph.height}`}
+                width={graph.width}
+                height={graph.height}
+                class="graph__svg"
+                role="img"
+                aria-labelledby="graph-svg-title"
+            >
+                <title id="graph-svg-title">
+                    Commit graph of {releases.length} releases on {branches.length} branches; see the list below for details.
+                </title>
+                {graph.edges.map((e) => <path d={e.d} class={`edge edge--${e.branch}`} />)}
+                {
+                    graph.nodes.map((n) => (
+                        <g class={`node node--${n.release.branch}`}>
+                            <circle cx={n.x} cy={n.y} r={n.release.latest ? 9 : 7} />
+                            <text x={graph.labelX} y={n.y - 3} class="node__tag">
+                                {n.release.tag}
+                                {n.release.latest ? ' (HEAD)' : ''}
+                            </text>
+                            <text x={graph.labelX} y={n.y + 15} class="node__date">
+                                {formatMonth(n.release.date)} · {n.release.hash}
+                            </text>
+                        </g>
+                    ))
+                }
+            </svg>
+        </div>
+
+        <h3 id="graph-list-heading">Commits as a list</h3>
+        <ol class="graph-list" reversed aria-labelledby="graph-list-heading">
+            {
+                releases.map((r) => (
+                    <li>
+                        <a href={`/#${r.anchor}`}><code>{r.tag}</code></a> on <code>{r.branch}</code>,{' '}
+                        <time datetime={r.date}>{formatMonth(r.date)}</time>: {r.title}{' '}
+                        <span class="graph-list__hash">({r.hash})</span>
+                    </li>
+                ))
+            }
+        </ol>
+    </section>
+</Base>
