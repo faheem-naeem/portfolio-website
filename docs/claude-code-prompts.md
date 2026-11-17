@@ -104,7 +104,8 @@ Convert the repo into a pnpm + Turborepo monorepo:
    build output folder contents match the pre-migration build (compare file list).
 5. Write MIGRATION.md explaining exactly what I must change in the Cloudflare
    dashboard for the existing project:
-   - Root directory -> apps/web
+   - Root directory -> repo root (NOT apps/web: the pnpm lockfile lives at the root)
+   - Build command -> pnpm turbo run build --filter=web; output -> apps/web/public
    - Build command and output directory (relative to the new root)
    - Build watch paths include: apps/web/*, packages/*
    - How to confirm via a preview deployment of the `monorepo` branch before
