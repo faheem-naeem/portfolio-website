@@ -1,0 +1,47 @@
+[
+    {
+        "id": "faheemnaeem-dev",
+        "name": "faheemnaeem.dev",
+        "tagline": "Interactive 3D desktop portfolio.",
+        "description": "Personal portfolio presented on a retro computer inside a Three.js scene, with a classic desktop, resume window and small games.",
+        "tech": [
+            "TypeScript",
+            "React",
+            "Three.js",
+            "webpack",
+            "Cloudflare Workers"
+        ],
+        "repoUrl": null,
+        "liveUrl": "https://faheemnaeem.dev",
+        "status": "live",
+        "healthcheckUrl": "https://faheemnaeem.dev"
+    },
+    {
+        "id": "subdomain-network",
+        "name": "faheemnaeem.dev subdomains",
+        "tagline": "A small network of single-purpose apps on the Cloudflare free plan.",
+        "description": "SAMPLE: monorepo of static sites and Workers (resume, api, status, bugs, changelog and more) sharing one data package.",
+        "tech": [
+            "TypeScript",
+            "Hono",
+            "Astro",
+            "Cloudflare Workers",
+            "Turborepo"
+        ],
+        "repoUrl": null,
+        "liveUrl": null,
+        "status": "wip",
+        "sample": true
+    },
+    {
+        "id": "sample-cli-tool",
+        "name": "SAMPLE CLI tool",
+        "tagline": "SAMPLE: placeholder project to replace.",
+        "description": "SAMPLE: a placeholder entry showing the shape of an archived side project.",
+        "tech": ["Python"],
+        "repoUrl": null,
+        "liveUrl": null,
+        "status": "archived",
+        "sample": true
+    }
+]

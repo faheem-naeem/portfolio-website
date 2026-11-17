@@ -1,0 +1,30 @@
+{
+    "sample": true,
+    "components": [
+        {
+            "name": "Coffee intake",
+            "state": "operational",
+            "message": "SAMPLE: Nominal. Second cup in progress."
+        },
+        {
+            "name": "Sleep schedule",
+            "state": "degraded",
+            "message": "SAMPLE: Elevated latency after late-night deploys."
+        },
+        {
+            "name": "Inbox zero",
+            "state": "outage",
+            "message": "SAMPLE: Known issue. No ETA."
+        },
+        {
+            "name": "Side projects",
+            "state": "maintenance",
+            "message": "SAMPLE: Scheduled refactor of everything, again."
+        },
+        {
+            "name": "Calgary winter readiness",
+            "state": "operational",
+            "message": "SAMPLE: Block heater plugged in."
+        }
+    ]
+}

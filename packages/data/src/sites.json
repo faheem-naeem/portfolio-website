@@ -1,0 +1,79 @@
+[
+    {
+        "id": "web",
+        "url": "https://faheemnaeem.dev",
+        "title": "Home",
+        "pitch": "Interactive 3D desktop portfolio.",
+        "kind": "static"
+    },
+    {
+        "id": "resume",
+        "url": "https://resume.faheemnaeem.dev",
+        "title": "Resume",
+        "pitch": "A curl-able terminal resume.",
+        "kind": "worker"
+    },
+    {
+        "id": "api",
+        "url": "https://api.faheemnaeem.dev",
+        "title": "API",
+        "pitch": "Public JSON API for resume data and random facts.",
+        "kind": "worker"
+    },
+    {
+        "id": "status",
+        "url": "https://status.faheemnaeem.dev",
+        "title": "Status",
+        "pitch": "A status page for the sites and for me.",
+        "kind": "worker"
+    },
+    {
+        "id": "bugs",
+        "url": "https://bugs.faheemnaeem.dev",
+        "title": "Bug museum",
+        "pitch": "Memorable bugs, how they were found and fixed.",
+        "kind": "static"
+    },
+    {
+        "id": "changelog",
+        "url": "https://changelog.faheemnaeem.dev",
+        "title": "Changelog",
+        "pitch": "My career as semantic-versioned release notes.",
+        "kind": "static"
+    },
+    {
+        "id": "manual",
+        "url": "https://manual.faheemnaeem.dev",
+        "title": "Manual",
+        "pitch": "How to work with me.",
+        "kind": "static"
+    },
+    {
+        "id": "a11y",
+        "url": "https://a11y.faheemnaeem.dev",
+        "title": "Accessibility",
+        "pitch": "Live accessibility reports for every site.",
+        "kind": "static"
+    },
+    {
+        "id": "ask",
+        "url": "https://ask.faheemnaeem.dev",
+        "title": "Ask",
+        "pitch": "Ask questions about my experience, answered by AI.",
+        "kind": "worker"
+    },
+    {
+        "id": "ctf",
+        "url": "https://ctf.faheemnaeem.dev",
+        "title": "CTF",
+        "pitch": "A small capture-the-flag puzzle.",
+        "kind": "worker"
+    },
+    {
+        "id": "metrics",
+        "url": "https://metrics.faheemnaeem.dev",
+        "title": "Metrics",
+        "pitch": "Public metrics for the whole network.",
+        "kind": "worker"
+    }
+]

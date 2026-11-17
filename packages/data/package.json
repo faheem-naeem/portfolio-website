@@ -1,0 +1,31 @@
+{
+    "name": "@faheem/data",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./schema": "./src/schema.ts",
+        "./resume.json": "./src/resume.json",
+        "./projects.json": "./src/projects.json",
+        "./career.json": "./src/career.json",
+        "./status.json": "./src/status.json",
+        "./sites.json": "./src/sites.json",
+        "./fun-facts.json": "./src/fun-facts.json",
+        "./incidents.json": "./src/incidents.json"
+    },
+    "scripts": {
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "zod": "^3.25.0"
+    },
+    "devDependencies": {
+        "@faheem/config": "workspace:*",
+        "eslint": "^9.29.0",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4"
+    }
+}

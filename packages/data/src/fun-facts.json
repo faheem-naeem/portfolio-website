@@ -1,0 +1,25 @@
+{
+    "sample": true,
+    "facts": [
+        {
+            "id": "first-language",
+            "text": "SAMPLE: The first program I wrote printed my name in an infinite loop."
+        },
+        {
+            "id": "favourite-bug",
+            "text": "SAMPLE: My favourite bug was a timezone off-by-one that only happened on Sundays."
+        },
+        {
+            "id": "editor",
+            "text": "SAMPLE: I have mass-renamed a variable across 400 files and lived to tell the tale."
+        },
+        {
+            "id": "winter",
+            "text": "SAMPLE: I learned what a block heater is during my first Calgary winter."
+        },
+        {
+            "id": "games",
+            "text": "SAMPLE: The portfolio desktop has a hidden word game; the answer list is five words long."
+        }
+    ]
+}
