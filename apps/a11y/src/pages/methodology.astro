@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import { AXE_TAGS, COLOR_SCHEMES, LIGHTHOUSE_PACKAGE, VIEWPORTS } from '../../scripts/audit.mjs';
+---
+
+<Base
+    title="Methodology"
+    description="How the faheemnaeem.dev accessibility audit works, in plain language."
+>
+    <h1>How the audit works</h1>
+    <p class="lede">
+        Plain-language notes on what is tested, with which tools, and what the
+        results do and do not prove.
+    </p>
+
+    <section aria-labelledby="what-title">
+        <h2 id="what-title">What gets tested</h2>
+        <p>
+            Every site listed in my shared site list, from the main portfolio to
+            each subdomain app. Once a week (Monday 06:00 UTC), and whenever I
+            start it by hand, a GitHub Actions workflow visits each site's home
+            page.
+        </p>
+        <p>
+            If a site does not answer (its address does not exist yet, it times
+            out, or it returns an error status), it is marked
+            <strong>Not deployed yet</strong> and skipped. Most apps are still
+            being built, so this is expected and is not counted as a failure.
+        </p>
+    </section>
+
+    <section aria-labelledby="tools-title">
+        <h2 id="tools-title">The tools</h2>
+        <h3>axe-core</h3>
+        <p>
+            axe-core, by Deque Systems, is an open-source rule engine that
+            inspects a rendered page and reports problems such as missing text
+            alternatives, low colour contrast or buttons without a name. It runs
+            inside a real Chromium browser driven by Playwright (a browser
+            automation library), at these settings:
+        </p>
+        <ul>
+            {
+                VIEWPORTS.map((v) => (
+                    <li>
+                        {v.name}: {v.width} pixels wide
+                    </li>
+                ))
+            }
+            <li>colour schemes: {COLOR_SCHEMES.join(' and ')} mode</li>
+        </ul>
+        <p>
+            That makes four runs per site. A problem found in several runs is
+            listed once, with the runs where it appeared. Rule sets used:
+            {' '}<code>{AXE_TAGS.join(', ')}</code>.
+        </p>
+        <h3>Lighthouse</h3>
+        <p>
+            Lighthouse, by Google, loads the page in headless Chrome (a browser
+            without a window) on an emulated phone and scores four categories
+            from 0 to 100: performance, accessibility, best practices and SEO
+            (search engine optimisation). The version is pinned to
+            <code>{LIGHTHOUSE_PACKAGE}</code> so scores stay comparable. 90 or
+            more is good, 50 to 89 needs work, below 50 is poor.
+        </p>
+    </section>
+
+    <section aria-labelledby="wcag-title">
+        <h2 id="wcag-title">WCAG levels, briefly</h2>
+        <p>
+            WCAG (Web Content Accessibility Guidelines) is the W3C standard for
+            accessible websites. Version 2.2 is current. Each requirement, called
+            a success criterion, has a number such as 1.4.3 and a level:
+        </p>
+        <dl class="levels">
+            <dt>Level A</dt>
+            <dd>The basics. Without these, some people cannot use the page at all.</dd>
+            <dt>Level AA</dt>
+            <dd>
+                The usual legal and industry target, and mine. Adds things like
+                4.5:1 text contrast, visible keyboard focus and touch targets of
+                at least 24 by 24 pixels.
+            </dd>
+            <dt>Level AAA</dt>
+            <dd>The strictest level. Not required for whole sites.</dd>
+        </dl>
+        <p>
+            Some axe rules are <strong>best practices</strong>: good advice that
+            is not a WCAG requirement. They count towards the total, but not
+            towards the badge.
+        </p>
+    </section>
+
+    <section aria-labelledby="impact-title">
+        <h2 id="impact-title">Impact and the badge</h2>
+        <p>
+            axe rates each problem as minor, moderate, serious or critical,
+            based on how badly it blocks people. A site shows the
+            <strong>WCAG 2.2 AA</strong> badge only when the latest audit found
+            zero serious and zero critical problems in all four runs.
+        </p>
+        <p>
+            Automated tools catch only part of all accessibility problems. The
+            badge means "no serious automated findings", not a full conformance
+            claim. I also test by hand with a keyboard, a screen reader and 200%
+            zoom.
+        </p>
+    </section>
+
+    <section aria-labelledby="data-title">
+        <h2 id="data-title">Where the data lives</h2>
+        <p>
+            Each run saves one JSON file in the repository
+            (<code>apps/a11y/src/reports/&lt;date&gt;.json</code>) and commits it,
+            so the full history is public and diffable. This site is rebuilt
+            from those files and has no tracking and no client-side JavaScript.
+            The newest report is also at <a href="/latest.json">latest.json</a>.
+        </p>
+        <p>
+            When a problem disappears between two audits, the site page lists it
+            under "Fixed issues" with a link to the code changes between the two
+            audited commits.
+        </p>
+    </section>
+</Base>

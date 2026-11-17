@@ -1,0 +1,303 @@
+---
+import { getSites } from '@faheem/data';
+import AABadge from '../../components/AABadge.astro';
+import SampleBanner from '../../components/SampleBanner.astro';
+import Score from '../../components/Score.astro';
+import Sparkline from '../../components/Sparkline.astro';
+import Base from '../../layouts/Base.astro';
+import { loadReports } from '../../lib/load';
+import {
+    commitUrl,
+    formatDate,
+    latestReport,
+    METRICS,
+    resolvedIssues,
+    siteCounts,
+    sitePassesAA,
+    siteTrend,
+    statusLabel,
+    wcagName,
+    wcagUrl,
+} from '../../lib/report';
+
+export function getStaticPaths() {
+    return getSites().map((site) => ({ params: { id: site.id }, props: { site } }));
+}
+
+const { site } = Astro.props;
+const reports = loadReports();
+const report = latestReport(reports);
+const result = report?.sites.find((s) => s.id === site.id);
+const counts = result ? siteCounts(result) : undefined;
+const violations = result?.axe?.violations ?? [];
+const resolved = resolvedIssues(reports, site.id);
+const history = [...reports].reverse().map((r) => ({
+    report: r,
+    entry: r.sites.find((s) => s.id === site.id),
+}));
+const repo = report?.source.repository ?? null;
+const runLabel = (key: string) => key.replace('-', ', ');
+---
+
+<Base
+    title={`${site.title} accessibility`}
+    description={`Accessibility and Lighthouse results for ${site.url}.`}
+>
+    <p class="crumbs"><a href="/">All sites</a></p>
+    <h1>{site.title}</h1>
+    <p class="lede">
+        <a href={site.url}>{site.url.replace('https://', '')}</a>: {site.pitch}
+    </p>
+
+    {report && <SampleBanner report={report} />}
+
+    {
+        !report || !result ? (
+            <p>This site is not in any report yet.</p>
+        ) : (
+            <>
+                <section aria-labelledby="latest-title">
+                    <h2 id="latest-title">
+                        Latest audit: <time datetime={report.date}>{formatDate(report.date)}</time>
+                    </h2>
+                    <p>
+                        Status:{' '}
+                        <span class={`status status--${result.status}`}>
+                            {statusLabel(result.status)}
+                        </span>
+                        {result.status !== 'ok' && result.reason && <> ({result.reason})</>}
+                    </p>
+                    {result.status === 'ok' && counts && (
+                        <AABadge
+                            passes={sitePassesAA(result)}
+                            blocking={counts.serious + counts.critical}
+                        />
+                    )}
+                    {result.status === 'not-deployed' && (
+                        <p>
+                            The audit could not reach this address, so it was skipped. That is
+                            expected while the app is still being built; it is not counted as a
+                            failure.
+                        </p>
+                    )}
+                    {result.errors.length > 0 && (
+                        <>
+                            <h3>Audit problems</h3>
+                            <ul>
+                                {result.errors.map((e) => (
+                                    <li>
+                                        <code>{e}</code>
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    )}
+                </section>
+
+                {result.status === 'ok' && (
+                    <>
+                        <section aria-labelledby="lh-title">
+                            <h2 id="lh-title">Lighthouse scores</h2>
+                            <p class="hint">
+                                Out of 100, measured on an emulated phone. 90 and above is good.
+                            </p>
+                            <dl class="scores scores--wide">
+                                {METRICS.map((m) => (
+                                    <Score label={m.label} value={result.lighthouse?.[m.key] ?? null} />
+                                ))}
+                            </dl>
+                            <ul class="trends" role="list">
+                                {METRICS.map((m) => (
+                                    <li>
+                                        {m.label} trend:{' '}
+                                        <Sparkline
+                                            points={siteTrend(reports, site.id, (s) => s.lighthouse?.[m.key])}
+                                            label={`${m.label} score`}
+                                            range={{ min: 0, max: 100 }}
+                                        />
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+
+                        {result.axe && (
+                            <section aria-labelledby="runs-title">
+                                <h2 id="runs-title">axe-core runs</h2>
+                                <div class="table-wrap" tabindex="0" role="region" aria-labelledby="runs-caption">
+                                    <table>
+                                        <caption id="runs-caption">
+                                            Violations found per screen size and colour scheme
+                                        </caption>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Screen</th>
+                                                <th scope="col">Width</th>
+                                                <th scope="col">Colour scheme</th>
+                                                <th scope="col">Violations</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {result.axe.runs.map((r) => (
+                                                <tr>
+                                                    <th scope="row">{r.viewport}</th>
+                                                    <td>{r.width}px</td>
+                                                    <td>{r.colorScheme}</td>
+                                                    <td>{r.violations ?? `failed: ${r.error ?? 'unknown'}`}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        )}
+
+                        <section aria-labelledby="issues-title">
+                            <h2 id="issues-title">Open issues ({violations.length})</h2>
+                            {violations.length === 0 ? (
+                                <p>No axe-core violations in any run.</p>
+                            ) : (
+                                <ol class="issues">
+                                    {violations.map((v) => (
+                                        <li class={`issue issue--${v.impact}`}>
+                                            <h3 class="issue__title">{v.help}</h3>
+                                            <dl class="issue__facts">
+                                                <div>
+                                                    <dt>Rule</dt>
+                                                    <dd>
+                                                        <code>{v.id}</code>
+                                                    </dd>
+                                                </div>
+                                                <div>
+                                                    <dt>Impact</dt>
+                                                    <dd>
+                                                        <span class={`impact impact--${v.impact}`}>{v.impact}</span>
+                                                    </dd>
+                                                </div>
+                                                <div>
+                                                    <dt>WCAG</dt>
+                                                    <dd>
+                                                        {v.wcag.length === 0 ? (
+                                                            'Best practice (not a WCAG requirement)'
+                                                        ) : (
+                                                            v.wcag.map((c, i) => {
+                                                                const url = wcagUrl(c);
+                                                                const text = `${c}${wcagName(c) ? ` ${wcagName(c)}` : ''}`;
+                                                                return (
+                                                                    <>
+                                                                        {i > 0 && ', '}
+                                                                        {url ? <a href={url}>{text}</a> : text}
+                                                                    </>
+                                                                );
+                                                            })
+                                                        )}
+                                                        {v.level && ` (level ${v.level})`}
+                                                    </dd>
+                                                </div>
+                                                <div>
+                                                    <dt>Elements</dt>
+                                                    <dd>{v.nodes}</dd>
+                                                </div>
+                                                <div>
+                                                    <dt>Seen in</dt>
+                                                    <dd>{v.runs.map(runLabel).join('; ')}</dd>
+                                                </div>
+                                            </dl>
+                                            {v.description && <p>{v.description}.</p>}
+                                            {v.targets.length > 0 && (
+                                                <p>
+                                                    Example element{v.targets.length === 1 ? '' : 's'}:{' '}
+                                                    {v.targets.map((t, i) => (
+                                                        <>
+                                                            {i > 0 && ', '}
+                                                            <code>{t}</code>
+                                                        </>
+                                                    ))}
+                                                </p>
+                                            )}
+                                            {v.fix && (
+                                                <p>
+                                                    Fix: {v.fix.note}
+                                                    {commitUrl(repo, v.fix.commit) && (
+                                                        <>
+                                                            {' '}
+                                                            (<a href={commitUrl(repo, v.fix.commit)}>fix commit for {v.id}</a>)
+                                                        </>
+                                                    )}
+                                                </p>
+                                            )}
+                                            {v.helpUrl && (
+                                                <p>
+                                                    <a href={v.helpUrl}>
+                                                        How to fix <code>{v.id}</code> (Deque docs)
+                                                    </a>
+                                                </p>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ol>
+                            )}
+                        </section>
+                    </>
+                )}
+
+                <section aria-labelledby="fixed-title">
+                    <h2 id="fixed-title">Fixed issues ({resolved.length})</h2>
+                    {resolved.length === 0 ? (
+                        <p>Nothing fixed yet between audits.</p>
+                    ) : (
+                        <ul class="fixed">
+                            {resolved.map((r) => (
+                                <li>
+                                    <code>{r.id}</code> ({r.impact}): {r.help}. Gone on{' '}
+                                    <time datetime={r.resolvedOn}>{formatDate(r.resolvedOn)}</time>
+                                    {r.fix && <> — {r.fix.note}</>}
+                                    {r.compareUrl && (
+                                        <>
+                                            {' '}
+                                            <a href={r.compareUrl}>
+                                                Changes between {r.lastSeen} and {r.resolvedOn}
+                                            </a>
+                                        </>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </section>
+
+                <section aria-labelledby="history-title">
+                    <h2 id="history-title">History</h2>
+                    <div class="table-wrap" tabindex="0" role="region" aria-labelledby="history-caption">
+                        <table>
+                            <caption id="history-caption">Every audit of {site.title}, newest first</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    {METRICS.map((m) => (
+                                        <th scope="col">{m.label}</th>
+                                    ))}
+                                    <th scope="col">axe violations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {history.map(({ report: r, entry }) => (
+                                    <tr>
+                                        <th scope="row">
+                                            <time datetime={r.date}>{r.date}</time>
+                                        </th>
+                                        <td>{entry ? statusLabel(entry.status) : 'Not listed'}</td>
+                                        {METRICS.map((m) => (
+                                            <td>{entry?.lighthouse?.[m.key] ?? '–'}</td>
+                                        ))}
+                                        <td>{entry?.axe ? entry.axe.violations.length : '–'}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </>
+        )
+    }
+</Base>

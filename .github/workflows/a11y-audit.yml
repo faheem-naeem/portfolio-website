@@ -1,0 +1,76 @@
+# Weekly accessibility + Lighthouse audit of every faheemnaeem.dev site.
+# Writes apps/a11y/src/reports/<YYYY-MM-DD>.json and commits it back to master.
+#
+# Triggers: weekly cron + manual dispatch ONLY. There is deliberately no `push`
+# trigger: the bot commit would start another run and a Cloudflare rebuild loop.
+# The bot commit message also carries [skip ci].
+name: a11y audit
+
+on:
+    schedule:
+        # Mondays 06:00 UTC
+        - cron: '0 6 * * 1'
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+concurrency:
+    group: a11y-audit
+    cancel-in-progress: false
+
+jobs:
+    audit:
+        runs-on: ubuntu-latest
+        timeout-minutes: 45
+        steps:
+            - name: Check out
+              uses: actions/checkout@v4
+
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  # Must match "packageManager" in the root package.json.
+                  version: 9.15.9
+
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: pnpm
+
+            - name: Install workspace dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Install audit tools (not saved to package.json)
+              # Heavy audit tools live in a temp dir outside the workspace, so
+              # Cloudflare builds never install them. audit.mjs reads AUDIT_DEPS_DIR.
+              run: |
+                  echo "AUDIT_DEPS_DIR=$RUNNER_TEMP/a11y-audit-deps" >> "$GITHUB_ENV"
+                  AUDIT_DEPS_DIR="$RUNNER_TEMP/a11y-audit-deps"
+                  mkdir -p "$AUDIT_DEPS_DIR"
+                  cd "$AUDIT_DEPS_DIR"
+                  npm init -y > /dev/null
+                  npm i --no-save --no-audit --no-fund playwright@1 @axe-core/playwright@4 lighthouse@12
+                  npx playwright install --with-deps chromium
+
+            - name: Run audit
+              run: node apps/a11y/scripts/audit.mjs
+
+            - name: Validate report (tests + site build)
+              run: pnpm turbo run test build --filter=a11y
+
+            - name: Commit report
+              if: github.ref == 'refs/heads/master'
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git add apps/a11y/src/reports
+                  if git diff --cached --quiet; then
+                      echo "No report changes to commit."
+                      exit 0
+                  fi
+                  git commit -m "chore(a11y): accessibility report $(date -u +%F) [skip ci]"
+                  # Only our new, unpushed report commit is replayed if master moved meanwhile.
+                  git pull --rebase origin master
+                  git push origin HEAD:master
