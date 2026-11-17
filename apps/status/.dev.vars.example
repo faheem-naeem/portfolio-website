@@ -1,0 +1,2 @@
+# This Worker needs no secrets. Copy to .dev.vars only if you add one later.
+# EXAMPLE_TOKEN=<PLACEHOLDER>
