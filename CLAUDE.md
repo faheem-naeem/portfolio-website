@@ -27,7 +27,7 @@ This repository contains a personal developer portfolio for **faheemnaeem.dev**.
 - `apps/changelog` -> `changelog.faheemnaeem.dev` (static)
 - `apps/manual` -> `manual.faheemnaeem.dev` (static)
 - `apps/a11y` -> `a11y.faheemnaeem.dev` (static + CI job)
-- `apps/ask` -> `ask.faheemnaeem.dev` (Worker + AI)
+- `apps/ask` -> `ask.faheemnaeem.dev` (Worker + Workers AI, free tier)
 - `apps/ctf` -> `ctf.faheemnaeem.dev` (Worker)
 - `apps/metrics` -> `metrics.faheemnaeem.dev` (Worker + cron)
 - `packages/data` -> single source of truth for resume, projects, and career JSON
@@ -46,6 +46,7 @@ This repository contains a personal developer portfolio for **faheemnaeem.dev**.
 ## Rules
 
 - All personal content must come from `packages/data`; never hardcode resume facts.
+- Everything must run at $0 on the Cloudflare Workers Free plan. Do not add paid APIs, SDKs or services. AI features use Cloudflare Workers AI (free allowance 10,000 Neurons/day) via the `AI` binding, with no API keys. Respect free limits: 5 cron triggers per account, 100,000 Worker requests/day, KV 1,000 writes/day (use D1 for counters).
 - Never commit secrets. Use `.dev.vars` locally (and keep it gitignored) and `wrangler secret put` in production.
 - Commit `.dev.vars.example` with placeholders only.
 - Never use employer/client code, data, or screenshots.
