@@ -6,10 +6,12 @@ A personal portfolio for Faheem Naeem, a Calgary-based software developer with e
 
 This is a pnpm + Turborepo monorepo. Each subdomain of faheemnaeem.dev is its own app.
 
-| Path | What it is |
-|---|---|
-| `apps/web` | The main site (faheemnaeem.dev): interactive 3D desktop, Three.js + React + webpack |
-| `packages/config` | Shared TypeScript, ESLint and Prettier config |
+| Path              | What it is                                                                             |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| `apps/web`        | The main site (faheemnaeem.dev): interactive 3D desktop, Three.js + React + webpack    |
+| `packages/config` | Shared TypeScript, ESLint and Prettier config                                          |
+| `packages/data`   | Single source of truth for resume, projects, career, sites and content (Zod-validated) |
+| `packages/ui`     | Shared design tokens, base CSS and HTML layout (header/footer)                         |
 
 ## Run locally
 

@@ -12,7 +12,7 @@ This repository contains a personal developer portfolio for **faheemnaeem.dev**.
 - Node: no `.nvmrc` on purpose (Cloudflare builds would read it and change the production Node version)
 - Deployment: **Cloudflare Workers (static assets) via Workers Builds Git integration**. Worker name `portfolio-website`, config in root `wrangler.jsonc` (assets dir `apps/web/public`). Custom domains (faheemnaeem.dev + 1 other) are managed in the dashboard, so `wrangler.jsonc` has no `routes`. Static assets have a 25 MiB per-file limit.
 - `apps/web/server/index.ts` is only a local Express static server for `public/`. It is not deployed. `buildspec.yaml` (AWS CodeBuild) is legacy and not used by the Cloudflare deploy.
-- Build command (repo root): `pnpm turbo run build --filter=web`
+- Build command (repo root): `pnpm turbo run build --filter=web`. Cloudflare runs `npm run build`, so the root `build` script deliberately builds ONLY `web` (production isolation). Use `pnpm build:all` to build every app. Never change the root `build` script to build other apps.
 - Development command: `pnpm --filter web dev`
 - Production output directory: `apps/web/public/`
 - Cloudflare build settings for the monorepo are documented in `MIGRATION.md` (root directory = repo root, not `apps/web`).

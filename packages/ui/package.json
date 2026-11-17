@@ -1,0 +1,29 @@
+{
+    "name": "@faheem/ui",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./layout": "./src/layout.ts",
+        "./styles": "./src/styles.ts",
+        "./tokens.css": "./src/tokens.css",
+        "./base.css": "./src/base.css"
+    },
+    "scripts": {
+        "sync-css": "node scripts/sync-css.mjs",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.test.json",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "@faheem/data": "workspace:*"
+    },
+    "devDependencies": {
+        "@faheem/config": "workspace:*",
+        "@types/node": "^20.19.0",
+        "eslint": "^9.29.0",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4"
+    }
+}

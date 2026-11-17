@@ -1,0 +1,4 @@
+{
+    "extends": "@faheem/config/tsconfig.base.json",
+    "include": ["src", "test"]
+}

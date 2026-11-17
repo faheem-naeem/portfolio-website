@@ -1,0 +1,60 @@
+/* Design tokens for every faheemnaeem.dev app.
+   Derived from apps/web/static/faheem-portfolio.html (paper, ink, teal, green, blue;
+   Courier New body text, Georgia headings). Muted text is darkened slightly to meet
+   WCAG 2.2 AA (4.5:1). Edit this file, then run `pnpm --filter @faheem/ui sync-css`. */
+:root {
+    color-scheme: light dark;
+
+    --color-bg: #f2f1e9;
+    --color-surface: #f8f7f0;
+    --color-surface-alt: #e8eee4;
+    --color-text: #252b2b;
+    --color-muted: #5f6b6a;
+    --color-border: #c9cbc2;
+    --color-accent: #164d50;
+    --color-accent-strong: #287b78;
+    --color-on-accent: #ffffff;
+    --color-link: #274c8d;
+    --color-success: #83a77d;
+    --color-brand: #008080;
+    --color-focus: #274c8d;
+
+    --font-mono: 'Courier New', Courier, monospace;
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.75rem;
+    --font-size-2xl: clamp(2rem, 6vw, 3.5rem);
+    --line-height: 1.55;
+
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+
+    --radius: 0;
+    --content-width: 70rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-bg: #121a19;
+        --color-surface: #1b2524;
+        --color-surface-alt: #22302e;
+        --color-text: #e6e9e3;
+        --color-muted: #a3aea9;
+        --color-border: #34413f;
+        --color-accent: #7fc4be;
+        --color-accent-strong: #a6d8d3;
+        --color-on-accent: #121a19;
+        --color-link: #9bb8f0;
+        --color-success: #9cc296;
+        --color-brand: #1f9c9c;
+        --color-focus: #9bb8f0;
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "sample": true,
+    "incidents": [
+        {
+            "id": "2026-01-coffee-shortage",
+            "title": "SAMPLE: Coffee supply interruption",
+            "component": "Coffee intake",
+            "severity": "major",
+            "startedAt": "2026-01-12T08:05:00-07:00",
+            "resolvedAt": "2026-01-12T08:40:00-07:00",
+            "summary": "SAMPLE: Beans ran out before the first stand-up. Mitigated by an emergency grocery run.",
+            "updates": [
+                {
+                    "at": "2026-01-12T08:05:00-07:00",
+                    "message": "SAMPLE: Investigating an empty bag."
+                },
+                {
+                    "at": "2026-01-12T08:40:00-07:00",
+                    "message": "SAMPLE: Resolved. Added a reorder alert."
+                }
+            ]
+        },
+        {
+            "id": "2026-03-dns-propagation",
+            "title": "SAMPLE: Slow DNS propagation",
+            "component": "Side projects",
+            "severity": "minor",
+            "startedAt": "2026-03-02T19:00:00-07:00",
+            "resolvedAt": "2026-03-03T07:00:00-07:00",
+            "summary": "SAMPLE: A new subdomain took a night to resolve everywhere. It was, as always, DNS.",
+            "updates": [
+                {
+                    "at": "2026-03-02T19:00:00-07:00",
+                    "message": "SAMPLE: Subdomain not resolving for some visitors."
+                },
+                {
+                    "at": "2026-03-03T07:00:00-07:00",
+                    "message": "SAMPLE: Propagation complete."
+                }
+            ]
+        }
+    ]
+}

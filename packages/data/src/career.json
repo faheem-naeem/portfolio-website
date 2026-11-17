@@ -1,0 +1,70 @@
+{
+    "sample": true,
+    "note": "SAMPLE: release framing is invented; dates and roles mirror resume.json. Replace freely.",
+    "releases": [
+        {
+            "version": "1.0.0",
+            "date": "2016-12-01",
+            "type": "major",
+            "title": "Graduated: B.S. in Computer Science",
+            "notes": [
+                "Initial release after four years of compile errors.",
+                "Shipped with a strong opinion on tabs vs spaces."
+            ]
+        },
+        {
+            "version": "1.1.0",
+            "date": "2017-06-01",
+            "type": "minor",
+            "title": "First role: Software Engineer at WebDroid Solutions",
+            "notes": [
+                "Added support for e-commerce, finance, real estate and healthcare clients.",
+                "Introduced Django to the toolchain."
+            ]
+        },
+        {
+            "version": "1.2.0",
+            "date": "2020-06-01",
+            "type": "minor",
+            "title": "Software Engineer at Olive Digital",
+            "notes": [
+                "Added production-support mode with root-cause analysis.",
+                "Delivered 25+ CRM enhancements."
+            ]
+        },
+        {
+            "version": "2.0.0",
+            "date": "2021-06-01",
+            "type": "major",
+            "title": "Senior Software Engineer at Folio3",
+            "notes": [
+                "Breaking change: legacy PHP/Yii migrated to MERN.",
+                "Added mentoring and code-review features."
+            ]
+        },
+        {
+            "version": "2.1.0",
+            "date": "2022-12-01",
+            "type": "minor",
+            "title": "M.S. in Data Science",
+            "notes": ["Added statistics and machine-learning modules."]
+        },
+        {
+            "version": "2.1.1",
+            "date": "2024-06-01",
+            "type": "patch",
+            "title": "Machine Learning Specialization",
+            "notes": ["Patched gaps in gradient-descent intuition."]
+        },
+        {
+            "version": "3.0.0",
+            "date": "2025-01-01",
+            "type": "major",
+            "title": "Relocated to Calgary; Full Stack Developer at Eligeo.ai",
+            "notes": [
+                "Breaking change: timezone moved to America/Edmonton.",
+                "Added LLM workflows, OCR pipelines and winter-tire support."
+            ]
+        }
+    ]
+}
