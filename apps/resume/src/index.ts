@@ -11,9 +11,12 @@ import { renderText, type Section } from './render';
 const CACHE_SECONDS = 3600;
 const CACHE_CONTROL = `public, max-age=${CACHE_SECONDS}`;
 
+/** Cloudflare Web Analytics: the auto-injected beacon script and its report endpoint. */
+export const CF_ANALYTICS_SCRIPT = 'https://static.cloudflareinsights.com';
+export const CF_ANALYTICS_CONNECT = 'https://cloudflareinsights.com';
+
 const SECURITY_HEADERS: Record<string, string> = {
-    'Content-Security-Policy':
-        "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+    'Content-Security-Policy': `default-src 'none'; script-src 'self' ${CF_ANALYTICS_SCRIPT}; style-src 'self'; img-src 'self' data:; connect-src 'self' ${CF_ANALYTICS_CONNECT}; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`,
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
@@ -142,10 +145,7 @@ app.get('/styles.css', (c) =>
 
 app.notFound((c) => {
     if (isTerminalClient(c.req.raw)) {
-        return c.text(
-            'Not found. Try: curl resume.faheemnaeem.dev\n',
-            404,
-        );
+        return c.text('Not found. Try: curl resume.faheemnaeem.dev\n', 404);
     }
     return c.html(
         '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Not found</title><link rel="stylesheet" href="/styles.css"></head><body><main id="main" class="site-main"><h1>404</h1><p>Nothing here. <a href="/">Back to the resume</a>.</p></main></body></html>',

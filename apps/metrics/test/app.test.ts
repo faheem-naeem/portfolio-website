@@ -66,6 +66,13 @@ describe('GET /', () => {
                 `'sha256-${createHash('sha256').update(css).digest('base64')}'`,
             );
         expect(csp).not.toContain('unsafe-inline');
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(csp).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(csp).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
+        );
         expect(res.headers.get('strict-transport-security')).toContain(
             'max-age=',
         );

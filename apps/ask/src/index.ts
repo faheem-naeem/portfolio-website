@@ -45,11 +45,15 @@ export interface AppOptions {
 
 const TURNSTILE_ORIGIN = 'https://challenges.cloudflare.com';
 
+/** Cloudflare Web Analytics: the auto-injected beacon script and its report endpoint. */
+export const CF_ANALYTICS_SCRIPT = 'https://static.cloudflareinsights.com';
+export const CF_ANALYTICS_CONNECT = 'https://cloudflareinsights.com';
+
 export const CONTENT_SECURITY_POLICY = [
     "default-src 'none'",
-    `script-src 'self' ${TURNSTILE_ORIGIN}`,
+    `script-src 'self' ${TURNSTILE_ORIGIN} ${CF_ANALYTICS_SCRIPT}`,
     `frame-src ${TURNSTILE_ORIGIN}`,
-    "connect-src 'self'",
+    `connect-src 'self' ${CF_ANALYTICS_CONNECT}`,
     "style-src 'self'",
     "img-src 'self'",
     "base-uri 'none'",

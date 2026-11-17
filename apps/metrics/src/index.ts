@@ -23,6 +23,10 @@ async function sha256Base64(text: string): Promise<string> {
     return btoa(bin);
 }
 
+/** Cloudflare Web Analytics: the auto-injected beacon script and its report endpoint. */
+export const CF_ANALYTICS_SCRIPT = 'https://static.cloudflareinsights.com';
+export const CF_ANALYTICS_CONNECT = 'https://cloudflareinsights.com';
+
 let cspPromise: Promise<string> | undefined;
 export function contentSecurityPolicy(): Promise<string> {
     cspPromise ??= Promise.all([
@@ -31,6 +35,8 @@ export function contentSecurityPolicy(): Promise<string> {
     ]).then(([a, b]) =>
         [
             "default-src 'none'",
+            `script-src ${CF_ANALYTICS_SCRIPT}`,
+            `connect-src 'self' ${CF_ANALYTICS_CONNECT}`,
             `style-src 'sha256-${a}' 'sha256-${b}'`,
             "img-src 'self'",
             "base-uri 'none'",

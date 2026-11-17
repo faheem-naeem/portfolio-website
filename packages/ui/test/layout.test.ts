@@ -51,11 +51,17 @@ describe('layout', () => {
             'manual',
             'a11y',
             'ask',
-            'ctf',
             'metrics',
         ]) {
             expect(html).toContain(`href="https://${sub}.faheemnaeem.dev"`);
         }
+    });
+
+    it('never lists hidden sites (the CTF) in the navigation', () => {
+        expect(html).not.toContain('ctf.faheemnaeem.dev');
+        const onCtf = layout({ title: 'CTF', body: '', current: 'ctf' });
+        expect(onCtf).not.toContain('ctf.faheemnaeem.dev');
+        expect(onCtf).not.toContain('aria-current="page"');
     });
 
     it('inlines the CSS by default and can opt out', () => {

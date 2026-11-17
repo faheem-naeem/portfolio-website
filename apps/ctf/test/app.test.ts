@@ -21,6 +21,13 @@ describe('GET /', () => {
         expect(res.headers.get('Content-Type')).toContain('text/html');
         expect(res.headers.get('Content-Security-Policy')).toBe(HTML_CSP);
         expect(HTML_CSP).not.toContain('unsafe-inline');
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(HTML_CSP).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(HTML_CSP).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
+        );
         expect(res.headers.get('Strict-Transport-Security')).toContain(
             'max-age=',
         );
@@ -32,7 +39,10 @@ describe('GET /', () => {
         expect(html).toContain('<h1>Find the flag</h1>');
         expect(html).toContain('<script src="/assets/ctf.js" defer></script>');
         expect(html).not.toMatch(/<script>|<style>/);
-        expect(html).toContain('aria-current="page"');
+        // The CTF is hidden from the shared navigation, even on its own page.
+        expect(html).toContain('class="site-nav"');
+        expect(html).not.toContain('href="https://ctf.faheemnaeem.dev"');
+        expect(html).not.toContain('aria-current="page"');
     });
 
     it('shows a 5-step map with one <details> hint per step (works without JS)', async () => {

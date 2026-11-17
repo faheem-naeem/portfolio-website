@@ -87,6 +87,13 @@ describe('GET /contact', () => {
         );
         expect(csp).toContain('frame-src https://challenges.cloudflare.com');
         expect(csp).toContain("form-action 'self'");
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(csp).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(csp).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
+        );
         expect(csp).not.toMatch(/script-src[^;]*unsafe-inline/);
         expect(res.headers.get('X-Content-Type-Options')).toBe('nosniff');
         expect(res.headers.get('Strict-Transport-Security')).toContain(

@@ -131,7 +131,14 @@ describe('page', () => {
             CONTENT_SECURITY_POLICY,
         );
         expect(CONTENT_SECURITY_POLICY).toContain(
-            "script-src 'self' https://challenges.cloudflare.com;",
+            "script-src 'self' https://challenges.cloudflare.com ",
+        );
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(CONTENT_SECURITY_POLICY).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(CONTENT_SECURITY_POLICY).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
         );
         expect(CONTENT_SECURITY_POLICY).not.toContain('unsafe-inline');
         expect(res.headers.get('strict-transport-security')).toMatch(

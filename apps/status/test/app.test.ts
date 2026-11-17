@@ -116,6 +116,13 @@ describe('GET /', () => {
         expect(csp).toContain(`'sha256-${hash(allCss)}'`);
         expect(csp).toContain(`'sha256-${hash(PAGE_CSS)}'`);
         expect(csp).toContain("default-src 'none'");
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(csp).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(csp).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
+        );
         expect(csp).not.toContain('unsafe-inline');
         expect(res.headers.get('strict-transport-security')).toContain(
             'max-age=',
@@ -136,7 +143,11 @@ describe('GET /api/status.json', () => {
         const body = (await res.json()) as ReturnType<typeof buildModel>;
         expect(body.generatedAt).toBe('2026-11-17T14:20:00.000Z');
         expect(body.overall.state).not.toBe('outage');
-        expect(body.overall.state).toBe(body.projects[0]!.state === 'unknown' ? 'operational' : body.projects[0]!.state);
+        expect(body.overall.state).toBe(
+            body.projects[0]!.state === 'unknown'
+                ? 'operational'
+                : body.projects[0]!.state,
+        );
         expect(body.faheem.components.length).toBeGreaterThan(0);
         expect(body.incidents.length).toBeGreaterThan(0);
         const p = body.projects[0]!;
