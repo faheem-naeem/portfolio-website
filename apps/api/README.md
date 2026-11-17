@@ -23,7 +23,7 @@ Cross-cutting:
 - **Errors** always look like `{"error":{"code","message"}}`. Validation errors also include `details: [{path, message}]`.
 - **Caching**: successful GETs get an `ETag` (and `304` on `If-None-Match`) plus `Cache-Control: public, max-age=300, s-maxage=3600`. Errors and POSTs get `no-store`.
 - **CORS (Cross-Origin Resource Sharing)**: GET from any origin (`*`). POST only from `https://faheemnaeem.dev` and direct subdomains (`https://<sub>.faheemnaeem.dev`). Other origins get a `403 FORBIDDEN_ORIGIN` from the server, not just a missing CORS header.
-- **Security headers** on every response: CSP, HSTS, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`. JSON uses `default-src 'none'`. The docs page allows scripts only from `'self'` (`/docs.js`) and the one pinned Scalar file. It also allows inline styles, because Scalar injects `<style>` tags. The `/contact` pages allow scripts from `'self'` (`/contact.js`) and `https://challenges.cloudflare.com` (Turnstile), frames only from Turnstile, and `form-action 'self'`.
+- **Security headers** on every response: CSP, HSTS, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`. JSON uses `default-src 'none'`. The docs page allows scripts only from `'self'` (`/docs.js`) and the one pinned Scalar file. It also allows inline styles, because Scalar injects `<style>` tags. The `/contact` pages allow scripts from `'self'` (`/contact.js`) and `https://challenges.cloudflare.com` (Turnstile), frames only from Turnstile, and `form-action 'self'`. Both HTML pages also allow the Cloudflare Web Analytics beacon (`https://static.cloudflareinsights.com` in `script-src`, `https://cloudflareinsights.com` in `connect-src`).
 
 ### GET /contact
 

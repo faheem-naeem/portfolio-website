@@ -10,6 +10,13 @@ describe('docs', () => {
         const csp = res.headers.get('Content-Security-Policy') ?? '';
         expect(csp).toContain(`script-src 'self' ${SCALAR_SCRIPT}`);
         expect(csp).not.toContain("'unsafe-eval'");
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(csp).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(csp).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
+        );
         expect(csp).not.toMatch(/script-src[^;]*'unsafe-inline'/);
         const html = await res.text();
         expect(html).toContain('Try it:');

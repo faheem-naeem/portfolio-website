@@ -17,12 +17,16 @@ import {
 export const RATE_LIMIT = { limit: 10, windowSeconds: 3600 };
 export const FLAG_MAX = 200;
 
+/** Cloudflare Web Analytics: the auto-injected beacon script and its report endpoint. */
+export const CF_ANALYTICS_SCRIPT = 'https://static.cloudflareinsights.com';
+export const CF_ANALYTICS_CONNECT = 'https://cloudflareinsights.com';
+
 export const HTML_CSP = [
     "default-src 'none'",
-    "script-src 'self'",
+    `script-src 'self' ${CF_ANALYTICS_SCRIPT}`,
     "style-src 'self'",
     "img-src 'self'",
-    "connect-src 'self'",
+    `connect-src 'self' ${CF_ANALYTICS_CONNECT}`,
     "form-action 'self'",
     "base-uri 'none'",
     "frame-ancestors 'none'",

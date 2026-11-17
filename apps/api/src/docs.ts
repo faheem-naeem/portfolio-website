@@ -1,6 +1,7 @@
 import type { Hono } from 'hono';
 import { getSite } from '@faheem/data';
 import { escapeHtml, layout } from '@faheem/ui';
+import { CF_ANALYTICS_CONNECT, CF_ANALYTICS_SCRIPT } from './lib/http';
 import type { AppEnv } from './env';
 
 /** Pinned Scalar API Reference build (jsDelivr), verified with SRI. */
@@ -15,11 +16,11 @@ export const SCALAR_SRI =
  */
 export const DOCS_CSP = [
     "default-src 'none'",
-    `script-src 'self' ${SCALAR_SCRIPT}`,
+    `script-src 'self' ${SCALAR_SCRIPT} ${CF_ANALYTICS_SCRIPT}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
     "font-src 'self' data:",
-    "connect-src 'self'",
+    `connect-src 'self' ${CF_ANALYTICS_CONNECT}`,
     "base-uri 'none'",
     "form-action 'none'",
     "frame-ancestors 'none'",

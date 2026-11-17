@@ -190,6 +190,8 @@ export const SiteSchema = z
         title: z.string().min(1),
         pitch: z.string().min(1),
         kind: z.enum(['static', 'worker']),
+        /** Hidden sites (e.g. the CTF puzzle) are left out of shared navigation. */
+        hidden: z.boolean().optional(),
     })
     .strict();
 export const SitesSchema = z

@@ -5,6 +5,7 @@
 import type { Hono } from 'hono';
 import { getResume, getSite } from '@faheem/data';
 import { escapeHtml, layout } from '@faheem/ui';
+import { CF_ANALYTICS_CONNECT, CF_ANALYTICS_SCRIPT } from '../lib/http';
 import type { AppEnv } from '../env';
 
 export const TURNSTILE_ORIGIN = 'https://challenges.cloudflare.com';
@@ -17,11 +18,11 @@ export const TURNSTILE_SCRIPT = `${TURNSTILE_ORIGIN}/turnstile/v0/api.js`;
  */
 export const CONTACT_CSP = [
     "default-src 'none'",
-    `script-src 'self' ${TURNSTILE_ORIGIN}`,
+    `script-src 'self' ${TURNSTILE_ORIGIN} ${CF_ANALYTICS_SCRIPT}`,
     `frame-src ${TURNSTILE_ORIGIN}`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
-    "connect-src 'self'",
+    `connect-src 'self' ${CF_ANALYTICS_CONNECT}`,
     "base-uri 'none'",
     "form-action 'self'",
     "frame-ancestors 'none'",

@@ -49,6 +49,10 @@ export function cors(): MiddlewareHandler {
     };
 }
 
+/** Cloudflare Web Analytics: the auto-injected beacon script and its report endpoint. */
+export const CF_ANALYTICS_SCRIPT = 'https://static.cloudflareinsights.com';
+export const CF_ANALYTICS_CONNECT = 'https://cloudflareinsights.com';
+
 /** CSP for JSON and plain responses: nothing may load or run. */
 export const API_CSP =
     "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'";

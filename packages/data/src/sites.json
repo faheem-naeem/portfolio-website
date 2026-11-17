@@ -67,7 +67,8 @@
         "url": "https://ctf.faheemnaeem.dev",
         "title": "CTF",
         "pitch": "A small capture-the-flag puzzle.",
-        "kind": "worker"
+        "kind": "worker",
+        "hidden": true
     },
     {
         "id": "metrics",

@@ -140,4 +140,17 @@ describe('schemas reject bad data', () => {
         );
         expect(SitesSchema.safeParse(sites).success).toBe(false);
     });
+
+    it('hides only the CTF from navigation and validates the hidden flag', () => {
+        expect(getSite('ctf').hidden).toBe(true);
+        expect(
+            getSites()
+                .filter((s) => s.hidden)
+                .map((s) => s.id),
+        ).toEqual(['ctf']);
+        const bad = getSites().map((s, i) =>
+            i === 0 ? { ...s, hidden: 'yes' } : s,
+        );
+        expect(SitesSchema.safeParse(bad).success).toBe(false);
+    });
 });

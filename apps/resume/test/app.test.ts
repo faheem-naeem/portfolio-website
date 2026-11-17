@@ -122,6 +122,13 @@ describe('browsers', () => {
         const res = await app.request('/', { headers: BROWSER });
         const csp = res.headers.get('Content-Security-Policy') ?? '';
         expect(csp).toContain("script-src 'self'");
+        // Cloudflare Web Analytics beacon is allowed.
+        expect(csp).toMatch(
+            /script-src [^;]*https:\/\/static\.cloudflareinsights\.com/,
+        );
+        expect(csp).toMatch(
+            /connect-src 'self'[^;]* https:\/\/cloudflareinsights\.com/,
+        );
         expect(csp).not.toContain('unsafe-inline');
         expect(res.headers.get('Strict-Transport-Security')).toMatch(
             /max-age=\d+/,
@@ -165,9 +172,10 @@ describe('browsers', () => {
         const html = await (
             await app.request('/', { headers: BROWSER })
         ).text();
-        const data = /<script type="application\/json" id="resume-data">(.*?)<\/script>/s.exec(
-            html,
-        );
+        const data =
+            /<script type="application\/json" id="resume-data">(.*?)<\/script>/s.exec(
+                html,
+            );
         expect(data).not.toBeNull();
         const parsed = JSON.parse(data?.[1] ?? '{}') as { help: string };
         expect(parsed.help).toContain('PDF');

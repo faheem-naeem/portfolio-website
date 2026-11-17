@@ -35,12 +35,14 @@ export function escapeHtml(value: string): string {
     return value.replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch] ?? ch);
 }
 
-/** Shared header with links to the main site and every subdomain app. */
+/** Shared header with links to the main site and every non-hidden subdomain app. */
 export function renderHeader(current?: SiteId): string {
     const { name } = getResume();
     const sites = getSites();
     const home = sites.find((s) => s.id === 'web');
+    // Hidden sites (the CTF puzzle) never appear in navigation, even on their own page.
     const items = sites
+        .filter((site) => !site.hidden)
         .map((site) => {
             const isCurrent = site.id === current;
             const aria = isCurrent ? ' aria-current="page"' : '';
