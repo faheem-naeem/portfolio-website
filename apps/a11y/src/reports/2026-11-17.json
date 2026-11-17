@@ -1,0 +1,650 @@
+{
+    "schemaVersion": 1,
+    "sample": false,
+    "date": "2026-11-17",
+    "generatedAt": "2026-11-17T22:46:21.174Z",
+    "source": {
+        "repository": "faheem-naeem/portfolio-website",
+        "commit": "25fe8793a58d891a9a1b7b84675719b0ddfa9e4e",
+        "runUrl": "https://github.com/faheem-naeem/portfolio-website/actions/runs/44192384800"
+    },
+    "tools": {
+        "axeCore": "4.14.1",
+        "axePlaywright": "4.14.0",
+        "playwright": "1.65.1",
+        "lighthouse": "12.8.2",
+        "chromium": "159.0.8154.6"
+    },
+    "config": {
+        "viewports": [
+            {
+                "name": "desktop",
+                "width": 1280
+            },
+            {
+                "name": "mobile",
+                "width": 360
+            }
+        ],
+        "colorSchemes": [
+            "light",
+            "dark"
+        ],
+        "axeTags": [
+            "wcag2a",
+            "wcag2aa",
+            "wcag21a",
+            "wcag21aa",
+            "wcag22aa",
+            "best-practice"
+        ],
+        "lighthouseCategories": [
+            "performance",
+            "accessibility",
+            "best-practices",
+            "seo"
+        ],
+        "lighthouseFormFactor": "mobile"
+    },
+    "sites": [
+        {
+            "id": "web",
+            "url": "https://faheemnaeem.dev",
+            "title": "Home",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": null,
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 2
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 2
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 2
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 2
+                    }
+                ],
+                "violations": [
+                    {
+                        "id": "color-contrast",
+                        "impact": "serious",
+                        "help": "Elements must meet minimum color contrast ratio thresholds",
+                        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+                        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+                        "wcag": [
+                            "1.4.3"
+                        ],
+                        "level": "AA",
+                        "nodes": 1,
+                        "targets": [
+                            "#computer-screen #about > .section-heading > span"
+                        ],
+                        "runs": [
+                            "desktop-light",
+                            "desktop-dark",
+                            "mobile-light",
+                            "mobile-dark"
+                        ]
+                    },
+                    {
+                        "id": "region",
+                        "impact": "moderate",
+                        "help": "All page content should be contained by landmarks",
+                        "description": "Ensure all page content is contained by landmarks",
+                        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/region?application=playwright",
+                        "wcag": [],
+                        "level": null,
+                        "nodes": 8,
+                        "targets": [
+                            "#computer-screen .desktop-shortcuts",
+                            "#computer-screen .titlebar > span",
+                            "#computer-screen .titlebar > small",
+                            "#computer-screen #clock",
+                            "#webgl"
+                        ],
+                        "runs": [
+                            "desktop-light",
+                            "desktop-dark",
+                            "mobile-light",
+                            "mobile-dark"
+                        ]
+                    }
+                ]
+            },
+            "errors": [
+                "lighthouse: Command failed: npx --yes lighthouse@12 https://faheemnaeem.dev --output=json --output-path=/tmp/a11y-audit-5QTGm3/lh-1794955328915.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags=--headless=new --no-sandbox --disable-gpu --quiet\nRuntime error encountered: The page"
+            ]
+        },
+        {
+            "id": "resume",
+            "url": "https://resume.faheemnaeem.dev",
+            "title": "Resume",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "api",
+            "url": "https://api.faheemnaeem.dev",
+            "title": "API",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 73,
+                "accessibility": 97,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 3
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 3
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 3
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 3
+                    }
+                ],
+                "violations": [
+                    {
+                        "id": "color-contrast",
+                        "impact": "serious",
+                        "help": "Elements must meet minimum color contrast ratio thresholds",
+                        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+                        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=playwright",
+                        "wcag": [
+                            "1.4.3"
+                        ],
+                        "level": "AA",
+                        "nodes": 7,
+                        "targets": [
+                            ".sidebar-search-placeholder",
+                            ".text-c-3 > p",
+                            "#headlessui-tabs-tab-scalar-refs-0-5 > .client-libraries-text[data-v-11a35bae=\"\"]",
+                            "#headlessui-tabs-tab-scalar-refs-0-6 > .client-libraries-text[data-v-11a35bae=\"\"]",
+                            "#headlessui-tabs-tab-scalar-refs-0-7 > .client-libraries-text[data-v-11a35bae=\"\"]"
+                        ],
+                        "runs": [
+                            "desktop-light",
+                            "desktop-dark",
+                            "mobile-light",
+                            "mobile-dark"
+                        ]
+                    },
+                    {
+                        "id": "landmark-main-is-top-level",
+                        "impact": "moderate",
+                        "help": "Main landmark should not be contained in another landmark",
+                        "description": "Ensure the main landmark is at top level",
+                        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-main-is-top-level?application=playwright",
+                        "wcag": [],
+                        "level": null,
+                        "nodes": 1,
+                        "targets": [
+                            ".references-rendered"
+                        ],
+                        "runs": [
+                            "desktop-light",
+                            "desktop-dark",
+                            "mobile-light",
+                            "mobile-dark"
+                        ]
+                    },
+                    {
+                        "id": "landmark-no-duplicate-main",
+                        "impact": "moderate",
+                        "help": "Document should not have more than one main landmark",
+                        "description": "Ensure the document has at most one main landmark",
+                        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-no-duplicate-main?application=playwright",
+                        "wcag": [],
+                        "level": null,
+                        "nodes": 1,
+                        "targets": [
+                            "#main"
+                        ],
+                        "runs": [
+                            "desktop-light",
+                            "desktop-dark",
+                            "mobile-light",
+                            "mobile-dark"
+                        ]
+                    }
+                ]
+            },
+            "errors": []
+        },
+        {
+            "id": "status",
+            "url": "https://status.faheemnaeem.dev",
+            "title": "Status",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 91
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "bugs",
+            "url": "https://bugs.faheemnaeem.dev",
+            "title": "Bug museum",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "changelog",
+            "url": "https://changelog.faheemnaeem.dev",
+            "title": "Changelog",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "manual",
+            "url": "https://manual.faheemnaeem.dev",
+            "title": "Manual",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 1
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 1
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 1
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 1
+                    }
+                ],
+                "violations": [
+                    {
+                        "id": "landmark-unique",
+                        "impact": "moderate",
+                        "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+                        "description": "Ensure landmarks are unique",
+                        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/landmark-unique?application=playwright",
+                        "wcag": [],
+                        "level": null,
+                        "nodes": 1,
+                        "targets": [
+                            "#known-bugs > .callout--note[aria-label=\"Note\"]"
+                        ],
+                        "runs": [
+                            "desktop-light",
+                            "desktop-dark",
+                            "mobile-light",
+                            "mobile-dark"
+                        ]
+                    }
+                ]
+            },
+            "errors": []
+        },
+        {
+            "id": "a11y",
+            "url": "https://a11y.faheemnaeem.dev",
+            "title": "Accessibility",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "ask",
+            "url": "https://ask.faheemnaeem.dev",
+            "title": "Ask",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 98,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "ctf",
+            "url": "https://ctf.faheemnaeem.dev",
+            "title": "CTF",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 100,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 100
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        },
+        {
+            "id": "metrics",
+            "url": "https://metrics.faheemnaeem.dev",
+            "title": "Metrics",
+            "status": "ok",
+            "httpStatus": 200,
+            "lighthouse": {
+                "performance": 99,
+                "accessibility": 100,
+                "bestPractices": 93,
+                "seo": 91
+            },
+            "axe": {
+                "runs": [
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "desktop",
+                        "width": 1280,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "light",
+                        "violations": 0
+                    },
+                    {
+                        "viewport": "mobile",
+                        "width": 360,
+                        "colorScheme": "dark",
+                        "violations": 0
+                    }
+                ],
+                "violations": []
+            },
+            "errors": []
+        }
+    ]
+}
