@@ -1,6 +1,7 @@
 ---
 // Note / Tip / Warning callout. Markup matches calloutHtml() in lib/markdown.ts,
-// which renders the same callouts from markdown (`> [!TIP]`).
+// which renders the same callouts from markdown (`> [!TIP]`). role="note" is not a
+// landmark, so repeated callouts do not trip axe landmark-unique.
 import { CALLOUT_LABELS, type CalloutType } from '../lib/markdown';
 
 interface Props {
@@ -10,7 +11,7 @@ const { type = 'note' } = Astro.props;
 const label = CALLOUT_LABELS[type];
 ---
 
-<aside class={`callout callout--${type}`} aria-label={label}>
+<div class={`callout callout--${type}`} role="note" aria-label={label}>
     <p class="callout__title">{label}</p>
     <slot />
-</aside>
+</div>
