@@ -1,0 +1,38 @@
+---
+// Page shell: shared @faheem/ui tokens, base CSS, header and footer.
+import { getResume } from '@faheem/data';
+import { renderFooter, renderHeader } from '@faheem/ui';
+import '@faheem/ui/tokens.css';
+import '@faheem/ui/base.css';
+import '../styles/manual.css';
+
+interface Props {
+    title: string;
+    description: string;
+}
+const { title, description } = Astro.props;
+const { name } = getResume();
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <title>{title} · {name}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <slot name="head" />
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+        <Fragment set:html={renderHeader('manual')} />
+        <main id="main" class="site-main" tabindex="-1">
+            <slot />
+        </main>
+        <Fragment set:html={renderFooter()} />
+    </body>
+</html>
