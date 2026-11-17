@@ -1,0 +1,49 @@
+---
+import { sparklinePoints, type TrendPoint } from '../lib/report';
+
+interface Props {
+    points: TrendPoint[];
+    /** What the values are, used in the text alternative. */
+    label: string;
+    range?: { min: number; max: number };
+}
+
+const { points, label, range } = Astro.props;
+const width = 120;
+const height = 32;
+const values = points.map((p) => p.value);
+const line = sparklinePoints(values, width, height, range);
+const last = line.split(' ').at(-1)?.split(',') ?? [];
+const description =
+    points.length === 0
+        ? `${label}: no audited data yet.`
+        : `${label} over ${points.length} audit${points.length === 1 ? '' : 's'}: ${points
+              .map((p) => `${p.value} on ${p.date}`)
+              .join(', ')}.`;
+---
+
+<span class="sparkline">
+    {
+        points.length > 1 && (
+            <svg
+                class="sparkline__chart"
+                viewBox={`0 0 ${width} ${height}`}
+                width={width}
+                height={height}
+                aria-hidden="true"
+                focusable="false"
+            >
+                <polyline points={line} />
+                <circle cx={last[0]} cy={last[1]} r="2.5" />
+            </svg>
+        )
+    }
+    <span class="visually-hidden">{description}</span>
+    {
+        points.length === 1 && (
+            <span class="sparkline__note" aria-hidden="true">
+                trend appears after 2 audits
+            </span>
+        )
+    }
+</span>

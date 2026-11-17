@@ -1,0 +1,65 @@
+---
+import '@faheem/ui/tokens.css';
+import '@faheem/ui/base.css';
+import '../styles/a11y.css';
+import { getResume } from '@faheem/data';
+import { renderFooter, renderHeader } from '@faheem/ui';
+
+interface Props {
+    title: string;
+    description: string;
+}
+
+const { title, description } = Astro.props;
+const { name } = getResume();
+const fullTitle = `${title} · ${name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const subnav = [
+    { href: '/', label: 'Overview' },
+    { href: '/methodology/', label: 'Methodology' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+            rel="alternate"
+            type="application/json"
+            title="Latest accessibility report (JSON)"
+            href="/latest.json"
+        />
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+        <Fragment set:html={renderHeader('a11y')} />
+        <nav class="subnav" aria-label="Accessibility report">
+            <ul>
+                {
+                    subnav.map((item) => (
+                        <li>
+                            <a
+                                href={item.href}
+                                aria-current={path === item.href ? 'page' : undefined}
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </nav>
+        <main id="main" class="site-main" tabindex="-1">
+            <slot />
+        </main>
+        <Fragment set:html={renderFooter()} />
+    </body>
+</html>

@@ -1,0 +1,23 @@
+---
+import type { Report } from '../lib/report';
+
+interface Props {
+    report: Report;
+}
+
+const { report } = Astro.props;
+---
+
+{
+    report.sample && (
+        <div class="banner" role="note" aria-labelledby="sample-banner-title">
+            <p id="sample-banner-title" class="banner__title">
+                Sample report
+            </p>
+            <p>
+                {report.note ??
+                    'This report is illustrative, not measured. Real results appear here after the weekly audit runs.'}
+            </p>
+        </div>
+    )
+}

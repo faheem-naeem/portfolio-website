@@ -1,0 +1,19 @@
+---
+import { scoreBand } from '../lib/report';
+
+interface Props {
+    label: string;
+    value: number | null;
+}
+
+const { label, value } = Astro.props;
+const band = scoreBand(value);
+const bandText = { good: 'good', average: 'needs work', poor: 'poor', none: 'not measured' }[band];
+---
+
+<div class={`score score--${band}`}>
+    <dt class="score__label">{label}</dt>
+    <dd class="score__value">
+        {value ?? '–'}<span class="score__band">{bandText}</span>
+    </dd>
+</div>

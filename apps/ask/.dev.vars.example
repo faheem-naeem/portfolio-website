@@ -1,0 +1,5 @@
+# Copy to .dev.vars for `wrangler dev` (never commit .dev.vars).
+# Turnstile secret key from the Cloudflare dashboard (Turnstile > your widget).
+# Leave it out locally to use the logged dev bypass (needs ENVIRONMENT=development).
+TURNSTILE_SECRET=<TURNSTILE_SECRET>
+ENVIRONMENT=development

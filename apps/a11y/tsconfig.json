@@ -1,0 +1,11 @@
+{
+    "extends": "@faheem/config/tsconfig.base.json",
+    "compilerOptions": {
+        "lib": ["ES2022", "DOM"],
+        "types": ["astro/client", "node"],
+        // scripts/audit.mjs is plain Node ESM; allowJs lets tests import its pure helpers.
+        "allowJs": true
+    },
+    "include": [".astro/types.d.ts", "src", "test", "scripts", "astro.config.mjs"],
+    "exclude": ["dist", "node_modules"]
+}
