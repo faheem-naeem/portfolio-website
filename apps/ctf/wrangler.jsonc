@@ -1,0 +1,21 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "faheemnaeem-ctf",
+    "main": "src/index.ts",
+    "compatibility_date": "2026-10-01",
+    "routes": [{ "pattern": "ctf.faheemnaeem.dev", "custom_domain": true }],
+    "observability": { "enabled": true },
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "faheemnaeem-ctf",
+            // TODO: replace after `wrangler d1 create faheemnaeem-ctf`
+            "database_id": "00000000-0000-0000-0000-000000000000",
+            "migrations_dir": "migrations",
+        },
+    ],
+    // Optional: "vars": { "CONTACT_URL": "<YOUR_CALENDAR_OR_CONTACT_URL>" }
+    // (defaults to the LinkedIn link from @faheem/data).
+    // Secrets (not in this file): FLAG_HASH, IP_HASH_SALT.
+    // Set with `wrangler secret put <NAME>`; locally use .dev.vars.
+}

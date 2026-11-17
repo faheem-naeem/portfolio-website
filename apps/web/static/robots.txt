@@ -1,0 +1,3 @@
+# Hello, human. Robots may visit everything except the hatch below.
+User-agent: *
+Disallow: /maintenance-hatch.txt

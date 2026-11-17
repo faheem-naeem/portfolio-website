@@ -3,3 +3,5 @@
 TURNSTILE_SECRET=<TURNSTILE_SECRET>
 NOTIFY_EMAIL=<YOUR_EMAIL>
 IP_HASH_SALT=<RANDOM_STRING>
+# Final flag for the ctf.faheemnaeem.dev hunt (generate with apps/ctf/scripts/make-flag.mjs).
+CTF_FLAG=<CTF_FLAG>

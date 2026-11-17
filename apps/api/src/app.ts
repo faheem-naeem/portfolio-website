@@ -7,6 +7,7 @@ import { docsRoutes } from './docs';
 import type { AppEnv } from './env';
 import { codeForStatus, errorBody } from './lib/errors';
 import { cacheControl, cors, securityHeaders } from './lib/http';
+import { ctfRoutes } from './routes/ctf';
 import { interviewRoutes } from './routes/interview';
 import { resumeRoutes } from './routes/resume';
 
@@ -43,6 +44,7 @@ export function createApp() {
     docsRoutes(app);
     resumeRoutes(app);
     interviewRoutes(app);
+    ctfRoutes(app);
 
     app.doc31('/openapi.json', {
         openapi: '3.1.0',

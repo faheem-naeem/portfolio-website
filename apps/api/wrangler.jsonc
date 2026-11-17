@@ -23,6 +23,6 @@
         // Sender: any address on faheemnaeem.dev (Email Routing must be enabled).
         "NOTIFY_FROM": "api@faheemnaeem.dev",
     },
-    // Secrets (not in this file): TURNSTILE_SECRET, IP_HASH_SALT.
+    // Secrets (not in this file): TURNSTILE_SECRET, IP_HASH_SALT, CTF_FLAG.
     // Set with `wrangler secret put <NAME>`; locally use .dev.vars.
 }
