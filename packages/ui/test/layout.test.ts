@@ -84,6 +84,13 @@ describe('layout', () => {
         expect(m).toBeGreaterThan(h);
         expect(f).toBeGreaterThan(m);
     });
+
+    it('can render the body without a main landmark for embedded widgets', () => {
+        const page = layout({ title: 'x', body: '<p>hi</p>', mainLandmark: false });
+        expect(page).not.toContain('<main');
+        expect(page).toContain('<div id="main" class="site-main" tabindex="-1">');
+        expect(page).toMatch(/<a class="skip-link" href="#main">/);
+    });
 });
 
 describe('escapeHtml', () => {

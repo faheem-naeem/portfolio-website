@@ -69,7 +69,7 @@
     section { padding: clamp(23px, 4vw, 40px); border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
     .section-heading { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
     .section-heading h2 { margin: 0; color: var(--teal); font: bold 25px Georgia, serif; }
-    .section-heading span { color: #8a9188; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .section-heading span { color: #5c665f; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
     .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 30px; }
     .about-grid p { max-width: 650px; margin-bottom: 0; color: #4d5854; }
     .focus-list { margin: 0; padding: 0; list-style: none; }
@@ -118,7 +118,7 @@
 </head>
 <body>
   <div class="desktop">
-    <div class="desktop-shortcuts" aria-label="Desktop applications">
+    <nav class="desktop-shortcuts" aria-label="Desktop applications">
       <button class="shortcut" data-open="portfolio"><span class="shortcut-icon">🖥️</span>My Portfolio</button>
       <button class="shortcut" data-open="resume"><span class="shortcut-icon">📄</span>Resume</button>
       <button class="shortcut" data-open="trail"><span class="shortcut-icon">🐎</span>Oregon Trail</button>
@@ -126,9 +126,9 @@
       <button class="shortcut" data-open="scrabble"><span class="shortcut-icon">🔠</span>Scrabble</button>
       <button class="shortcut" data-open="wordgame"><span class="shortcut-icon">🟩</span>Henordle</button>
       <button class="shortcut" data-open="credits"><span class="shortcut-icon">ℹ️</span>Credits</button>
-    </div>
+    </nav>
     <div class="window" id="portfolioWindow">
-      <div class="titlebar"><span>FAHEEM.NAEEM — Portfolio</span><small>Calgary, AB</small><div class="window-controls"><button type="button" data-action="minimize" aria-label="Minimize">_</button><button type="button" data-action="maximize" aria-label="Maximize">□</button><button type="button" data-action="close" aria-label="Close">×</button></div></div>
+      <header class="titlebar"><span>FAHEEM.NAEEM — Portfolio</span><small>Calgary, AB</small><div class="window-controls"><button type="button" data-action="minimize" aria-label="Minimize">_</button><button type="button" data-action="maximize" aria-label="Maximize">□</button><button type="button" data-action="close" aria-label="Close">×</button></div></header>
       <nav class="toolbar" aria-label="Portfolio sections">
         <a href="#about">ABOUT</a><a href="#experience">EXPERIENCE</a><a href="#work">SELECTED WORK</a><a href="#skills">SKILLS</a><a href="#education">EDUCATION</a><a href="#explore">EXPLORE</a><a href="#contact">CONTACT</a>
       </nav>
@@ -199,7 +199,7 @@
       </main>
       <footer><span>© <span id="year"></span> Faheem Naeem</span><span>Made with care in Calgary, Alberta.</span></footer>
     </div>
-    <div class="start-menu" id="startMenu" hidden>
+    <nav class="start-menu" id="startMenu" aria-label="Start menu" hidden>
       <button data-open="portfolio">🖥️ &nbsp; My Portfolio</button>
       <button data-open="resume">📄 &nbsp; Resume</button>
       <button data-open="trail">🐎 &nbsp; Oregon Trail</button>
@@ -208,8 +208,8 @@
       <button data-open="wordgame">🟩 &nbsp; Henordle</button>
       <button data-open="credits">ℹ️ &nbsp; Credits</button>
       <button id="shutdownButton">⏻ &nbsp; Close all windows</button>
-    </div>
-    <div class="taskbar"><button class="start-button" id="startButton">⊞ Start</button><button id="portfolioTask" class="active" data-task="portfolio">Faheem Naeem — Portfolio</button><button id="appTask" data-task="app" hidden></button><span class="task-spacer"></span><span class="clock" id="clock"></span></div>
+    </nav>
+    <nav class="taskbar" aria-label="Taskbar"><button class="start-button" id="startButton">⊞ Start</button><button id="portfolioTask" class="active" data-task="portfolio">Faheem Naeem — Portfolio</button><button id="appTask" data-task="app" hidden></button><span class="task-spacer"></span><span class="clock" id="clock"></span></nav>
     <section class="app-window" id="appWindow" hidden aria-label="Application window">
       <div class="app-title" id="appTitle"><strong id="appTitleText">Application</strong><span class="app-controls"><button data-action="minimize" aria-label="Minimize">_</button><button data-action="maximize" aria-label="Maximize">□</button><button data-action="close" aria-label="Close">×</button></span></div>
       <div class="app-body" id="appBody"></div>

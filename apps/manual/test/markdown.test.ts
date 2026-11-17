@@ -24,8 +24,11 @@ describe('renderMarkdown', () => {
         ['WARNING', 'warning', 'Warning'],
     ])('turns > [!%s] into a %s callout', (marker, cls, label) => {
         const html = renderMarkdown(`> [!${marker}]\n> Be careful.`);
-        expect(html).toContain(`class="callout callout--${cls}"`);
-        expect(html).toContain(`aria-label="${label}"`);
+        expect(html).toContain(
+            `<div class="callout callout--${cls}" role="note" aria-label="${label}">`,
+        );
+        // Not a landmark: repeated callouts must not trip axe landmark-unique.
+        expect(html).not.toContain('<aside');
         expect(html).toContain('<p>Be careful.</p>');
         expect(html).not.toContain('[!');
     });

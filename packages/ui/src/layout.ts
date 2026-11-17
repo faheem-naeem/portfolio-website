@@ -20,6 +20,13 @@ export interface LayoutOptions {
     inlineCss?: boolean;
     /** Stylesheet URLs to link (e.g. when inlineCss is false). */
     stylesheets?: string[];
+    /**
+     * Wrap the body in a `<main>` landmark. Defaults to true. Set to false when
+     * the body embeds a widget that renders its own `<main>` (for example the
+     * Scalar API reference), so the page keeps exactly one top-level main. The
+     * wrapper is then a plain `<div id="main">`, so the skip link still works.
+     */
+    mainLandmark?: boolean;
 }
 
 const HTML_ESCAPES: Record<string, string> = {
@@ -70,6 +77,7 @@ export function layout(opts: LayoutOptions): string {
     const links = (opts.stylesheets ?? [])
         .map((href) => `<link rel="stylesheet" href="${escapeHtml(href)}">`)
         .join('');
+    const mainTag = opts.mainLandmark === false ? 'div' : 'main';
     return `<!doctype html>
 <html lang="${escapeHtml(lang)}">
 <head>
@@ -82,9 +90,9 @@ ${description}${styles}${links}${opts.head ?? ''}
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 ${renderHeader(opts.current)}
-<main id="main" class="site-main" tabindex="-1">
+<${mainTag} id="main" class="site-main" tabindex="-1">
 ${opts.body}
-</main>
+</${mainTag}>
 ${renderFooter()}
 </body>
 </html>

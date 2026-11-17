@@ -13,9 +13,13 @@ export const CALLOUT_LABELS: Record<CalloutType, string> = {
     warning: 'Warning',
 };
 
-/** Shared callout markup (also used by Callout.astro, keep in sync). */
+/**
+ * Shared callout markup (also used by Callout.astro, keep in sync).
+ * A `<div role="note">`, not an `<aside>`: asides are complementary landmarks,
+ * and several callouts with the same label fail axe `landmark-unique`.
+ */
 export function calloutHtml(type: CalloutType, innerHtml: string): string {
-    return `<aside class="callout callout--${type}" aria-label="${CALLOUT_LABELS[type]}"><p class="callout__title">${CALLOUT_LABELS[type]}</p>${innerHtml}</aside>`;
+    return `<div class="callout callout--${type}" role="note" aria-label="${CALLOUT_LABELS[type]}"><p class="callout__title">${CALLOUT_LABELS[type]}</p>${innerHtml}</div>`;
 }
 
 const ALERT_RE = /^<p>\[!(NOTE|TIP|WARNING)\][ \t]*\n?/i;

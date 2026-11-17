@@ -57,14 +57,35 @@ function fnv1a(text: string): string {
 }
 export const DOCS_JS_URL = `/docs.js?v=${fnv1a(DOCS_JS)}`;
 
-const PAGE_CSS = `
-.api-intro { max-width: 70ch; }
+/**
+ * Page styles, served from the Worker as /docs.css (no inline <style>).
+ *
+ * The Scalar overrides raise its secondary/tertiary text colours to WCAG AA
+ * (>= 4.5:1) against all three Scalar backgrounds. Ratios (worst case is
+ * --scalar-background-3):
+ *   light: color-2 #505050 = 8.06 / 7.46 / 6.52 on #fff / #f6f6f6 / #e7e7e7
+ *          color-3 #5c5c5c = 6.69 / 6.19 / 5.41
+ *   dark:  color-2 #b0b0b0 = 8.84 / 8.03 / 6.89 on #0f0f0f / #1a1a1a / #272727
+ *          color-3 #9a9a9a = 6.81 / 6.19 / 5.31
+ * The doubled class selector outranks Scalar's own .light-mode/.dark-mode rules,
+ * which it injects later in <head>.
+ */
+export const DOCS_CSS = `.api-intro { max-width: 70ch; }
 .try-it { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
   padding: .75rem 1rem; border: 2px solid var(--color-accent, currentColor);
   border-radius: 6px; margin: 1rem 0; }
 .try-it code { overflow-wrap: anywhere; }
 #scalar-docs { margin-top: 1.5rem; min-height: 60vh; }
+.light-mode.light-mode {
+  --scalar-color-2: #505050;
+  --scalar-color-3: #5c5c5c;
+}
+.dark-mode.dark-mode {
+  --scalar-color-2: #b0b0b0;
+  --scalar-color-3: #9a9a9a;
+}
 `;
+export const DOCS_CSS_URL = `/docs.css?v=${fnv1a(DOCS_CSS)}`;
 
 export function renderDocsPage(): string {
     const site = getSite('api');
@@ -83,7 +104,9 @@ export function renderDocsPage(): string {
         title: 'API',
         current: 'api',
         description: site.pitch,
-        head: `<style>${PAGE_CSS}</style>`,
+        stylesheets: [DOCS_CSS_URL],
+        // Scalar renders its own <main>; keep it the only (top-level) main.
+        mainLandmark: false,
         body,
     });
 }
@@ -98,5 +121,10 @@ export function docsRoutes(app: Hono<AppEnv>) {
         c.header('Content-Type', 'text/javascript; charset=utf-8');
         c.header('Cache-Control', 'public, max-age=86400');
         return c.body(DOCS_JS);
+    });
+    app.get('/docs.css', (c) => {
+        c.header('Content-Type', 'text/css; charset=utf-8');
+        c.header('Cache-Control', 'public, max-age=86400');
+        return c.body(DOCS_CSS);
     });
 }
