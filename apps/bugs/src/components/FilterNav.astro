@@ -1,0 +1,68 @@
+---
+import {
+    FILTER_TITLES,
+    getFilterOptions,
+    type Exhibit,
+    type FilterKind,
+} from '../lib/exhibits';
+
+interface Props {
+    exhibits: Exhibit[];
+    active?: { kind: FilterKind; value: string };
+}
+
+const { exhibits, active } = Astro.props;
+const kinds: FilterKind[] = ['severity', 'stack', 'tag'];
+const groups = kinds.map((kind) => ({
+    kind,
+    title: FILTER_TITLES[kind],
+    options: getFilterOptions(exhibits, kind),
+}));
+---
+
+<nav class="filters" aria-label="Filter exhibits" data-filters>
+    <p class="filters__all">
+        <a
+            href="/"
+            data-filter-kind=""
+            data-filter-value=""
+            aria-current={active ? undefined : 'page'}>All exhibits</a
+        >
+    </p>
+    {
+        groups.map((group) => (
+            <div class="filters__group">
+                <p class="filters__title" id={`filter-${group.kind}`}>
+                    {group.title}
+                </p>
+                <ul aria-labelledby={`filter-${group.kind}`}>
+                    {group.options.map((o) => (
+                        <li>
+                            <a
+                                href={`/${o.kind}/${o.value}/`}
+                                data-filter-kind={o.kind}
+                                data-filter-value={o.value}
+                                data-filter-label={`${group.title}: ${o.label}`}
+                                aria-current={
+                                    active?.kind === o.kind &&
+                                    active.value === o.value
+                                        ? 'page'
+                                        : undefined
+                                }
+                            >
+                                {o.label}
+                                <span class="filters__count">
+                                    ({o.count}
+                                    <span class="visually-hidden">
+                                        {o.count === 1 ? 'exhibit' : 'exhibits'}
+                                    </span>
+                                    )
+                                </span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+</nav>

@@ -1,0 +1,10 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "faheemnaeem-bugs",
+    "compatibility_date": "2026-10-01",
+    "assets": {
+        "directory": "./dist",
+        "not_found_handling": "404-page"
+    },
+    "routes": [{ "pattern": "bugs.faheemnaeem.dev", "custom_domain": true }]
+}

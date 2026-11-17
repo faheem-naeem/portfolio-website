@@ -1,0 +1,60 @@
+---
+import '@faheem/ui/tokens.css';
+import '@faheem/ui/base.css';
+import '../styles/museum.css';
+import { getResume } from '@faheem/data';
+import { renderFooter, renderHeader } from '@faheem/ui';
+
+interface Props {
+    title: string;
+    description: string;
+    /** og:type, defaults to "website". */
+    type?: 'website' | 'article';
+    /** Extra scripts (same-origin URLs) loaded with defer. */
+    scripts?: string[];
+}
+
+const { title, description, type = 'website', scripts = [] } = Astro.props;
+const { name } = getResume();
+const fullTitle = `${title} · ${name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+// No native image tooling (sharp/canvas) on purpose: every page shares the
+// main site's preview image.
+const ogImage = 'https://faheemnaeem.dev/images/preview.jpg';
+const rss = new URL('/rss.xml', Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
+        <title>{fullTitle}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="The Bug Museum"
+            href={rss}
+        />
+        <meta property="og:site_name" content="The Bug Museum" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content={type} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta name="twitter:card" content="summary_large_image" />
+        {scripts.map((src) => <script is:inline src={src} defer></script>)}
+    </head>
+    <body>
+        <a class="skip-link" href="#main">Skip to main content</a>
+        <Fragment set:html={renderHeader('bugs')} />
+        <main id="main" class="site-main" tabindex="-1">
+            <slot />
+        </main>
+        <Fragment set:html={renderFooter()} />
+    </body>
+</html>
