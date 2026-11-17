@@ -1,0 +1,5 @@
+# Copy to .dev.vars for `wrangler dev`. Never commit .dev.vars.
+# Turnstile test secret that always passes: 1x0000000000000000000000000000000AA
+TURNSTILE_SECRET=<TURNSTILE_SECRET>
+NOTIFY_EMAIL=<YOUR_EMAIL>
+IP_HASH_SALT=<RANDOM_STRING>

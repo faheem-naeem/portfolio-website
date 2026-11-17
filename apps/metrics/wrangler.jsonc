@@ -1,0 +1,20 @@
+{
+    "$schema": "../../node_modules/wrangler/config-schema.json",
+    "name": "faheemnaeem-metrics",
+    "main": "src/index.ts",
+    "compatibility_date": "2026-10-01",
+    "routes": [{ "pattern": "metrics.faheemnaeem.dev", "custom_domain": true }],
+    // ONE cron for the whole app (the account only has 5): refresh every 6 hours.
+    // Each run writes at most 2 KV keys, so about 8 writes/day (free limit 1,000).
+    "triggers": { "crons": ["0 */6 * * *"] },
+    "kv_namespaces": [
+        {
+            "binding": "METRICS",
+            // TODO: replace after `wrangler kv namespace create METRICS`
+            "id": "00000000-0000-0000-0000-000000000000",
+        },
+    ],
+    // Secrets (set with `wrangler secret put`, never here):
+    // GITHUB_TOKEN (optional), WAKATIME_API_KEY (optional), REFRESH_TOKEN (optional)
+    "observability": { "enabled": true },
+}
