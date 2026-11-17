@@ -1,0 +1,334 @@
+/* Product-documentation layout for manual.faheemnaeem.dev.
+   Uses @faheem/ui tokens (light + dark via prefers-color-scheme). */
+
+.site-main {
+    padding-block: var(--space-5) var(--space-7);
+}
+
+.docs {
+    display: grid;
+    gap: var(--space-5);
+}
+
+@media (min-width: 56rem) {
+    .docs {
+        grid-template-columns: 16rem minmax(0, 1fr);
+        gap: var(--space-7);
+        align-items: start;
+    }
+
+    .docs-nav {
+        position: sticky;
+        top: var(--space-4);
+        max-height: calc(100vh - 2 * var(--space-4));
+        overflow-y: auto;
+    }
+}
+
+/* Sidebar */
+.docs-nav {
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent);
+    font-size: var(--font-size-sm);
+}
+
+.docs-nav__product {
+    margin-bottom: var(--space-1);
+    color: var(--color-accent);
+    font-family: var(--font-serif);
+    font-size: var(--font-size-md);
+    font-weight: bold;
+}
+
+.docs-nav__muted {
+    display: block;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    font-weight: normal;
+}
+
+.docs-nav__meta {
+    color: var(--color-muted);
+}
+
+.docs-nav__title {
+    margin: var(--space-4) 0 var(--space-2);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.docs-nav__list {
+    margin: 0;
+    padding-left: var(--space-5);
+}
+
+.docs-nav__list li + li {
+    margin-top: var(--space-1);
+}
+
+.docs-nav__list a {
+    display: inline-block;
+    min-height: 24px;
+    padding-block: 2px;
+}
+
+/* Content */
+.docs-content {
+    min-width: 0;
+    max-width: 46rem;
+}
+
+.docs-header {
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.docs-header h1 {
+    font-size: var(--font-size-2xl);
+}
+
+.eyebrow {
+    margin-bottom: var(--space-2);
+    color: var(--color-muted);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.docs-lede {
+    color: var(--color-muted);
+}
+
+.docs-section {
+    margin-bottom: var(--space-6);
+    scroll-margin-top: var(--space-4);
+}
+
+.docs-section h2 {
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--color-border);
+    font-size: var(--font-size-xl);
+}
+
+.docs-section h3 {
+    margin-top: var(--space-5);
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+}
+
+.docs-section li + li {
+    margin-top: var(--space-1);
+}
+
+.docs-section code {
+    padding: 0 0.2em;
+    background: var(--color-surface-alt);
+}
+
+.docs-section blockquote {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--color-border);
+    color: var(--color-muted);
+}
+
+/* Callouts: Note / Tip / Warning. Colour is never the only cue: each has a title. */
+.callout {
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--callout-color, var(--color-link));
+}
+
+.callout > :last-child {
+    margin-bottom: 0;
+}
+
+.callout__title {
+    margin-bottom: var(--space-1);
+    color: var(--callout-color, var(--color-link));
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+}
+
+.callout--note {
+    --callout-color: var(--color-link);
+}
+
+.callout--tip {
+    --callout-color: var(--color-accent);
+    background: var(--color-surface-alt);
+}
+
+.callout--warning {
+    --callout-color: #8a4b00;
+}
+
+@media (prefers-color-scheme: dark) {
+    .callout--warning {
+        --callout-color: #f0b46a;
+    }
+}
+
+/* Live clock */
+.clock {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    margin: 0 0 var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+}
+
+.clock dt {
+    color: var(--color-muted);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.clock dd {
+    margin: 0;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+/* Support */
+.support-links {
+    padding-left: var(--space-5);
+}
+
+.support-links a {
+    display: inline-block;
+    min-height: 24px;
+}
+
+.print-url,
+.print-only {
+    display: none;
+}
+
+.not-found {
+    max-width: 40rem;
+}
+
+/* Print: a clean one-pager. */
+@media print {
+    @page {
+        size: auto;
+        margin: 12mm;
+    }
+
+    :root {
+        --color-bg: #fff;
+        --color-surface: #fff;
+        --color-surface-alt: #fff;
+        --color-text: #000;
+        --color-muted: #333;
+        --color-border: #999;
+        --color-accent: #000;
+        --color-link: #000;
+    }
+
+    body {
+        font-size: 9pt;
+        line-height: 1.35;
+    }
+
+    .skip-link,
+    .site-header,
+    .site-footer,
+    .docs-nav,
+    .docs-header .callout {
+        display: none !important;
+    }
+
+    .site-main {
+        max-width: none;
+        padding: 0;
+    }
+
+    .docs {
+        display: block;
+    }
+
+    .docs-content {
+        max-width: none;
+        column-count: 2;
+        column-gap: 8mm;
+    }
+
+    .docs-header {
+        column-span: all;
+        margin-bottom: 4mm;
+        padding-bottom: 2mm;
+    }
+
+    .docs-header h1 {
+        font-size: 18pt;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    .docs-section {
+        margin-bottom: 3mm;
+        break-inside: avoid;
+    }
+
+    .docs-section h2 {
+        margin-bottom: 1.5mm;
+        padding-bottom: 0.5mm;
+        font-size: 11pt;
+        break-after: avoid;
+    }
+
+    .docs-section h3 {
+        margin-top: 2mm;
+        margin-bottom: 0.5mm;
+        font-size: 9.5pt;
+    }
+
+    p,
+    ul,
+    ol,
+    .callout,
+    .clock {
+        margin-bottom: 1.5mm;
+    }
+
+    .callout,
+    .clock {
+        padding: 1mm 2mm;
+        break-inside: avoid;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .print-url {
+        display: inline;
+        color: var(--color-muted);
+    }
+
+    .print-url::before {
+        content: '(';
+    }
+
+    .print-url::after {
+        content: ')';
+    }
+}
