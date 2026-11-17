@@ -1,5 +1,9 @@
 # Migration: single site → pnpm + Turborepo monorepo
 
+> **Status:** done. The monorepo is merged into `master`.
+> The "Safe rollout order" below is kept as a record. To deploy the subdomain apps, see
+> [`DEPLOYMENT.md`](./DEPLOYMENT.md).
+
 ## What changed
 
 | Before | After |
