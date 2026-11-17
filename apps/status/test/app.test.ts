@@ -57,11 +57,12 @@ describe('GET /', () => {
         expect(html).not.toMatch(/<script/i);
     });
 
-    it('derives the banner from the worst state', async () => {
+    it('derives the banner from real checks only, never from joke components', async () => {
         const { env } = await seededEnv();
         const html = await (await app.request('/', {}, env)).text();
-        // The data includes an "outage" joke component (Inbox zero).
-        expect(html).toContain('<h1 id="banner">Major Outage</h1>');
+        // The data includes an "outage" joke component (Inbox zero) — it must not affect the banner.
+        expect(html).toContain('Inbox zero');
+        expect(html).not.toContain('<h1 id="banner">Major Outage</h1>');
     });
 
     it('renders 90 labelled uptime bars and a hidden table alternative', async () => {
@@ -134,10 +135,8 @@ describe('GET /api/status.json', () => {
         expect(res.headers.get('access-control-allow-origin')).toBe('*');
         const body = (await res.json()) as ReturnType<typeof buildModel>;
         expect(body.generatedAt).toBe('2026-11-17T14:20:00.000Z');
-        expect(body.overall).toEqual({
-            state: 'outage',
-            label: 'Major Outage',
-        });
+        expect(body.overall.state).not.toBe('outage');
+        expect(body.overall.state).toBe(body.projects[0]!.state === 'unknown' ? 'operational' : body.projects[0]!.state);
         expect(body.faheem.components.length).toBeGreaterThan(0);
         expect(body.incidents.length).toBeGreaterThan(0);
         const p = body.projects[0]!;

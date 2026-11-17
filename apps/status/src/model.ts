@@ -96,10 +96,9 @@ export function buildModel(input: {
             days,
         };
     });
-    const state = worstState([
-        ...input.status.components.map((c) => c.state),
-        ...projects.map((p) => p.state),
-    ]);
+    // The banner reflects REAL uptime checks only. The "Faheem" components are
+    // jokes (e.g. "Inbox zero: outage") and must never turn the headline red.
+    const state = worstState(projects.map((p) => p.state));
     const incidents = [...input.incidents].sort(
         (a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt),
     );
