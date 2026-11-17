@@ -1,0 +1,8 @@
+# Copy to .dev.vars for local development. Every value is optional.
+# Fine-grained GitHub token with NO repository permissions (public data only).
+# Without it the page uses the unauthenticated REST API and skips the calendar.
+GITHUB_TOKEN=<GITHUB_TOKEN>
+# WakaTime secret API key (wakatime.com/settings/api-key). Unset = section hidden.
+WAKATIME_API_KEY=<WAKATIME_API_KEY>
+# Enables POST /api/refresh with header "X-Refresh-Token: <REFRESH_TOKEN>". Unset = route disabled.
+REFRESH_TOKEN=<REFRESH_TOKEN>
