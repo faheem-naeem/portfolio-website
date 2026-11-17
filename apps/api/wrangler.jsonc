@@ -1,0 +1,28 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "faheemnaeem-api",
+    "main": "src/index.ts",
+    "compatibility_date": "2026-10-01",
+    "routes": [{ "pattern": "api.faheemnaeem.dev", "custom_domain": true }],
+    "observability": { "enabled": true },
+    "d1_databases": [
+        {
+            "binding": "DB",
+            "database_name": "faheemnaeem-api",
+            // TODO: replace after `wrangler d1 create faheemnaeem-api`
+            "database_id": "00000000-0000-0000-0000-000000000000",
+            "migrations_dir": "migrations",
+        },
+    ],
+    // Email Routing: lets the Worker email NOTIFY_EMAIL (must be a verified
+    // destination address in Email Routing).
+    "send_email": [{ "name": "SEND_EMAIL" }],
+    "vars": {
+        // TODO: replace with your verified Email Routing destination address.
+        "NOTIFY_EMAIL": "<YOUR_EMAIL>",
+        // Sender: any address on faheemnaeem.dev (Email Routing must be enabled).
+        "NOTIFY_FROM": "api@faheemnaeem.dev",
+    },
+    // Secrets (not in this file): TURNSTILE_SECRET, IP_HASH_SALT.
+    // Set with `wrangler secret put <NAME>`; locally use .dev.vars.
+}
