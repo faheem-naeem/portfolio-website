@@ -1,0 +1,31 @@
+{
+    "name": "a11y",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "test": "vitest run",
+        "typecheck": "astro check",
+        "lint": "eslint .",
+        "audit": "node scripts/audit.mjs"
+    },
+    "dependencies": {
+        "@faheem/data": "workspace:*",
+        "@faheem/ui": "workspace:*",
+        "astro": "^7.4.12",
+        "zod": "^3.25.0"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.12",
+        "@faheem/config": "workspace:*",
+        "@types/node": "^22.15.0",
+        "eslint": "^9.29.0",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4",
+        "wrangler": "^4",
+        "yaml": "^2.9.1"
+    }
+}

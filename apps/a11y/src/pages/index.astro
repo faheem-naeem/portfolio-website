@@ -1,0 +1,154 @@
+---
+import AABadge from '../components/AABadge.astro';
+import SampleBanner from '../components/SampleBanner.astro';
+import Score from '../components/Score.astro';
+import Sparkline from '../components/Sparkline.astro';
+import Base from '../layouts/Base.astro';
+import { loadReports } from '../lib/load';
+import {
+    formatDate,
+    latestReport,
+    METRICS,
+    siteCounts,
+    sitePassesAA,
+    siteTrend,
+    statusLabel,
+    summarizeReport,
+    totalTrend,
+} from '../lib/report';
+
+const reports = loadReports();
+const report = latestReport(reports);
+const summary = report ? summarizeReport(report) : undefined;
+const blocking = summary ? summary.counts.serious + summary.counts.critical : 0;
+---
+
+<Base
+    title="Accessibility report"
+    description="Weekly automated accessibility and Lighthouse results for every faheemnaeem.dev site."
+>
+    <h1>Accessibility report</h1>
+    <p class="lede">
+        Every week a robot opens each of my sites in a real browser, at desktop
+        and phone widths, in light and dark mode, and checks it with axe-core
+        and Lighthouse. These are the results, warts and all.{' '}
+        <a href="/methodology/">How the audit works</a>.
+    </p>
+
+    {
+        !report || !summary ? (
+            <p>No reports yet. The first weekly audit has not run.</p>
+        ) : (
+            <>
+                <SampleBanner report={report} />
+
+                <section class="summary" aria-labelledby="summary-title">
+                    <h2 id="summary-title">
+                        Latest audit: <time datetime={report.date}>{formatDate(report.date)}</time>
+                    </h2>
+                    <AABadge
+                        passes={summary.passesAA}
+                        blocking={blocking}
+                        nothingAudited={summary.audited === 0}
+                    />
+                    <dl class="stats">
+                        <div class="stat">
+                            <dt>Total axe violations</dt>
+                            <dd class="stat__value">{summary.counts.total}</dd>
+                            <dd class="stat__hint">Goal: 0</dd>
+                        </div>
+                        <div class="stat">
+                            <dt>Serious or critical</dt>
+                            <dd class="stat__value">{blocking}</dd>
+                            <dd class="stat__hint">Must be 0 for the badge</dd>
+                        </div>
+                        <div class="stat">
+                            <dt>Sites audited</dt>
+                            <dd class="stat__value">{summary.audited}</dd>
+                            <dd class="stat__hint">of {report.sites.length}</dd>
+                        </div>
+                        <div class="stat">
+                            <dt>Not deployed yet</dt>
+                            <dd class="stat__value">{summary.notDeployed}</dd>
+                            <dd class="stat__hint">Skipped, not failed</dd>
+                        </div>
+                    </dl>
+                    <p class="trend-line">
+                        Violations trend:{' '}
+                        <Sparkline points={totalTrend(reports)} label="Total axe violations" />
+                    </p>
+                </section>
+
+                <section aria-labelledby="sites-title">
+                    <h2 id="sites-title">Sites</h2>
+                    <ul class="cards" role="list">
+                        {report.sites.map((site) => {
+                            const counts = siteCounts(site);
+                            return (
+                                <li class={`card card--${site.status}`}>
+                                    <h3 class="card__title">
+                                        <a href={`/sites/${site.id}/`}>{site.title}</a>
+                                    </h3>
+                                    <p class="card__url">{site.url.replace('https://', '')}</p>
+                                    <p class="card__status">
+                                        <span class={`status status--${site.status}`}>
+                                            {statusLabel(site.status)}
+                                        </span>
+                                        {sitePassesAA(site) && (
+                                            <span class="mini-badge">WCAG 2.2 AA</span>
+                                        )}
+                                    </p>
+                                    {site.status === 'ok' ? (
+                                        <>
+                                            <dl class="scores">
+                                                {METRICS.map((m) => (
+                                                    <Score
+                                                        label={m.label}
+                                                        value={site.lighthouse?.[m.key] ?? null}
+                                                    />
+                                                ))}
+                                            </dl>
+                                            <p class="card__axe">
+                                                {counts.total} axe violation
+                                                {counts.total === 1 ? '' : 's'}
+                                                {counts.total > 0 &&
+                                                    ` (${counts.serious + counts.critical} serious or critical)`}
+                                            </p>
+                                            <p class="card__trend">
+                                                Accessibility trend:{' '}
+                                                <Sparkline
+                                                    points={siteTrend(
+                                                        reports,
+                                                        site.id,
+                                                        (s) => s.lighthouse?.accessibility,
+                                                    )}
+                                                    label={`${site.title} Lighthouse accessibility score`}
+                                                    range={{ min: 0, max: 100 }}
+                                                />
+                                            </p>
+                                        </>
+                                    ) : (
+                                        <p class="card__reason">
+                                            {site.reason ?? site.errors[0] ?? 'No details.'}
+                                        </p>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </section>
+
+                <p class="meta">
+                    {reports.length} report{reports.length === 1 ? '' : 's'} on file.
+                    Machine-readable: <a href="/latest.json">latest.json</a>.
+                    {report.source.runUrl && (
+                        <>
+                            {' '}
+                            <a href={report.source.runUrl}>Workflow run</a>.
+                        </>
+                    )}
+                </p>
+            </>
+        )
+    }
+</Base>

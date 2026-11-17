@@ -1,0 +1,26 @@
+---
+interface Props {
+    passes: boolean;
+    /** Number of serious + critical issues, shown when there is no badge. */
+    blocking: number;
+    /** Nothing was audited (e.g. no site deployed yet). */
+    nothingAudited?: boolean;
+}
+
+const { passes, blocking, nothingAudited = false } = Astro.props;
+---
+
+{
+    passes ? (
+        <p class="aa-badge">
+            <span class="aa-badge__mark">WCAG 2.2 AA</span>
+            <span class="aa-badge__text">0 serious or critical automated issues</span>
+        </p>
+    ) : (
+        <p class="aa-badge aa-badge--none">
+            {nothingAudited
+                ? 'No WCAG 2.2 AA badge yet: nothing has been audited.'
+                : `No WCAG 2.2 AA badge: ${blocking} serious or critical issue${blocking === 1 ? '' : 's'} to fix.`}
+        </p>
+    )
+}
