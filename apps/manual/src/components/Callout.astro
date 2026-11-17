@@ -1,0 +1,16 @@
+---
+// Note / Tip / Warning callout. Markup matches calloutHtml() in lib/markdown.ts,
+// which renders the same callouts from markdown (`> [!TIP]`).
+import { CALLOUT_LABELS, type CalloutType } from '../lib/markdown';
+
+interface Props {
+    type?: CalloutType;
+}
+const { type = 'note' } = Astro.props;
+const label = CALLOUT_LABELS[type];
+---
+
+<aside class={`callout callout--${type}`} aria-label={label}>
+    <p class="callout__title">{label}</p>
+    <slot />
+</aside>

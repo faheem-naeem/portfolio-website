@@ -1,0 +1,81 @@
+---
+import { getManual, getResume } from '@faheem/data';
+import Base from '../components/Base.astro';
+import Callout from '../components/Callout.astro';
+import { APP_CONTENT_SAMPLE, MANUAL_VERSION } from '../content';
+import { buildSections } from '../lib/manual';
+import { formatBuildDate, offsetSummary, yearOffsets } from '../lib/time';
+
+const manual = getManual();
+const resume = getResume();
+const sections = buildSections(manual, resume);
+// Build date, not git: git history may be unavailable in CI.
+const builtAt = new Date();
+const builtIso = builtAt.toISOString().slice(0, 10);
+const tzOffsets = offsetSummary(resume.timezone, builtAt);
+// Valid <time datetime> value for the no-JS fallback: a time-zone offset, e.g. "-07:00".
+const tzIso = (yearOffsets(resume.timezone, builtAt)[0] ?? 'UTC+00:00')
+    .replace('UTC', '')
+    .replace('\u2212', '-');
+const isSample = Boolean(manual.frontmatter.sample) || APP_CONTENT_SAMPLE;
+---
+
+<Base
+    title={manual.frontmatter.title}
+    description={`${manual.frontmatter.title}: a user manual for working with ${resume.name}.`}
+>
+    <script slot="head" src="/clock.js" defer is:inline></script>
+    <div class="docs">
+        <nav class="docs-nav" aria-labelledby="toc-title">
+            <p class="docs-nav__product">{resume.name} <span class="docs-nav__muted">User manual</span></p>
+            <p class="docs-nav__meta">
+                v{MANUAL_VERSION} — Last built <time datetime={builtIso}>{formatBuildDate(builtAt)}</time>
+            </p>
+            <p id="toc-title" class="docs-nav__title">On this page</p>
+            <ol class="docs-nav__list">
+                {sections.map((s) => <li><a href={`#${s.id}`}>{s.title}</a></li>)}
+            </ol>
+        </nav>
+
+        <article class="docs-content">
+            <header class="docs-header">
+                <p class="eyebrow">Manual · v{MANUAL_VERSION}</p>
+                <h1>{manual.frontmatter.title}</h1>
+                <p class="docs-lede">{resume.name} · {resume.title} · {resume.location}</p>
+                <p class="print-only docs-print-meta">
+                    v{MANUAL_VERSION} — Last built {formatBuildDate(builtAt)} · manual.faheemnaeem.dev
+                </p>
+                {
+                    isSample && (
+                        <Callout type="note">
+                            <p>Parts of this manual are SAMPLE placeholder text and will be replaced.</p>
+                        </Callout>
+                    )
+                }
+            </header>
+
+            {
+                sections.map((s) => (
+                    <section id={s.id} class="docs-section" aria-labelledby={`${s.id}-title`}>
+                        <h2 id={`${s.id}-title`}>{s.title}</h2>
+                        {s.clock && (
+                            <dl class="clock">
+                                <div>
+                                    <dt>Timezone</dt>
+                                    <dd>{resume.timezone}</dd>
+                                </div>
+                                <div>
+                                    <dt>Local time</dt>
+                                    <dd>
+                                        <time data-tz={resume.timezone} datetime={tzIso}>{tzOffsets}</time>
+                                    </dd>
+                                </div>
+                            </dl>
+                        )}
+                        <Fragment set:html={s.html} />
+                    </section>
+                ))
+            }
+        </article>
+    </div>
+</Base>
