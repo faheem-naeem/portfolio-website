@@ -59,15 +59,14 @@ Vitest with a mocked `env.AI`, mocked `fetch` (Turnstile) and an in-memory D1 fa
 
 One-time steps (placeholders only; never commit real values):
 
-1. `npx wrangler d1 create faheemnaeem-ask` and paste the returned id into `database_id` in `wrangler.jsonc`.
+1. D1: already created; its id is committed in `wrangler.jsonc` (to recreate: `npx wrangler d1 create faheemnaeem-ask` and update `database_id`).
 2. `npx wrangler d1 migrations apply faheemnaeem-ask --remote`
-3. Dashboard → Turnstile → Add widget for hostname `ask.faheemnaeem.dev` (Managed mode). Put the **site key** in `TURNSTILE_SITE_KEY` in `wrangler.jsonc` (public, replaces `<TURNSTILE_SITE_KEY>`).
+3. Dashboard → Turnstile → Add widget for hostname `ask.faheemnaeem.dev` (Managed mode). The public **site key** is already set as `TURNSTILE_SITE_KEY` in `wrangler.jsonc` (the same widget as the api form; add both hostnames to it).
 4. `npx wrangler secret put TURNSTILE_SECRET` and paste the Turnstile **secret key** (`<TURNSTILE_SECRET>`).
 5. Workers AI needs no setup or key on the Free plan; keep `ENVIRONMENT = "production"`.
 6. `npx wrangler deploy` from `apps/ask` (the `routes` entry creates the `ask.faheemnaeem.dev` custom domain).
 
 ## Content notes
 
-- `manual` in `@faheem/data` is SAMPLE content; the assistant will repeat it as fact until it is replaced.
-- Skill levels/years marked `sample` are left out of the prompt; only skill names are used.
-- Projects with `sample: true` are left out.
+- All `@faheem/data` content is real launch content; the assistant treats the manual as Faheem's own words.
+- Legacy guard: skill groups or projects flagged `sample` (none today) would be left out of the prompt.

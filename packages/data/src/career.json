@@ -1,69 +1,97 @@
 {
-    "sample": true,
-    "note": "SAMPLE: release framing is invented; dates and roles mirror resume.json. Replace freely.",
+    "note": "Built from the resume timeline. Dates are accurate to the year; releases within the same year are ordered for readability.",
     "releases": [
         {
+            "version": "0.1.0",
+            "date": "2016-01-01",
+            "type": "minor",
+            "title": "B.S. in Computer Science, University of Karachi",
+            "notes": [
+                "Completed a four-year computer science degree (2013–2016).",
+                "Degree later assessed by IQAS for use in Canada."
+            ]
+        },
+        {
             "version": "1.0.0",
-            "date": "2016-12-01",
+            "date": "2017-01-01",
             "type": "major",
-            "title": "Graduated: B.S. in Computer Science",
+            "title": "Software Engineer at WebDroid Solutions",
             "notes": [
-                "Initial release after four years of compile errors.",
-                "Shipped with a strong opinion on tabs vs spaces."
-            ]
-        },
-        {
-            "version": "1.1.0",
-            "date": "2017-06-01",
-            "type": "minor",
-            "title": "First role: Software Engineer at WebDroid Solutions",
-            "notes": [
-                "Added support for e-commerce, finance, real estate and healthcare clients.",
-                "Introduced Django to the toolchain."
-            ]
-        },
-        {
-            "version": "1.2.0",
-            "date": "2020-06-01",
-            "type": "minor",
-            "title": "Software Engineer at Olive Digital",
-            "notes": [
-                "Added production-support mode with root-cause analysis.",
-                "Delivered 25+ CRM enhancements."
+                "First professional role: custom web applications for e-commerce, finance, real estate and healthcare clients.",
+                "Built a Django-based bidding tool for Freelancer.com.",
+                "Owned projects end to end, from client discussions through deployment and support."
             ]
         },
         {
             "version": "2.0.0",
-            "date": "2021-06-01",
+            "date": "2020-01-01",
             "type": "major",
-            "title": "Senior Software Engineer at Folio3",
+            "title": "Software Engineer at Olive Digital",
             "notes": [
-                "Breaking change: legacy PHP/Yii migrated to MERN.",
-                "Added mentoring and code-review features."
+                "Maintained a Laravel CRM with 300+ users and delivered 25+ enhancements.",
+                "Took on production support, monitoring and root-cause analysis.",
+                "Worked directly with clients on requirements and training."
             ]
         },
         {
-            "version": "2.1.0",
-            "date": "2022-12-01",
-            "type": "minor",
-            "title": "M.S. in Data Science",
-            "notes": ["Added statistics and machine-learning modules."]
-        },
-        {
-            "version": "2.1.1",
-            "date": "2024-06-01",
-            "type": "patch",
-            "title": "Machine Learning Specialization",
-            "notes": ["Patched gaps in gradient-descent intuition."]
-        },
-        {
             "version": "3.0.0",
+            "date": "2021-01-01",
+            "type": "major",
+            "title": "Senior Software Engineer at Folio3",
+            "notes": [
+                "Modernized a legacy PHP/Yii application onto a MERN stack.",
+                "Built REST APIs for 300+ vending machines and 7,000+ daily transactions across partner systems.",
+                "Delivered a PostgreSQL-backed SaaS platform for 10,000+ student and case records.",
+                "Deployed on AWS with Docker, raised automated test coverage to 80% and mentored teammates."
+            ]
+        },
+        {
+            "version": "3.1.0",
+            "date": "2022-01-01",
+            "type": "minor",
+            "title": "M.S. in Data Science, NED University of Engineering and Technology",
+            "notes": [
+                "Completed a master's degree in data science (2020–2022), alongside full-time engineering work.",
+                "Degree later assessed by IQAS for use in Canada."
+            ]
+        },
+        {
+            "version": "3.2.0",
+            "date": "2024-01-01",
+            "type": "minor",
+            "title": "Machine Learning Specialization",
+            "notes": [
+                "Completed the Machine Learning Specialization from Stanford University and DeepLearning.AI."
+            ]
+        },
+        {
+            "version": "4.0.0",
             "date": "2025-01-01",
             "type": "major",
-            "title": "Relocated to Calgary; Full Stack Developer at Eligeo.ai",
+            "title": "Full Stack Developer at Eligeo.ai, Calgary",
             "notes": [
-                "Breaking change: timezone moved to America/Edmonton.",
-                "Added LLM workflows, OCR pipelines and winter-tire support."
+                "First role in Canada, based in Calgary, Alberta.",
+                "Built OCR and document-ingestion pipelines for scanned files and PDFs.",
+                "Developed an LLM-powered bid-comparison engine and schedule intelligence with Python, FastAPI, LangChain, Fireworks AI and Pydantic.",
+                "Integrated Monday.com, Stripe and HubSpot, and improved API response times by 20% through query optimization, caching and schema design."
+            ]
+        },
+        {
+            "version": "4.1.0",
+            "date": "2026-01-01",
+            "type": "minor",
+            "title": "CCIS IT Bridging Program",
+            "notes": [
+                "Completed Employment Skills Training covering business analysis, project management, Agile, Python and data analytics."
+            ]
+        },
+        {
+            "version": "4.2.0",
+            "date": "2026-02-01",
+            "type": "minor",
+            "title": "Applied Information Technology Certificate, SAIT",
+            "notes": [
+                "Earned the Applied Information Technology Certificate from the Southern Alberta Institute of Technology in Calgary."
             ]
         }
     ]

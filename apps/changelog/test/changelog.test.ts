@@ -16,9 +16,12 @@ import { buildRssItems } from '../src/lib/feed';
 
 const SITE = 'https://changelog.faheemnaeem.dev';
 
+// The legacy sample flag is still supported by the app; real data never sets it.
+const LEGACY_SAMPLE = true;
+
 const fixture: Career = {
-    sample: true,
-    note: 'SAMPLE fixture',
+    sample: LEGACY_SAMPLE,
+    note: 'Legacy sample fixture',
     releases: [
         { version: '1.0.0', date: '2016-12-01', type: 'major', title: 'Graduated: B.S. in CS', notes: ['Initial release.'] },
         { version: '1.10.0', date: '2019-01-01', type: 'minor', title: 'Role B', notes: ['Added things.'] },

@@ -40,7 +40,7 @@ flowchart LR
     ui --> static
     ui --> workers
 
-    api --- apiB[("D1 · Send Email · Turnstile")]
+    api --- apiB[("D1 · Turnstile")]
     status --- statusB[("D1 · cron */10 min")]
     ask --- askB[("D1 · Workers AI · Turnstile")]
     ctf --- ctfB[("D1")]
@@ -58,16 +58,16 @@ workspace packages; it stays exactly as the live 3D site.
 | Subdomain | App | Type | Pitch | Status |
 | --- | --- | --- | --- | --- |
 | [faheemnaeem.dev](https://faheemnaeem.dev) | `apps/web` | Static assets | Interactive 3D desktop portfolio | Live |
-| resume.faheemnaeem.dev | `apps/resume` | Worker | A curl-able terminal resume | Built, not yet deployed |
-| api.faheemnaeem.dev | `apps/api` | Worker + D1 + Email | Public JSON API (OpenAPI docs) for resume data, plus interview requests | Built, not yet deployed |
-| status.faheemnaeem.dev | `apps/status` | Worker + D1 + cron | A status page for the sites and for me | Built, not yet deployed |
-| bugs.faheemnaeem.dev | `apps/bugs` | Static assets (Astro) | Memorable bugs, how they were found and fixed | Built, not yet deployed |
-| changelog.faheemnaeem.dev | `apps/changelog` | Static assets (Astro) | My career as semantic-versioned release notes | Built, not yet deployed |
-| manual.faheemnaeem.dev | `apps/manual` | Static assets (Astro) | How to work with me | Built, not yet deployed |
-| a11y.faheemnaeem.dev | `apps/a11y` | Static assets + GitHub Actions | Live accessibility reports for every site | Built, not yet deployed |
-| ask.faheemnaeem.dev | `apps/ask` | Worker + Workers AI + D1 | Ask questions about my experience, answered by AI | Built, not yet deployed |
-| ctf.faheemnaeem.dev | `apps/ctf` | Worker + D1 | A small capture-the-flag puzzle across the network | Built, not yet deployed |
-| metrics.faheemnaeem.dev | `apps/metrics` | Worker + KV + cron | Public coding metrics dashboard | Built, not yet deployed |
+| resume.faheemnaeem.dev | `apps/resume` | Worker | A curl-able terminal resume | Live |
+| api.faheemnaeem.dev | `apps/api` | Worker + D1 + Turnstile | Public JSON API (OpenAPI docs) for resume data, plus an interview-request form | Live |
+| status.faheemnaeem.dev | `apps/status` | Worker + D1 + cron | A status page for the sites and for me | Live |
+| bugs.faheemnaeem.dev | `apps/bugs` | Static assets (Astro) | Memorable bugs, how they were found and fixed | Live |
+| changelog.faheemnaeem.dev | `apps/changelog` | Static assets (Astro) | My career as semantic-versioned release notes | Live |
+| manual.faheemnaeem.dev | `apps/manual` | Static assets (Astro) | How to work with me | Live |
+| a11y.faheemnaeem.dev | `apps/a11y` | Static assets + GitHub Actions | Live accessibility reports for every site | Live |
+| ask.faheemnaeem.dev | `apps/ask` | Worker + Workers AI + D1 | Ask questions about my experience, answered by AI | Live |
+| ctf.faheemnaeem.dev | `apps/ctf` | Worker + D1 | A small capture-the-flag puzzle across the network | Live |
+| metrics.faheemnaeem.dev | `apps/metrics` | Worker + KV + cron | Public coding metrics dashboard | Live |
 
 | Path              | What it is                                                                             |
 | ----------------- | -------------------------------------------------------------------------------------- |

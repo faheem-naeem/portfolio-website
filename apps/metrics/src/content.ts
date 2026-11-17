@@ -1,6 +1,4 @@
-// "Currently learning" and "Now reading" are not in @faheem/data yet, so they
-// live here as SAMPLE content. Move them to packages/data and replace them
-// with real entries before deploying.
+// "Currently learning" and "Now reading" for the metrics page.
 export interface NowItem {
     title: string;
     detail: string;
@@ -9,25 +7,33 @@ export interface NowItem {
 export interface NowContent {
     learning: NowItem[];
     reading: NowItem[];
-    sample: boolean;
+    /** Legacy placeholder marker; launch content never sets it. */
+    sample?: boolean;
 }
 
 export const NOW: NowContent = {
-    sample: true,
     learning: [
         {
-            title: 'Cloudflare Workers + D1',
-            detail: 'Edge-first APIs on the free plan.',
+            title: 'LLM evaluation',
+            detail: 'Test sets and regression checks for prompts and structured outputs.',
         },
         {
-            title: 'Rust basics',
-            detail: 'Ownership and borrowing, one small CLI at a time.',
+            title: 'Cloudflare Workers, D1 and Workers AI',
+            detail: 'Edge-first APIs, built while running this site on the free plan.',
+        },
+        {
+            title: 'Retrieval-augmented generation',
+            detail: 'Grounding answers in documents, with citations and guardrails.',
         },
     ],
     reading: [
         {
             title: 'Designing Data-Intensive Applications',
             detail: 'Martin Kleppmann',
+        },
+        {
+            title: 'The Pragmatic Programmer',
+            detail: 'David Thomas and Andrew Hunt',
         },
     ],
 };

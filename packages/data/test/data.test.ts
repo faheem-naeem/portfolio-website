@@ -87,19 +87,36 @@ describe('getters', () => {
 describe('content safety', () => {
     const all = JSON.stringify(rawData);
 
-    it('keeps the email as a placeholder', () => {
-        expect(all).not.toMatch(/[\w.+-]+@[\w-]+\.[\w.]+/);
+    it('publishes a real, valid contact email (and no other email)', () => {
+        const email = getResume().links.email;
+        expect(email).toMatch(/^[\w.+-]+@[\w-]+(\.[\w-]+)+$/);
+        expect(email).not.toMatch(/[<>]/);
+        const found = all.match(/[\w.+-]+@[\w-]+\.[\w.]+/g) ?? [];
+        expect(new Set(found)).toEqual(new Set([email]));
     });
 
-    it('marks every invented content file as SAMPLE', () => {
-        expect(getCareer().sample).toBe(true);
-        expect(getStatus().sample).toBe(true);
-        expect(getManual().frontmatter.sample).toBe(true);
-        expect(getBugs().every((b) => b.frontmatter.sample === true)).toBe(
+    it('contains no sample or placeholder content', () => {
+        expect(getCareer().sample).toBeUndefined();
+        expect(getStatus().sample).toBeUndefined();
+        expect(getManual().frontmatter.sample).toBeUndefined();
+        expect(getBugs().every((b) => b.frontmatter.sample === undefined)).toBe(
             true,
         );
-        expect(FunFactsSchema.parse(rawData.funFacts).sample).toBe(true);
-        expect(IncidentsSchema.parse(rawData.incidents).sample).toBe(true);
+        expect(getResume().skills.every((g) => g.sample === undefined)).toBe(
+            true,
+        );
+        expect(getProjects().every((p) => p.sample === undefined)).toBe(true);
+        expect(FunFactsSchema.parse(rawData.funFacts).sample).toBeUndefined();
+        expect(IncidentsSchema.parse(rawData.incidents).sample).toBeUndefined();
+        expect(all).not.toMatch(/\bSAMPLE\b/);
+        expect(all).not.toMatch(/<[A-Z_]+>/);
+    });
+
+    it('never claims more years for a skill than the career span', () => {
+        const r = getResume();
+        for (const g of r.skills)
+            for (const s of g.items)
+                expect(s.years).toBeLessThanOrEqual(r.yearsOfExperience);
     });
 });
 

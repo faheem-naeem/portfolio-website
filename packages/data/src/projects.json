@@ -20,28 +20,18 @@
         "id": "subdomain-network",
         "name": "faheemnaeem.dev subdomains",
         "tagline": "A small network of single-purpose apps on the Cloudflare free plan.",
-        "description": "SAMPLE: monorepo of static sites and Workers (resume, api, status, bugs, changelog and more) sharing one data package.",
+        "description": "A pnpm and Turborepo monorepo of static sites and Workers (resume, api, status, bugs, changelog, manual, a11y, ask and metrics) that share one validated data package and one design system, running at $0 on the Cloudflare Workers free plan.",
         "tech": [
             "TypeScript",
             "Hono",
             "Astro",
             "Cloudflare Workers",
+            "D1",
+            "Workers AI",
             "Turborepo"
         ],
         "repoUrl": null,
-        "liveUrl": null,
-        "status": "wip",
-        "sample": true
-    },
-    {
-        "id": "sample-cli-tool",
-        "name": "SAMPLE CLI tool",
-        "tagline": "SAMPLE: placeholder project to replace.",
-        "description": "SAMPLE: a placeholder entry showing the shape of an archived side project.",
-        "tech": ["Python"],
-        "repoUrl": null,
-        "liveUrl": null,
-        "status": "archived",
-        "sample": true
+        "liveUrl": "https://status.faheemnaeem.dev",
+        "status": "live"
     }
 ]

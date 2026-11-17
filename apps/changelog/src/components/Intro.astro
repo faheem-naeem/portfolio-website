@@ -30,6 +30,11 @@ const sampleNote = stripped
         features, a patch fixes things.
     </p>
     {
+        !career.sample && career.note && (
+            <p class="intro__note">{career.note}</p>
+        )
+    }
+    {
         career.sample && (
             <p class="notice" role="note">
                 <strong>Sample data.</strong>{' '}

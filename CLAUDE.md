@@ -52,5 +52,6 @@ This repository contains a personal developer portfolio for **faheemnaeem.dev**.
 - Never use employer/client code, data, or screenshots.
 - Every app must pass WCAG 2.2 AA, support dark mode via `prefers-color-scheme`, work at 360px width, and target a Lighthouse performance score of 95+.
   - Exception: `apps/web` is a Three.js 3D experience. Do not refactor or "optimize" its scene, shaders, or interactions to chase scores; only fix real accessibility issues around it.
-- Work only on the `monorepo` branch. Never push or deploy. The default branch is `master`; never commit to it.
-- Never switch branches in the main checkout (other sessions may be using it). Create the `monorepo` branch in a separate worktree: `git worktree add ../portfolio-website-monorepo -b monorepo`, and work there.
+- Work on a feature branch in a separate worktree created from `origin/master` (for example `git fetch origin && git worktree add ../pw-<topic> -b <topic> origin/master`), then open a pull request. The default branch is `master`; never commit directly to it.
+- Never switch branches in the main checkout (other sessions may be using it).
+- `apps/web` deploys automatically from `master` through Workers Builds. Subdomain Workers are deployed manually after merge with `cd apps/<id> && npx wrangler deploy` (see `DEPLOYMENT.md`).

@@ -2,7 +2,7 @@
 
 `changelog.faheemnaeem.dev`: Faheem's career written as release notes (GitHub Releases / Keep a Changelog style). Static Astro site, no client JavaScript.
 
-Data: `getCareer()` from `@faheem/data` (`packages/data/src/career.json`). While that file has `"sample": true`, every page shows a "Sample data" notice and the JSON/RSS feeds flag it too.
+Data: `getCareer()` from `@faheem/data` (`packages/data/src/career.json`). Career dates are only accurate to the year, so pages show years and the intro shows the `note` from the data. (A legacy `sample` flag, unused today, would add a "Sample data" notice.)
 
 ## Pages and endpoints
 

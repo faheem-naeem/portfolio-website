@@ -17,61 +17,137 @@
         "website": "https://faheemnaeem.dev",
         "linkedin": "https://www.linkedin.com/in/faheem-naeem/",
         "github": "https://github.com/faheem-naeem",
-        "email": "<EMAIL>"
+        "email": "faheem.naeem017@gmail.com"
     },
     "skills": [
         {
             "group": "Languages",
-            "sample": true,
             "items": [
-                { "name": "Python", "level": "expert", "years": 6 },
-                { "name": "PHP", "level": "expert", "years": 8 },
-                { "name": "JavaScript", "level": "expert", "years": 8 },
-                { "name": "SQL", "level": "proficient", "years": 8 }
+                {
+                    "name": "Python",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "PHP",
+                    "level": "expert",
+                    "years": 8
+                },
+                {
+                    "name": "JavaScript",
+                    "level": "expert",
+                    "years": 7
+                },
+                {
+                    "name": "SQL",
+                    "level": "expert",
+                    "years": 8
+                }
             ]
         },
         {
             "group": "Frameworks",
-            "sample": true,
             "items": [
-                { "name": "React.js", "level": "proficient", "years": 5 },
-                { "name": "Laravel", "level": "expert", "years": 6 },
-                { "name": "Django", "level": "proficient", "years": 4 },
-                { "name": "FastAPI", "level": "proficient", "years": 2 },
-                { "name": "LangChain", "level": "proficient", "years": 2 },
-                { "name": "Pydantic", "level": "proficient", "years": 2 },
-                { "name": "Eloquent", "level": "proficient", "years": 6 }
+                {
+                    "name": "React.js",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "Laravel",
+                    "level": "proficient",
+                    "years": 3
+                },
+                {
+                    "name": "Django",
+                    "level": "proficient",
+                    "years": 3
+                },
+                {
+                    "name": "FastAPI",
+                    "level": "proficient",
+                    "years": 1
+                },
+                {
+                    "name": "LangChain",
+                    "level": "proficient",
+                    "years": 1
+                },
+                {
+                    "name": "Pydantic",
+                    "level": "proficient",
+                    "years": 1
+                },
+                {
+                    "name": "Eloquent",
+                    "level": "proficient",
+                    "years": 3
+                }
             ]
         },
         {
             "group": "Data",
-            "sample": true,
             "items": [
-                { "name": "MySQL", "level": "expert", "years": 8 },
-                { "name": "PostgreSQL", "level": "proficient", "years": 4 },
-                { "name": "MongoDB", "level": "proficient", "years": 4 },
-                { "name": "SQL Server", "level": "familiar", "years": 2 }
+                {
+                    "name": "MySQL",
+                    "level": "expert",
+                    "years": 8
+                },
+                {
+                    "name": "PostgreSQL",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "MongoDB",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "SQL Server",
+                    "level": "familiar",
+                    "years": 1
+                }
             ]
         },
         {
             "group": "Cloud & practices",
-            "sample": true,
             "items": [
-                { "name": "AWS", "level": "proficient", "years": 4 },
-                { "name": "Docker", "level": "proficient", "years": 4 },
-                { "name": "REST APIs", "level": "expert", "years": 8 },
+                {
+                    "name": "AWS",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "Docker",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "REST APIs",
+                    "level": "expert",
+                    "years": 8
+                },
                 {
                     "name": "Prompt engineering",
                     "level": "proficient",
-                    "years": 2
+                    "years": 1
                 },
                 {
                     "name": "Prompt injection defense",
                     "level": "familiar",
                     "years": 1
                 },
-                { "name": "Unit testing", "level": "proficient", "years": 5 },
-                { "name": "Agile / Scrum", "level": "proficient", "years": 6 }
+                {
+                    "name": "Unit testing",
+                    "level": "proficient",
+                    "years": 4
+                },
+                {
+                    "name": "Agile / Scrum",
+                    "level": "proficient",
+                    "years": 6
+                }
             ]
         }
     ],
@@ -128,7 +204,11 @@
                 "Maintained a Laravel CRM used by 300+ users and delivered 25+ enhancements.",
                 "Handled production support, monitoring and root-cause analysis; collaborated with clients on requirements and training."
             ],
-            "tech": ["PHP", "Laravel", "MySQL"]
+            "tech": [
+                "PHP",
+                "Laravel",
+                "MySQL"
+            ]
         },
         {
             "company": "WebDroid Solutions",
@@ -140,7 +220,11 @@
                 "Delivered custom web applications across e-commerce, finance, real estate and healthcare.",
                 "Built a Django-based Freelancer.com bidding tool and managed projects from client discussions through deployment and support."
             ],
-            "tech": ["Python", "Django", "PHP"]
+            "tech": [
+                "Python",
+                "Django",
+                "PHP"
+            ]
         }
     ],
     "selectedWork": [
@@ -160,19 +244,33 @@
             "category": "AI / Operations",
             "title": "Schedule intelligence",
             "description": "Designed AI-driven checks to flag schedule risks, worker conflicts and dependency violations.",
-            "tech": ["LLM orchestration", "Prompt engineering", "Python"]
+            "tech": [
+                "LLM orchestration",
+                "Prompt engineering",
+                "Python"
+            ]
         },
         {
             "category": "Platform / Integrations",
             "title": "Connected vending platform",
             "description": "Delivered APIs supporting 300+ machines and more than 7,000 daily transactions across partner systems.",
-            "tech": ["REST APIs", "PHP", "MySQL", "Integrations"]
+            "tech": [
+                "REST APIs",
+                "PHP",
+                "MySQL",
+                "Integrations"
+            ]
         },
         {
             "category": "Cloud / SaaS",
             "title": "Scalable case-management SaaS",
             "description": "Built a data platform for 10,000+ student and case records and supported production deployment on AWS.",
-            "tech": ["PostgreSQL", "AWS", "Docker", "Testing"]
+            "tech": [
+                "PostgreSQL",
+                "AWS",
+                "Docker",
+                "Testing"
+            ]
         }
     ],
     "education": [

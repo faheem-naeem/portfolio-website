@@ -50,7 +50,7 @@ describe('GET /', () => {
             'Last updated <time datetime="2026-11-17T14:20:00.000Z">Nov 17, 2026, 14:20 UTC</time>',
         );
         expect(html).toContain('Currently learning');
-        expect(html).toContain('SAMPLE');
+        expect(html).not.toContain('SAMPLE');
         expect(html).toContain('Add &lt;metrics&gt; page');
         expect(html).not.toContain('Stale');
         expect(html).not.toMatch(/<script/i);

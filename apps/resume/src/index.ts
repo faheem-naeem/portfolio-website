@@ -95,7 +95,7 @@ app.get('/experience', resumeRoute('experience'));
 app.get('/projects', resumeRoute('projects'));
 app.get('/contact', resumeRoute('contact'));
 
-/** Raw resume data. The email is a placeholder in @faheem/data, so it is dropped. */
+/** Raw resume data. A "<...>" placeholder email (if ever set) is dropped. */
 app.get('/resume.json', (c) =>
     cached(c, 'json', () => {
         const { links, ...rest } = getResume();

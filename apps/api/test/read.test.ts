@@ -140,7 +140,9 @@ describe('fun endpoints', () => {
         const body = await json(res);
         expect(body.data.available).toBe(true);
         expect(body.data.contact.linkedin).toBe(getResume().links.linkedin);
-        expect(JSON.stringify(body)).not.toContain('<EMAIL>');
+        expect(body.data.contact.email).toBe(getResume().links.email);
+        expect(body.data.contact.contactForm).toBe('/contact');
+        expect(JSON.stringify(body)).not.toMatch(/<[A-Z_]+>/);
     });
 
     it("teapot is 418 I'm a teapot", async () => {

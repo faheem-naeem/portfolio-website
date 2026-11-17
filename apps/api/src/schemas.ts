@@ -150,10 +150,12 @@ export const HireMeResponse = data(
             available: z.boolean(),
             nextSteps: z.array(z.string()),
             contact: z.object({
+                email: z.string().email(),
                 linkedin: z.string().url(),
                 github: z.string().url().nullable(),
                 website: z.string().url(),
                 interviewRequest: z.string(),
+                contactForm: z.string(),
             }),
         })
         .openapi('HireMe'),

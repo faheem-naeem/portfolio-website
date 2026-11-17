@@ -40,6 +40,12 @@ pre {
     max-width: 60ch;
 }
 
+.intro__note {
+    max-width: 60ch;
+    color: var(--color-muted);
+    font-size: 0.9em;
+}
+
 .version-badge {
     display: inline-flex;
     border: 1px solid var(--color-accent);

@@ -9,17 +9,17 @@ Consumed as **TypeScript source** (no build step): `exports` point at `src/*.ts`
 import { getResume, getSites, getBugs, getManual } from '@faheem/data';
 ```
 
-| Getter                       | Source               | Real or SAMPLE                                                                                                                                          |
-| ---------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `getResume()`                | `src/resume.json`    | Real (from `apps/web/static/faheem-portfolio.html`). Skill `level`/`years` are SAMPLE (`"sample": true` per group). Email is the `<EMAIL>` placeholder. |
-| `getProjects()`              | `src/projects.json`  | `faheemnaeem-dev` is real; entries with `"sample": true` are placeholders.                                                                              |
-| `getCareer()`                | `src/career.json`    | SAMPLE release framing over real roles/dates.                                                                                                           |
-| `getStatus()`                | `src/status.json`    | SAMPLE joke components.                                                                                                                                 |
-| `getSites()` / `getSite(id)` | `src/sites.json`     | Every planned subdomain app (`id`, `url`, `title`, `pitch`, `kind`).                                                                                    |
-| `getFunFacts()`              | `src/fun-facts.json` | SAMPLE (used by `api` random-fact).                                                                                                                     |
-| `getIncidents()`             | `src/incidents.json` | SAMPLE (used by `status` incident history).                                                                                                             |
-| `getBugs()` / `getBug(slug)` | `src/bugs/*.ts`      | SAMPLE, generic, no employer/client details.                                                                                                            |
-| `getManual()`                | `src/manual.ts`      | SAMPLE.                                                                                                                                                 |
+| Getter                       | Source               | Content                                                                                   |
+| ---------------------------- | -------------------- | ----------------------------------------------------------------------------------------- |
+| `getResume()`                | `src/resume.json`    | Real (from `apps/web/static/faheem-portfolio.html`), incl. public email and skill levels. |
+| `getProjects()`              | `src/projects.json`  | Real personal projects (the portfolio and this subdomain network).                        |
+| `getCareer()`                | `src/career.json`    | Real timeline (roles, education, certifications) written as semver releases.              |
+| `getStatus()`                | `src/status.json`    | Humorous, work-related status components.                                                 |
+| `getSites()` / `getSite(id)` | `src/sites.json`     | Every subdomain app (`id`, `url`, `title`, `pitch`, `kind`).                              |
+| `getFunFacts()`              | `src/fun-facts.json` | Facts from the public professional profile (used by `api` random-fact).                   |
+| `getIncidents()`             | `src/incidents.json` | Humorous incident history (used by `status`).                                             |
+| `getBugs()` / `getBug(slug)` | `src/bugs/*.ts`      | Debugging stories, generic: no employer, client, product or colleague names.              |
+| `getManual()`                | `src/manual.ts`      | "How to work with me" manual.                                                             |
 
 Every getter validates with the Zod schemas in `src/schema.ts` (also exported, with inferred types) and memoises the result.
 
@@ -37,6 +37,6 @@ Inside template strings, escape backticks as `` \` `` and `${` as `\${`.
 ## Rules
 
 - Runtime code must not use Node-only APIs (no `fs`, `path`).
-- Invented content must carry `sample: true` until replaced with real data.
-- Never put a raw email, phone number, secret or employer/client data here.
+- No placeholder content: the optional `sample` fields remain in the schema but no data may set them (tests enforce this).
+- The only email allowed is the public contact address in `resume.json`. Never add phone numbers, secrets or employer/client data (bug stories stay generic).
 - `pnpm --filter @faheem/data test` validates everything; bad data fails CI.

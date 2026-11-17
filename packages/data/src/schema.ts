@@ -10,7 +10,7 @@ const httpsUrl = z.string().url().startsWith('https://');
 const slug = z
     .string()
     .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Expected a lowercase-kebab-case id');
-/** Marks invented placeholder content that the owner will replace. */
+/** Legacy marker for placeholder content. Launch data must never set it. */
 const sample = z.boolean().optional();
 
 export const SkillLevelSchema = z.enum(['expert', 'proficient', 'familiar']);
@@ -31,8 +31,8 @@ export const ResumeSchema = z
                 website: httpsUrl,
                 linkedin: httpsUrl,
                 github: httpsUrl.nullable(),
-                // Placeholder on purpose: never commit a raw email here.
-                email: z.literal('<EMAIL>'),
+                // Public contact address (already published on the main site).
+                email: z.string().email(),
             })
             .strict(),
         skills: z.array(

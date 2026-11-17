@@ -2,7 +2,7 @@
 import { getCareer } from '@faheem/data';
 import Intro from '../components/Intro.astro';
 import Base from '../layouts/Base.astro';
-import { buildReleases, formatMonth, gitLogLines } from '../lib/changelog';
+import { buildReleases, formatYear, gitLogLines } from '../lib/changelog';
 
 const releases = buildReleases(getCareer());
 const log = gitLogLines(releases).map((line, i) => ({
@@ -45,7 +45,7 @@ const log = gitLogLines(releases).map((line, i) => ({
                                 <p class="release__meta">
                                     {r.latest && <span class="badge badge--latest">Latest</span>}
                                     <span class={`label label--${r.label.toLowerCase()}`}>{r.label}</span>
-                                    <time datetime={r.date}>{formatMonth(r.date)}</time>
+                                    <time datetime={formatYear(r.date)}>{formatYear(r.date)}</time>
                                     <span class="release__hash">
                                         <span class="visually-hidden">commit </span>{r.hash}
                                     </span>

@@ -150,6 +150,11 @@ export function formatMonth(date: string): string {
     return `${months[Number(month) - 1] ?? ''} ${year}`.trim();
 }
 
+/** Year of a YYYY-MM-DD date. Career dates are only accurate to the year. */
+export function formatYear(date: string): string {
+    return date.slice(0, 4);
+}
+
 // ---------------------------------------------------------------- graph ---
 
 export interface GraphNode {

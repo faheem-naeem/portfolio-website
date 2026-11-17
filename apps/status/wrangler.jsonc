@@ -11,8 +11,7 @@
         {
             "binding": "DB",
             "database_name": "faheemnaeem-status",
-            // TODO: replace after `wrangler d1 create faheemnaeem-status`
-            "database_id": "00000000-0000-0000-0000-000000000000",
+            "database_id": "a95dd6f0-557f-4c14-8cc1-9cf95391124f",
             "migrations_dir": "migrations"
         }
     ],

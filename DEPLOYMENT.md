@@ -105,9 +105,7 @@ from the laptop before the first deploy and after every new migration file.
 
 ```sh
 cd apps/status
-npx wrangler d1 create faheemnaeem-status
-# → paste the printed id into d1_databases[0].database_id in apps/status/wrangler.jsonc
-#   (replaces 00000000-0000-0000-0000-000000000000)
+# already created; id committed in apps/status/wrangler.jsonc (d1_databases[0].database_id)
 npx wrangler d1 migrations apply faheemnaeem-status --remote
 npx wrangler deploy        # also registers the cron */10 * * * *
 ```
@@ -119,8 +117,7 @@ npx wrangler deploy        # also registers the cron */10 * * * *
 
 ```sh
 cd apps/metrics
-npx wrangler kv namespace create METRICS
-# → paste the printed id into kv_namespaces[0].id in apps/metrics/wrangler.jsonc
+# already created; id committed in apps/metrics/wrangler.jsonc (kv_namespaces[0].id)
 npx wrangler secret put GITHUB_TOKEN       # optional; paste <GITHUB_TOKEN>
 npx wrangler secret put WAKATIME_API_KEY   # optional; paste <WAKATIME_API_KEY>
 npx wrangler secret put REFRESH_TOKEN      # optional; paste <REFRESH_TOKEN>
@@ -135,8 +132,7 @@ npx wrangler deploy                        # also registers the cron 0 */6 * * *
 
 ```sh
 cd apps/api
-npx wrangler d1 create faheemnaeem-api
-# → paste the printed id into d1_databases[0].database_id in apps/api/wrangler.jsonc
+# already created; id committed in apps/api/wrangler.jsonc (d1_databases[0].database_id)
 npx wrangler d1 migrations apply faheemnaeem-api --remote
 npx wrangler secret put TURNSTILE_SECRET   # paste <TURNSTILE_SECRET>
 npx wrangler secret put IP_HASH_SALT       # paste a long random string <RANDOM_STRING>
@@ -144,24 +140,21 @@ npx wrangler secret put CTF_FLAG           # paste <CTF_FLAG> (see 2.10 step 1)
 npx wrangler deploy
 ```
 
-1. **Email Routing destination verification** (needed for interview-request emails):
-   Dashboard → `faheemnaeem.dev` → Email → Email Routing → Enable (accept the MX/TXT records it adds)
-   → Destination addresses → Add `<YOUR_EMAIL>` → click the link in the verification email.
-2. In `apps/api/wrangler.jsonc` set `vars.NOTIFY_EMAIL` to that verified address (replaces `<YOUR_EMAIL>`).
-   `NOTIFY_FROM` (`api@faheemnaeem.dev`) is already on the Email Routing domain.
-   Optional hardening: `"send_email": [{ "name": "SEND_EMAIL", "destination_address": "<YOUR_EMAIL>" }]`.
+1. **Email notifications are off.** Email Routing is not set up on faheemnaeem.dev, so `apps/api/wrangler.jsonc`
+   has no `send_email` binding; interview requests are stored in D1 only. To enable email later, follow
+   "Email notifications (re-enable later)" in `apps/api/README.md`.
+2. Nothing to do for email at deploy time.
 3. **Turnstile widget**: Dashboard → Turnstile → Add widget → name `faheemnaeem-api`, hostnames
-   `faheemnaeem.dev` plus the subdomain that will host the interview form, mode Managed → Create.
-   The **secret key** goes in `TURNSTILE_SECRET` (above). The **site key** goes in the widget on the page that hosts the form.
-   No page hosts this form yet (see follow-ups), so until then `POST /v1/interview-requests` only answers with validation/Turnstile errors.
+   `faheemnaeem.dev` and `api.faheemnaeem.dev`, mode Managed → Create.
+   The **secret key** goes in `TURNSTILE_SECRET` (above). The public **site key** is committed as
+   `vars.TURNSTILE_SITE_KEY` in `apps/api/wrangler.jsonc`; the form is served at `https://api.faheemnaeem.dev/contact`.
 4. Generate a random salt, for example `openssl rand -hex 32`, and paste it at the `IP_HASH_SALT` prompt.
 
 ### 2.9 ask — `ask.faheemnaeem.dev` (Worker + Workers AI + D1)
 
 ```sh
 cd apps/ask
-npx wrangler d1 create faheemnaeem-ask
-# → paste the printed id into d1_databases[0].database_id in apps/ask/wrangler.jsonc
+# already created; id committed in apps/ask/wrangler.jsonc (d1_databases[0].database_id)
 npx wrangler d1 migrations apply faheemnaeem-ask --remote
 npx wrangler secret put TURNSTILE_SECRET   # paste <TURNSTILE_SECRET> of the ask widget
 npx wrangler deploy
@@ -183,8 +176,7 @@ npx wrangler deploy
 2. Create the database and set secrets:
    ```sh
    cd apps/ctf
-   npx wrangler d1 create faheemnaeem-ctf
-   # → paste the printed id into d1_databases[0].database_id in apps/ctf/wrangler.jsonc
+   # already created; id committed in apps/ctf/wrangler.jsonc (d1_databases[0].database_id)
    npx wrangler d1 migrations apply faheemnaeem-ctf --remote
    npx wrangler secret put FLAG_HASH       # paste <FLAG_SHA256_HEX>
    npx wrangler secret put IP_HASH_SALT    # paste a long random string <RANDOM_STRING>
@@ -199,20 +191,22 @@ npx wrangler deploy
 7. Hall of Fame entries need manual approval: see "Moderating the Hall of Fame" in `apps/ctf/README.md`.
 8. The walkthrough `apps/ctf/CTF_SOLUTION.md` is gitignored; keep it local.
 
-### Placeholder ids to replace after creating resources
+### Resource ids (already filled in)
 
-| File | Field | Replace with output of |
+The D1 databases and the KV namespace exist, and their ids (not secret) are committed so deploys use the
+right resources:
+
+| File | Field | Resource |
 |---|---|---|
-| `apps/status/wrangler.jsonc` | `d1_databases[0].database_id` | `wrangler d1 create faheemnaeem-status` |
-| `apps/metrics/wrangler.jsonc` | `kv_namespaces[0].id` | `wrangler kv namespace create METRICS` |
-| `apps/api/wrangler.jsonc` | `d1_databases[0].database_id` | `wrangler d1 create faheemnaeem-api` |
-| `apps/api/wrangler.jsonc` | `vars.NOTIFY_EMAIL` (`<YOUR_EMAIL>`) | your verified Email Routing destination |
-| `apps/ask/wrangler.jsonc` | `d1_databases[0].database_id` | `wrangler d1 create faheemnaeem-ask` |
-| `apps/ask/wrangler.jsonc` | `vars.TURNSTILE_SITE_KEY` (`<TURNSTILE_SITE_KEY>`) | Turnstile widget site key |
-| `apps/ctf/wrangler.jsonc` | `d1_databases[0].database_id` | `wrangler d1 create faheemnaeem-ctf` |
+| `apps/status/wrangler.jsonc` | `d1_databases[0].database_id` | D1 `faheemnaeem-status` |
+| `apps/metrics/wrangler.jsonc` | `kv_namespaces[0].id` | KV `METRICS` |
+| `apps/api/wrangler.jsonc` | `d1_databases[0].database_id` | D1 `faheemnaeem-api` |
+| `apps/ask/wrangler.jsonc` | `d1_databases[0].database_id` | D1 `faheemnaeem-ask` |
+| `apps/ctf/wrangler.jsonc` | `d1_databases[0].database_id` | D1 `faheemnaeem-ctf` |
 
-All placeholder ids are `00000000-0000-0000-0000-000000000000`. Commit the real D1/KV ids
-(not secret) so Workers Builds deploys the right resources.
+The public Turnstile site key is set as `vars.TURNSTILE_SITE_KEY` in `apps/api/wrangler.jsonc` and
+`apps/ask/wrangler.jsonc`. If a resource is ever recreated (`wrangler d1 create ...` /
+`wrangler kv namespace create METRICS`), update the matching id here.
 
 ### Secrets summary (`wrangler secret put <NAME>`, run inside `apps/<id>`)
 
@@ -293,27 +287,15 @@ Workers Free plan limits (account-wide) and the expected use of this project:
 | KV writes | 1,000 / day | ~8 (metrics: ≤ 2 keys × 4 runs) | Counters use D1, not KV |
 | KV reads | 100,000 / day | one per metrics page view | |
 | Workers AI | 10,000 Neurons / day | ≤ ~1,200 (`DAILY_CAP=150` × 5–8 Neurons) | Past the allowance calls fail, never billed |
-| Email Routing | free | 1 email per interview request | Rate limited 5/hour/IP |
+| Email Routing | free | not used yet (optional interview-request emails) | Rate limited 5/hour/IP if enabled |
 | Turnstile | free | 2 widgets | |
 | GitHub Actions | free for public repos | 1 weekly run (a11y) | Not a Cloudflare cron |
 
 ## 6. Post-deploy follow-ups
 
-1. **Add the "Explore" section to the main site** (`apps/web`) linking every subdomain with its
-   one-line pitch from `packages/data/src/sites.json`. Deliberately not done before deploy, so the
-   live site never links to subdomains that do not exist yet.
-2. **Replace SAMPLE data in `packages/data`** (entries marked `sample: true` or labelled SAMPLE):
-   - `src/resume.json`: skill `level`/`years` (`"sample": true` per group); set `email` (now `<EMAIL>`) if you want it shown
-   - `src/projects.json`: projects with `"sample": true`
-   - `src/career.json`: release framing
-   - `src/status.json`: joke status components
-   - `src/fun-facts.json`: random facts (api)
-   - `src/incidents.json`: incident history (status)
-   - `src/manual.ts`: "how to work with me" content
-   - `src/bugs/float-money.ts`, `src/bugs/retry-storm.ts`, `src/bugs/timezone-sunday.ts`: bug museum entries
-   Then run `npx -y pnpm@9.15.9 turbo run test --filter=@faheem/data` and redeploy the apps that use them.
-3. **Set `EMAIL` in `packages/data/src/resume.json`** (`"email": "<EMAIL>"`); the resume and api apps hide the placeholder until then.
-4. **Host the interview-request form** with the api Turnstile site key on a faheemnaeem.dev page
-   (no page renders it yet), then update the api Turnstile widget hostnames.
-5. Optional: lock `send_email` to the verified destination (2.8 step 2).
-6. Optional: drop `packages/*` from the main site's build watch paths (`apps/web` does not import any workspace package), so shared-package edits do not rebuild production.
+Done in the launch-content change: the main site's "Explore" section, real content in `packages/data`
+(no `sample` data remains), the public email, and the interview-request form at
+`https://api.faheemnaeem.dev/contact`. Remaining:
+
+1. Optional: enable interview-request emails (see `apps/api/README.md`).
+2. Optional: drop `packages/*` from the main site's build watch paths (`apps/web` does not import any workspace package), so shared-package edits do not rebuild production.

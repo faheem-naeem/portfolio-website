@@ -71,6 +71,7 @@ export function renderDocsPage(): string {
 <section class="api-intro" aria-labelledby="api-title">
 <h1 id="api-title">${escapeHtml(site.title)}</h1>
 <p>${escapeHtml(site.pitch)} Read-only JSON under <code>/v1</code>, CORS-enabled for GET. Spec: <a href="/openapi.json">/openapi.json</a> (OpenAPI 3.1).</p>
+<p>Hiring? <a href="/contact">Send an interview request</a>.</p>
 <p class="try-it"><strong>Try it:</strong> <a href="${TRY_IT}"><code>GET ${escapeHtml(TRY_IT)}</code></a></p>
 <noscript><p>The interactive reference needs JavaScript. The raw spec is at <a href="/openapi.json">/openapi.json</a>.</p></noscript>
 </section>

@@ -277,6 +277,16 @@ describe('email notification', () => {
         );
     });
 
+    it('skips email silently without a SEND_EMAIL binding but stores the row', async () => {
+        mockTurnstile(true);
+        const h = harness({ SEND_EMAIL: undefined });
+        expect((await h.request(PATH, post(validBody))).status).toBe(201);
+        await Promise.all(h.waitUntil);
+        expect(h.sent).toHaveLength(0);
+        expect(h.db.rows('SELECT * FROM interview_requests')).toHaveLength(1);
+        expect(console.error).not.toHaveBeenCalled();
+    });
+
     it('builds a MIME message that user input cannot inject headers into', () => {
         const raw = buildRawEmail('api@faheemnaeem.dev', 'owner@example.com', {
             id: '00000000-0000-4000-8000-000000000000',

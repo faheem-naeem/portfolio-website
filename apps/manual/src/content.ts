@@ -1,14 +1,10 @@
-// App-local manual content that @faheem/data does not have yet (Quick start,
-// extra Known bugs, FAQ) plus the section plan. SAMPLE: replace with real text,
-// ideally by moving it into packages/data/src/manual.ts.
+// App-local manual content (Quick start, extra Known bugs, FAQ) plus the
+// section plan. The main body comes from packages/data/src/manual.ts.
 //
 // Markdown, rendered with the same renderer as the data body (raw HTML is escaped).
 // Callouts: start a blockquote with [!NOTE], [!TIP] or [!WARNING].
 
 export const MANUAL_VERSION = '1.0';
-
-/** True while the app-local text below is placeholder content. */
-export const APP_CONTENT_SAMPLE = true;
 
 export type SectionSource =
     /** Markdown from a `## heading` of the @faheem/data manual body. */
@@ -30,38 +26,45 @@ export interface SectionPlan {
     clock?: boolean;
 }
 
-const quickStart = `SAMPLE: the short version, if you only read one section.
+const quickStart = `The short version, if you only read one section.
 
 - Send context in writing first: the goal, the deadline and what "done" looks like.
-- Async is my default; I reply within one working day.
+- Async is my default; I reply within one working day, usually much sooner.
+- I am on Mountain Time (Calgary). Mornings are best for live discussions.
 - Ask "why" as often as you like. I will do the same.
-- Bad news early beats good news late.
+- Bad news early beats good news late, in both directions.
 
 > [!TIP]
-> SAMPLE: a short written brief gets a faster, better answer than a meeting invite with no agenda.`;
+> A short written brief gets a faster, better answer than a meeting invite with no agenda.`;
 
-const knownBugsExtra = `SAMPLE: more open issues, with workarounds.
+const knownBugsExtra = `- **Goes quiet when deep in a problem.** Workaround: ping me. I would rather be interrupted than leave you blocked.
+- **Wants to fix the neighbouring code too.** I keep those improvements in separate, clearly labelled pull requests so reviews stay small.
 
-- **Over-explains in pull request descriptions.** Workaround: skim the TL;DR at the top.
-- **Gets quiet when deep in a problem.** Workaround: ping me; I would rather be interrupted than stuck.
-
-> [!WARNING]
-> SAMPLE: I will push back on scope added late in a sprint. It is not personal; it is about shipping.`;
+> [!NOTE]
+> I will push back, politely, on scope added late in a sprint. It is not personal; it is about shipping what we promised.`;
 
 const faq = `### Can we just hop on a quick call?
 
-SAMPLE: Yes, but send two lines of context first so the call is actually quick.
+Yes. Send two lines of context first so the call is actually quick, and I will share notes afterwards.
 
 ### What is the best way to give me a task?
 
-SAMPLE: A short written brief with the goal, constraints and deadline. Links beat attachments.
+A short written brief with the goal, the constraints and the deadline. Links to tickets, designs or data beat attachments.
+
+### What kind of work do you enjoy most?
+
+Taking a product from an unclear idea to a stable application: full-stack features, APIs and integrations, and practical LLM workflows that have to be reliable, not just impressive in a demo.
 
 ### Do you work outside your hours?
 
-SAMPLE: For real incidents, yes. For everything else, it can wait until morning.
+For real production incidents, yes. Everything else can wait until the next working morning, and I do not expect replies from others outside their hours either.
+
+### How do I request an interview?
+
+Use the [interview request form](https://api.faheemnaeem.dev/contact), email me, or message me on LinkedIn (see Support below).
 
 > [!NOTE]
-> SAMPLE: this manual is versioned like software. If something here is wrong, file a bug (see Support).`;
+> This manual is versioned like software. If something here is wrong or out of date, file a bug through any channel in Support.`;
 
 /** Section order shown on the page (and in the sidebar). */
 export const SECTION_PLAN: SectionPlan[] = [

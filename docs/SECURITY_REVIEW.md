@@ -42,7 +42,7 @@ Results:
   `github-actions[bot]` noreply address (a11y workflow), `a@b.com` (ctf test input), and the owner's
   public contact Gmail address in `apps/web/static/faheem-portfolio.html` and `readme.md`. The latter
   is a deliberate, already-public contact link on the live site; left unchanged (`apps/web` is out of scope).
-  `packages/data/src/resume.json` keeps `"email": "<EMAIL>"` and the apps never print the placeholder.
+  `packages/data/src/resume.json` holds only the public contact email that is already published on the main site.
 - History check: `git log --all --name-only` shows no `.dev.vars`, `.env` or `CTF_SOLUTION.md` was ever committed.
 - `.gitignore` covers `.dev.vars`, `.env`, `.env.*` (except `.env.example`), `.wrangler/`, `dist/`.
 
@@ -86,7 +86,7 @@ Handwritten validation in ctf is equivalent to a schema (type check, length, all
 ## 5. Configuration
 
 - Every app's `wrangler.jsonc`: name `faheemnaeem-<id>`, `compatibility_date: 2026-10-01`,
-  custom-domain route `<id>.faheemnaeem.dev`, D1/KV ids `00000000-0000-0000-0000-000000000000` with TODO comments.
+  custom-domain route `<id>.faheemnaeem.dev`, real D1/KV resource ids (identifiers, not secrets).
 - Cron triggers across all apps: 2 of the 5 allowed per account (status `*/10 * * * *`, metrics `0 */6 * * *`).
 - The a11y GitHub workflow requests only `contents: write`, has no `push` trigger (no build loop), and commits only to `master`.
 

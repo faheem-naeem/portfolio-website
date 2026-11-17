@@ -9,8 +9,7 @@
         {
             "binding": "DB",
             "database_name": "faheemnaeem-ctf",
-            // TODO: replace after `wrangler d1 create faheemnaeem-ctf`
-            "database_id": "00000000-0000-0000-0000-000000000000",
+            "database_id": "eb083c4d-a6ba-4891-ab5b-f117dce9cd93",
             "migrations_dir": "migrations",
         },
     ],
