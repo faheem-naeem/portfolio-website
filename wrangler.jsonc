@@ -9,7 +9,10 @@
     // Static-assets-only Worker: no script, just serve the webpack output.
     "assets": {
         "directory": "./apps/web/public"
-    }
+    },
+    // Required by `npx wrangler preview`, which Workers Builds runs for
+    // non-production branches. Empty = reuse the top-level settings above.
+    "previews": {}
     // No "routes" on purpose: the custom domains (faheemnaeem.dev + 1 other)
     // are managed in the dashboard, and leaving them out here means a deploy
     // does not change them.
