@@ -6,7 +6,7 @@ Live coding dashboard for **metrics.faheemnaeem.dev**: a Cloudflare Worker (Hono
     - With `GITHUB_TOKEN`: one GraphQL request for followers, stars, the 12-month contribution calendar (heatmap + streaks), top languages across up to 100 public non-fork repos, and the last 10 commits by the owner in the 5 most recently pushed repos.
     - Without a token: unauthenticated REST API (user, repos, languages for at most 30 repos, commits from the 3 most recently pushed repos). No calendar or streaks; the page says "Connect a token to show the contribution calendar". Unauthenticated calls share GitHub's 60 requests/hour limit per IP, so a token is recommended.
 - **WakaTime** (optional, `WAKATIME_API_KEY`): last 7 days total, hours per day (bar chart), by language and by editor. The section is hidden when the key is unset.
-- **Now**: "Currently learning" and "Now reading" are SAMPLE content in `src/content.ts` (not in `@faheem/data` yet).
+- **Now**: "Currently learning" and "Now reading" live in `src/content.ts`.
 - Server-rendered HTML with inline SVG (heatmap with a per-month table fallback, language donut with legend and text percentages, hours bars). No client JavaScript, no chart library.
 
 ## Routes
@@ -62,8 +62,8 @@ npx -y pnpm@9.15.9 --filter metrics build       # wrangler deploy --dry-run
 
 Run from `apps/metrics`:
 
-1. Create the KV namespace: `npx wrangler kv namespace create METRICS`
-2. Copy the printed `id` into `wrangler.jsonc` (replace `00000000-0000-0000-0000-000000000000`).
+1. KV namespace: already created; its id is committed in `wrangler.jsonc` (to recreate: `npx wrangler kv namespace create METRICS` and update the id).
+2. (nothing to do)
 3. Create the GitHub token (optional but recommended): GitHub > Settings > Developer settings > Fine-grained tokens > Generate. Repository access "Public repositories", no permissions. Then: `npx wrangler secret put GITHUB_TOKEN` and paste `<GITHUB_TOKEN>`.
 4. Optional: `npx wrangler secret put WAKATIME_API_KEY` (value `<WAKATIME_API_KEY>`).
 5. Optional: `npx wrangler secret put REFRESH_TOKEN` (value `<REFRESH_TOKEN>`).

@@ -66,7 +66,7 @@ export function buildProfile(): string {
             ),
         );
     }
-    // Placeholder projects (sample: true) are left out so they are never "facts".
+    // Legacy placeholder projects (flagged sample) are left out so they are never "facts".
     const projects = getProjects().filter((p) => !p.sample);
     if (projects.length) {
         lines.push(

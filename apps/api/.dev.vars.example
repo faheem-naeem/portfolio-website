@@ -1,7 +1,11 @@
 # Copy to .dev.vars for `wrangler dev`. Never commit .dev.vars.
 # Turnstile test secret that always passes: 1x0000000000000000000000000000000AA
 TURNSTILE_SECRET=<TURNSTILE_SECRET>
-NOTIFY_EMAIL=<YOUR_EMAIL>
+# Turnstile test site key that always passes (overrides the wrangler.jsonc var locally): 1x00000000000000000000AA
+TURNSTILE_SITE_KEY=<TURNSTILE_SITE_KEY>
 IP_HASH_SALT=<RANDOM_STRING>
 # Final flag for the ctf.faheemnaeem.dev hunt (generate with apps/ctf/scripts/make-flag.mjs).
 CTF_FLAG=<CTF_FLAG>
+# Only if email notifications are re-enabled (see README "Email notifications"):
+# NOTIFY_EMAIL=<YOUR_EMAIL>
+# NOTIFY_FROM=<SENDER_ON_YOUR_DOMAIN>

@@ -2,7 +2,7 @@
 import { getManual, getResume } from '@faheem/data';
 import Base from '../components/Base.astro';
 import Callout from '../components/Callout.astro';
-import { APP_CONTENT_SAMPLE, MANUAL_VERSION } from '../content';
+import { MANUAL_VERSION } from '../content';
 import { buildSections } from '../lib/manual';
 import { formatBuildDate, offsetSummary, yearOffsets } from '../lib/time';
 
@@ -17,7 +17,7 @@ const tzOffsets = offsetSummary(resume.timezone, builtAt);
 const tzIso = (yearOffsets(resume.timezone, builtAt)[0] ?? 'UTC+00:00')
     .replace('UTC', '')
     .replace('\u2212', '-');
-const isSample = Boolean(manual.frontmatter.sample) || APP_CONTENT_SAMPLE;
+const isSample = Boolean(manual.frontmatter.sample);
 ---
 
 <Base

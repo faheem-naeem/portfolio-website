@@ -1,3 +1,4 @@
+import { getResume } from '@faheem/data';
 import { describe, expect, it } from 'vitest';
 import app from '../src/index';
 import { stripAnsi, visibleWidth } from '../src/ansi';
@@ -77,12 +78,16 @@ describe('terminal clients', () => {
         expect(body).toContain('https://github.com/faheem-naeem');
     });
 
-    it('never prints the email placeholder', async () => {
+    it('shows the real contact email and no placeholders', async () => {
+        const email = getResume().links.email;
+        expect(email).toMatch(/^[\w.+-]+@[\w-]+(\.[\w-]+)+$/);
+        expect(renderText('contact')).toContain(email);
         for (const s of SECTIONS) {
-            expect(renderText(s)).not.toContain('<EMAIL>');
+            expect(renderText(s)).not.toMatch(/<[A-Z_]+>/);
         }
         const json = await (await app.request('/resume.json')).text();
-        expect(json).not.toContain('<EMAIL>');
+        expect(JSON.parse(json).links.email).toBe(email);
+        expect(json).not.toMatch(/<[A-Z_]+>/);
     });
 
     it('nocolor output equals stripped colour output', async () => {
@@ -178,7 +183,7 @@ describe('other routes', () => {
         expect(res.headers.get('Content-Type')).toMatch(/application\/json/);
         const json = (await res.json()) as { name: string; links: object };
         expect(json.name).toBe('Faheem Naeem');
-        expect(json.links).not.toHaveProperty('email');
+        expect(json.links).toHaveProperty('email', getResume().links.email);
     });
 
     it('/resume.pdf redirects to the main site', async () => {

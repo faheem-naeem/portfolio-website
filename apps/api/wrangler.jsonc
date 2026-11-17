@@ -9,19 +9,16 @@
         {
             "binding": "DB",
             "database_name": "faheemnaeem-api",
-            // TODO: replace after `wrangler d1 create faheemnaeem-api`
-            "database_id": "00000000-0000-0000-0000-000000000000",
+            "database_id": "d4522378-2e7d-4851-8dcd-bf3bc847e26b",
             "migrations_dir": "migrations",
         },
     ],
-    // Email Routing: lets the Worker email NOTIFY_EMAIL (must be a verified
-    // destination address in Email Routing).
-    "send_email": [{ "name": "SEND_EMAIL" }],
+    // Email notifications are off: Email Routing is not set up on this domain.
+    // Interview requests are still stored in D1. See README "Email
+    // notifications" to re-enable the `send_email` binding later.
     "vars": {
-        // TODO: replace with your verified Email Routing destination address.
-        "NOTIFY_EMAIL": "<YOUR_EMAIL>",
-        // Sender: any address on faheemnaeem.dev (Email Routing must be enabled).
-        "NOTIFY_FROM": "api@faheemnaeem.dev",
+        // Public Turnstile site key for the /contact form (not a secret).
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAGF8dZt1jqFYAKMT",
     },
     // Secrets (not in this file): TURNSTILE_SECRET, IP_HASH_SALT, CTF_FLAG.
     // Set with `wrangler secret put <NAME>`; locally use .dev.vars.

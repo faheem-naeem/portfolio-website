@@ -7,13 +7,14 @@ The resume as a public JSON API: a Hono Worker on Cloudflare Workers (Free plan)
 | Method | Path                                                           | Notes                                                                                                          |
 | ------ | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | GET    | `/`                                                            | Interactive docs (Scalar `@scalar/api-reference@1.76.4` from jsDelivr, pinned with SRI) plus a "Try it" banner |
+| GET    | `/contact`, `/contact.js`                                      | Accessible interview-request form with a Turnstile widget (see below)                                          |
 | GET    | `/openapi.json`                                                | OpenAPI 3.1 spec                                                                                               |
 | GET    | `/v1/profile`                                                  | Profile and public links (no email)                                                                            |
 | GET    | `/v1/skills?level=expert&q=react`                              | `level`: expert, proficient or familiar. `q`: case-insensitive substring                                       |
 | GET    | `/v1/experience`, `/v1/experience/:index`                      | `0` = most recent role                                                                                         |
 | GET    | `/v1/projects?status=live&tech=typescript`, `/v1/projects/:id` | `tech` is a case-insensitive exact match                                                                       |
 | GET    | `/v1/random-fact`                                              | From `getFunFacts()`, `Cache-Control: no-store`                                                                |
-| GET    | `/v1/hire-me`                                                  | 200 with a playful message and contact links                                                                   |
+| GET    | `/v1/hire-me`                                                  | 200 with a playful message and contact links (email, LinkedIn, form)                                           |
 | GET    | `/teapot`                                                      | 418 I'm a teapot                                                                                               |
 | POST   | `/v1/interview-requests`                                       | See below                                                                                                      |
 
@@ -22,7 +23,15 @@ Cross-cutting:
 - **Errors** always look like `{"error":{"code","message"}}`. Validation errors also include `details: [{path, message}]`.
 - **Caching**: successful GETs get an `ETag` (and `304` on `If-None-Match`) plus `Cache-Control: public, max-age=300, s-maxage=3600`. Errors and POSTs get `no-store`.
 - **CORS (Cross-Origin Resource Sharing)**: GET from any origin (`*`). POST only from `https://faheemnaeem.dev` and direct subdomains (`https://<sub>.faheemnaeem.dev`). Other origins get a `403 FORBIDDEN_ORIGIN` from the server, not just a missing CORS header.
-- **Security headers** on every response: CSP, HSTS, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`. JSON uses `default-src 'none'`. The docs page allows scripts only from `'self'` (`/docs.js`) and the one pinned Scalar file. It also allows inline styles, because Scalar injects `<style>` tags.
+- **Security headers** on every response: CSP, HSTS, `nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`. JSON uses `default-src 'none'`. The docs page allows scripts only from `'self'` (`/docs.js`) and the one pinned Scalar file. It also allows inline styles, because Scalar injects `<style>` tags. The `/contact` pages allow scripts from `'self'` (`/contact.js`) and `https://challenges.cloudflare.com` (Turnstile), frames only from Turnstile, and `form-action 'self'`.
+
+### GET /contact
+
+An HTML form (name, company, email, role, message) built with the `@faheem/ui` layout and tokens, plus a Cloudflare Turnstile widget whose public site key comes from the `TURNSTILE_SITE_KEY` var in `wrangler.jsonc`.
+
+- **With JavaScript**, `/contact.js` posts JSON to `/v1/interview-requests` (the widget's `cf-turnstile-response` is sent as `turnstileToken`) and announces success or errors in an `aria-live` region.
+- **Without JavaScript**, the browser posts the form as `application/x-www-form-urlencoded` to the same URL, and the Worker answers with an HTML thank-you (or error) page. Turnstile itself needs JavaScript, so in practice no-JS visitors are pointed to email and LinkedIn on the page.
+- Without a site key the page renders a notice instead of the widget.
 
 ### POST /v1/interview-requests
 
@@ -46,9 +55,31 @@ The request goes through these steps, in order:
 3. Rate limit (`429 RATE_LIMITED` + `Retry-After`).
 4. Turnstile check (`403 TURNSTILE_FAILED`, or `503 NOT_CONFIGURED` without a secret).
 5. Insert into D1 `interview_requests`.
-6. Email notification in the background (`ctx.waitUntil`).
+6. Optional email notification in the background (`ctx.waitUntil`).
 
-The response is `201`. If the email fails, the error is logged (`notify_failed`) and the request still succeeds, because the row is already stored. The email is skipped (and logged as `notify_skipped`) while `NOTIFY_EMAIL` is still the `<YOUR_EMAIL>` placeholder.
+The response is `201`. Email notifications are **off in production**: Email Routing is not set up on faheemnaeem.dev, so `wrangler.jsonc` has no `send_email` binding and the Worker skips the email silently. Requests are read from D1:
+
+```sh
+npx wrangler d1 execute faheemnaeem-api --remote --command "SELECT created_at, name, company, email, role FROM interview_requests ORDER BY created_at DESC LIMIT 20"
+```
+
+If a binding is configured and sending fails, the error is logged (`notify_failed`) and the request still succeeds, because the row is already stored.
+
+### Email notifications (re-enable later)
+
+1. Dashboard > faheemnaeem.dev > Email > Email Routing: enable it and verify the destination address `<YOUR_EMAIL>`.
+2. In `wrangler.jsonc` add:
+
+    ```jsonc
+    "send_email": [{ "name": "SEND_EMAIL", "destination_address": "<YOUR_EMAIL>" }],
+    "vars": {
+        "TURNSTILE_SITE_KEY": "...",
+        "NOTIFY_EMAIL": "<YOUR_EMAIL>",
+        "NOTIFY_FROM": "api@faheemnaeem.dev"
+    }
+    ```
+
+3. Deploy. While `NOTIFY_EMAIL` or `NOTIFY_FROM` is missing (or still a `<...>` placeholder) the email is skipped and logged as `notify_skipped`.
 
 The token comes from a Cloudflare Turnstile widget on a faheemnaeem.dev page. Turnstile is Cloudflare's free CAPTCHA alternative. The widget's site key is public. Only the secret lives here.
 
@@ -84,24 +115,19 @@ Tests use Vitest with `app.fetch(req, env, ctx)`. D1 is faked with real SQLite (
 
 ## Deploy (one-time steps; placeholders only)
 
-1. **D1**: run `npx wrangler d1 create faheemnaeem-api`. Put the printed id into `database_id` in `wrangler.jsonc`, replacing `00000000-0000-0000-0000-000000000000`.
+1. **D1**: done. The database `faheemnaeem-api` exists and its id is in `wrangler.jsonc` (to recreate: `npx wrangler d1 create faheemnaeem-api` and update `database_id`).
 2. **Migrations**: `npx wrangler d1 migrations apply faheemnaeem-api --remote`
 3. **Turnstile** (Dashboard > Turnstile > Add widget):
-    - Add hostnames `faheemnaeem.dev` and any subdomain that hosts the form.
-    - The site key goes in that page's widget.
+    - Add hostnames `faheemnaeem.dev` and `api.faheemnaeem.dev` (the `/contact` form).
+    - The public site key is already set as `vars.TURNSTILE_SITE_KEY` in `wrangler.jsonc`.
     - Store the secret with `npx wrangler secret put TURNSTILE_SECRET` and paste `<TURNSTILE_SECRET>`.
 4. **IP hash salt**: `npx wrangler secret put IP_HASH_SALT` and paste a long random string, `<RANDOM_STRING>`.
-5. **Email Routing** (Dashboard > faheemnaeem.dev > Email > Email Routing):
-    - Enable it.
-    - Add and verify the destination address `<YOUR_EMAIL>`.
-    - In `wrangler.jsonc`, set `vars.NOTIFY_EMAIL` to that verified address.
-    - `NOTIFY_FROM` (`api@faheemnaeem.dev`) must be on the Email Routing domain.
-    - Optional: lock the binding with `"send_email": [{ "name": "SEND_EMAIL", "destination_address": "<YOUR_EMAIL>" }]`.
+5. **Email Routing**: not used (see "Email notifications" above to enable it later).
 6. **CTF flag** (for the ctf.faheemnaeem.dev puzzle hunt): run `node apps/ctf/scripts/make-flag.mjs` from the repo root, then `npx wrangler secret put CTF_FLAG` and paste the printed flag, `<CTF_FLAG>`. Set its hash on the ctf Worker as `FLAG_HASH` (see `apps/ctf/README.md`). Without it the hidden CTF route answers 503.
 7. **Deploy**: `npx wrangler deploy` from `apps/api`. The custom domain `api.faheemnaeem.dev` is created from `routes`.
 
 Free-plan notes:
 
 - GETs do no I/O.
-- A POST makes at most 1 Turnstile subrequest, 2 D1 statements (1 batch) for the rate limit, 1 D1 insert and 1 email.
+- A POST makes at most 1 Turnstile subrequest, 2 D1 statements (1 batch) for the rate limit, 1 D1 insert and (only if enabled) 1 email.
 - The Scalar bundle (about 4.9 MB) is served by jsDelivr, not by this Worker.

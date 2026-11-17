@@ -10,8 +10,7 @@
     "kv_namespaces": [
         {
             "binding": "METRICS",
-            // TODO: replace after `wrangler kv namespace create METRICS`
-            "id": "00000000-0000-0000-0000-000000000000",
+            "id": "ccb75a4fdeeb43d8910d74c12abdfc2d",
         },
     ],
     // Secrets (set with `wrangler secret put`, never here):

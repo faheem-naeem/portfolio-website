@@ -5,11 +5,11 @@ Static Astro site, served by Cloudflare Workers static assets (no Worker script,
 
 ## Content
 
-- Body: `getManual()` from `@faheem/data` (`packages/data/src/manual.ts`, SAMPLE), split on `## ` headings and
+- Body: `getManual()` from `@faheem/data` (`packages/data/src/manual.ts`), split on `## ` headings and
   rendered at build time with `marked`. Raw HTML in markdown is escaped, never passed through.
 - Section order and display titles: `SECTION_PLAN` in `src/content.ts`. Data sections not listed there are still
   rendered (before "Known bugs"), so nothing is dropped silently.
-- App-local SAMPLE text not yet in `@faheem/data` (Quick start, extra Known bugs, FAQ): `src/content.ts`.
+- App-local text (Quick start, extra Known bugs, FAQ): `src/content.ts`.
 - "What I'm great at" comes from `resume.focusAreas`; Support links from `resume.links` and `sites.json`
   (the email is a placeholder in the data, so it is not shown).
 - Callouts: `src/components/Callout.astro`, or in markdown `> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`.

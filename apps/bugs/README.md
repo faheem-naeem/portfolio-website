@@ -1,7 +1,7 @@
 # bugs — The Bug Museum
 
 Static Astro site for **bugs.faheemnaeem.dev**: a gallery of memorable bugs presented as museum exhibits.
-Exhibits come from `getBugs()` in `@faheem/data` (currently all SAMPLE entries, shown with a "Sample exhibit" badge).
+Exhibits come from `getBugs()` in `@faheem/data` (generic debugging stories with no employer, client or product details; a legacy `sample` flag, unused today, would add a "Sample exhibit" badge).
 
 ## Pages
 

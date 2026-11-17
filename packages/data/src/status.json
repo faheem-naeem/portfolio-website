@@ -1,30 +1,29 @@
 {
-    "sample": true,
     "components": [
         {
-            "name": "Coffee intake",
+            "name": "Code review queue",
             "state": "operational",
-            "message": "SAMPLE: Nominal. Second cup in progress."
+            "message": "Reviews go out within one working day. Nitpicks are clearly labelled as nitpicks."
         },
         {
-            "name": "Sleep schedule",
+            "name": "Prompt engineering",
             "state": "degraded",
-            "message": "SAMPLE: Elevated latency after late-night deploys."
+            "message": "Rewording the same prompt for the fourth time. Output quality improving with each attempt."
         },
         {
             "name": "Inbox zero",
             "state": "outage",
-            "message": "SAMPLE: Known issue. No ETA."
+            "message": "Known issue since 2017. Workaround: send a short message with a clear subject line."
         },
         {
-            "name": "Side projects",
+            "name": "Legacy code modernisation",
             "state": "maintenance",
-            "message": "SAMPLE: Scheduled refactor of everything, again."
+            "message": "Scheduled maintenance: replacing one more TODO comment with an actual test."
         },
         {
-            "name": "Calgary winter readiness",
+            "name": "Mountain Time sync",
             "state": "operational",
-            "message": "SAMPLE: Block heater plugged in."
+            "message": "Running on America/Edmonton. Daylight-saving transitions handled, with a unit test this time."
         }
     ]
 }

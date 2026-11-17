@@ -53,7 +53,7 @@ Vitest runs the Hono app with an in-memory D1 fake built on `node:sqlite` (real 
 
     It prints `CTF_FLAG = FAHEEM{...}` and `FLAG_HASH = <64 hex chars>`. Keep the flag in your password manager.
 
-2. **D1**: `npx wrangler d1 create faheemnaeem-ctf`. Put the printed id into `database_id` in `apps/ctf/wrangler.jsonc`, replacing `00000000-0000-0000-0000-000000000000`.
+2. **D1**: already created; its id is committed in `apps/ctf/wrangler.jsonc` (to recreate: `npx wrangler d1 create faheemnaeem-ctf` and update `database_id`).
 3. **Migrations**: `npx wrangler d1 migrations apply faheemnaeem-ctf --remote` (from `apps/ctf`).
 4. **Secrets on the ctf Worker** (from `apps/ctf`):
     - `npx wrangler secret put FLAG_HASH` and paste `<FLAG_SHA256_HEX>`.

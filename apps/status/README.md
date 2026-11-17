@@ -57,9 +57,8 @@ Tests run the real migration and SQL against an in-memory D1 fake built on Node'
 
 ## Deploy (one-time Cloudflare steps)
 
-1. Create the database:
-   `npx wrangler d1 create faheemnaeem-status`
-2. Copy the printed `database_id` into `wrangler.jsonc` (replace `00000000-0000-0000-0000-000000000000`).
+1. Database: already created; its id is committed in `wrangler.jsonc` (to recreate: `npx wrangler d1 create faheemnaeem-status` and update `database_id`).
+2. (nothing to do)
 3. Apply migrations to the remote database:
    `npx wrangler d1 migrations apply faheemnaeem-status --remote`
 4. Deploy: `npx wrangler deploy` (from `apps/status`). This attaches the custom domain `status.faheemnaeem.dev` (the `faheemnaeem.dev` zone must be on the same Cloudflare account) and registers the `*/10 * * * *` Cron Trigger.

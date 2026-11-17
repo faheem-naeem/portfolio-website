@@ -2,7 +2,7 @@
 import { getCareer } from '@faheem/data';
 import Intro from '../components/Intro.astro';
 import Base from '../layouts/Base.astro';
-import { buildReleases, formatMonth, layoutGraph } from '../lib/changelog';
+import { buildReleases, formatYear, layoutGraph } from '../lib/changelog';
 
 const releases = buildReleases(getCareer());
 const graph = layoutGraph(releases);
@@ -54,7 +54,7 @@ const branches = [...new Set(releases.map((r) => r.branch))];
                                 {n.release.latest ? ' (HEAD)' : ''}
                             </text>
                             <text x={graph.labelX} y={n.y + 15} class="node__date">
-                                {formatMonth(n.release.date)} · {n.release.hash}
+                                {formatYear(n.release.date)} · {n.release.hash}
                             </text>
                         </g>
                     ))
@@ -68,7 +68,7 @@ const branches = [...new Set(releases.map((r) => r.branch))];
                 releases.map((r) => (
                     <li>
                         <a href={`/#${r.anchor}`}><code>{r.tag}</code></a> on <code>{r.branch}</code>,{' '}
-                        <time datetime={r.date}>{formatMonth(r.date)}</time>: {r.title}{' '}
+                        <time datetime={formatYear(r.date)}>{formatYear(r.date)}</time>: {r.title}{' '}
                         <span class="graph-list__hash">({r.hash})</span>
                     </li>
                 ))

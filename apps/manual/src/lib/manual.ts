@@ -30,12 +30,15 @@ export function supportLinks(resume: Resume): SupportLink[] {
         links.push({ label: 'GitHub', href: resume.links.github });
     }
     links.push(
+        { label: 'Email', href: `mailto:${resume.links.email}` },
+        {
+            label: 'Interview request form',
+            href: `${getSite('api').url}/contact`,
+        },
         { label: 'Portfolio', href: resume.links.website },
         { label: 'Resume', href: getSite('resume').url },
         { label: 'Ask the AI version of me', href: getSite('ask').url },
     );
-    // The email in @faheem/data is a "<EMAIL>" placeholder on purpose, so it
-    // is not shown.
     return links;
 }
 
@@ -43,7 +46,7 @@ function supportHtml(resume: Resume): string {
     const items = supportLinks(resume)
         .map(
             (l) =>
-                `<li><a href="${escapeHtml(l.href)}">${escapeHtml(l.label)}</a> <span class="print-url">${escapeHtml(l.href.replace(/^https:\/\//, ''))}</span></li>`,
+                `<li><a href="${escapeHtml(l.href)}">${escapeHtml(l.label)}</a> <span class="print-url">${escapeHtml(l.href.replace(/^(https:\/\/|mailto:)/, ''))}</span></li>`,
         )
         .join('');
     return `<p>Open a ticket through any of these channels. Response time: about one working day.</p><ul class="support-links">${items}</ul>`;

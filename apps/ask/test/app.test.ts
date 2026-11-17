@@ -189,7 +189,7 @@ describe('grounded answer path', () => {
         expect(system?.content).toContain(r.name);
         expect(system?.content).toContain(r.experience[0]?.company ?? '');
         expect(system?.content).not.toContain('#');
-        expect(system?.content).not.toContain('<EMAIL>');
+        expect(system?.content).not.toMatch(/<[A-Z_]+>/);
         // Visitor text only ever appears in the user message.
         expect(system?.content).not.toContain("What's his strongest stack?");
         expect(rest).toEqual([

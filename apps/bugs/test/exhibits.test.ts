@@ -13,6 +13,9 @@ import {
     toExhibits,
 } from '../src/lib/exhibits';
 
+// The legacy sample flag is still supported by the app; real data never sets it.
+const LEGACY_SAMPLE = true;
+
 const body = (symptom: string) =>
     `## Symptom\n\n${symptom}\n\nMore detail.\n\n## Investigation\n\nx\n\n## Root cause\n\nx\n\n## Fix\n\nx\n\n## Lesson\n\nx\n`;
 
@@ -54,7 +57,7 @@ describe('helpers', () => {
 
 describe('toExhibits', () => {
     const exhibits = toExhibits([
-        entry('b', '2024-01-01', { severity: 'high', sample: true }),
+        entry('b', '2024-01-01', { severity: 'high', sample: LEGACY_SAMPLE }),
         entry('a', '2020-01-01', { stack: ['PHP'], tags: ['money'] }),
         entry('c', '2025-01-01', { severity: 'critical' }),
     ]);

@@ -53,14 +53,14 @@ describe('GET /', () => {
         expect(html).toContain('<h2 id="faheem">Faheem</h2>');
         expect(html).toContain('<h2 id="projects">Projects</h2>');
         expect(html).toContain('<h2 id="incidents">Incident history</h2>');
-        expect(html).toContain('Coffee intake');
+        expect(html).toContain('Inbox zero');
         expect(html).not.toMatch(/<script/i);
     });
 
     it('derives the banner from the worst state', async () => {
         const { env } = await seededEnv();
         const html = await (await app.request('/', {}, env)).text();
-        // Sample data includes an "outage" joke component.
+        // The data includes an "outage" joke component (Inbox zero).
         expect(html).toContain('<h1 id="banner">Major Outage</h1>');
     });
 

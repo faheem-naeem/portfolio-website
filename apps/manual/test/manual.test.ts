@@ -52,7 +52,11 @@ describe('buildSections (real data)', () => {
             ?.trim()
             .split('\n')[0];
         expect(firstLine).toBeTruthy();
-        expect(comm?.html).toContain(firstLine?.slice(0, 20));
+        // Compare plain text: the line may contain markdown such as **bold**.
+        const plain = (s: string) => s.replace(/<[^>]+>|[*_`]/g, '');
+        expect(plain(comm?.html ?? '')).toContain(
+            plain(firstLine ?? '').slice(0, 40),
+        );
     });
 });
 
@@ -83,12 +87,21 @@ describe('buildSections (custom data)', () => {
 });
 
 describe('supportLinks', () => {
-    it('never exposes the email placeholder and uses https links', () => {
-        const links = supportLinks(getResume());
+    it('uses https links plus a mailto for the real email, with no placeholders', () => {
+        const resume = getResume();
+        const links = supportLinks(resume);
         expect(links.length).toBeGreaterThan(2);
         for (const l of links) {
-            expect(l.href.startsWith('https://')).toBe(true);
-            expect(l.href).not.toContain('EMAIL');
+            expect(/^(https:\/\/|mailto:)/.test(l.href)).toBe(true);
+            expect(l.href).not.toMatch(/<|>|EMAIL/);
         }
+        expect(links).toContainEqual({
+            label: 'Email',
+            href: `mailto:${resume.links.email}`,
+        });
+        expect(links).toContainEqual({
+            label: 'Interview request form',
+            href: 'https://api.faheemnaeem.dev/contact',
+        });
     });
 });

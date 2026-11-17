@@ -1,41 +1,59 @@
 {
-    "sample": true,
     "incidents": [
         {
-            "id": "2026-01-coffee-shortage",
-            "title": "SAMPLE: Coffee supply interruption",
-            "component": "Coffee intake",
-            "severity": "major",
-            "startedAt": "2026-01-12T08:05:00-07:00",
-            "resolvedAt": "2026-01-12T08:40:00-07:00",
-            "summary": "SAMPLE: Beans ran out before the first stand-up. Mitigated by an emergency grocery run.",
+            "id": "2026-03-dst-standup",
+            "title": "Joined the stand-up an hour early",
+            "component": "Mountain Time sync",
+            "severity": "minor",
+            "startedAt": "2026-03-09T08:00:00-06:00",
+            "resolvedAt": "2026-03-09T09:00:00-06:00",
+            "summary": "The first Monday after the daylight-saving change, a calendar entry stored as a fixed offset fired an hour early. The meeting room was very quiet.",
             "updates": [
                 {
-                    "at": "2026-01-12T08:05:00-07:00",
-                    "message": "SAMPLE: Investigating an empty bag."
+                    "at": "2026-03-09T08:00:00-06:00",
+                    "message": "Investigating why nobody else is in the call."
                 },
                 {
-                    "at": "2026-01-12T08:40:00-07:00",
-                    "message": "SAMPLE: Resolved. Added a reorder alert."
+                    "at": "2026-03-09T09:00:00-06:00",
+                    "message": "Resolved. Event re-created in the America/Edmonton time zone instead of a UTC offset."
                 }
             ]
         },
         {
-            "id": "2026-03-dns-propagation",
-            "title": "SAMPLE: Slow DNS propagation",
-            "component": "Side projects",
-            "severity": "minor",
-            "startedAt": "2026-03-02T19:00:00-07:00",
-            "resolvedAt": "2026-03-03T07:00:00-07:00",
-            "summary": "SAMPLE: A new subdomain took a night to resolve everywhere. It was, as always, DNS.",
+            "id": "2026-06-json-essay",
+            "title": "Asked for JSON, received an essay",
+            "component": "Prompt engineering",
+            "severity": "major",
+            "startedAt": "2026-06-15T10:30:00-06:00",
+            "resolvedAt": "2026-06-15T11:15:00-06:00",
+            "summary": "A language model politely explained the JSON it was about to return instead of returning it. Mitigated with a schema, a validator and lowered expectations.",
             "updates": [
                 {
-                    "at": "2026-03-02T19:00:00-07:00",
-                    "message": "SAMPLE: Subdomain not resolving for some visitors."
+                    "at": "2026-06-15T10:30:00-06:00",
+                    "message": "Parser reports 'Sure! Here is your JSON:' is not valid JSON."
                 },
                 {
-                    "at": "2026-03-03T07:00:00-07:00",
-                    "message": "SAMPLE: Propagation complete."
+                    "at": "2026-06-15T11:15:00-06:00",
+                    "message": "Resolved. Output now validated against a Pydantic model, with a retry on failure."
+                }
+            ]
+        },
+        {
+            "id": "2026-11-pr-description",
+            "title": "Pull request description longer than the diff",
+            "component": "Code review queue",
+            "severity": "minor",
+            "startedAt": "2026-11-10T14:00:00-07:00",
+            "resolvedAt": "2026-11-10T14:20:00-07:00",
+            "summary": "A three-line fix shipped with a twelve-paragraph description. Reviewers were briefly unable to find the code.",
+            "updates": [
+                {
+                    "at": "2026-11-10T14:00:00-07:00",
+                    "message": "Reviewer requests a summary of the summary."
+                },
+                {
+                    "at": "2026-11-10T14:20:00-07:00",
+                    "message": "Resolved. Added a TL;DR at the top; the rest moved to the docs."
                 }
             ]
         }

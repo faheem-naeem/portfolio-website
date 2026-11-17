@@ -76,14 +76,16 @@ export async function notifyInterviewRequest(
     env: Env,
     req: InterviewRequestRecord,
 ): Promise<boolean> {
+    // Email is optional: without a SEND_EMAIL binding, skip silently.
+    if (!env.SEND_EMAIL) return false;
     const to = env.NOTIFY_EMAIL;
     const from = env.NOTIFY_FROM;
-    if (!env.SEND_EMAIL || !to || !from || to.includes('<')) {
+    if (!to || !from || to.includes('<')) {
         console.error(
             JSON.stringify({
                 event: 'notify_skipped',
                 id: req.id,
-                reason: 'SEND_EMAIL, NOTIFY_EMAIL or NOTIFY_FROM not configured',
+                reason: 'NOTIFY_EMAIL or NOTIFY_FROM not configured',
             }),
         );
         return false;

@@ -14,8 +14,8 @@
         "AI_MODEL": "@cf/ibm-granite/granite-4.0-h-micro",
         // Global questions per UTC day (keeps usage far below 10k Neurons).
         "DAILY_CAP": "150",
-        // Public Turnstile site key (not a secret). Replace before deploying.
-        "TURNSTILE_SITE_KEY": "<TURNSTILE_SITE_KEY>",
+        // Public Turnstile site key (not a secret).
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAGF8dZt1jqFYAKMT",
         // Set to "development" in .dev.vars to allow the local Turnstile bypass.
         "ENVIRONMENT": "production"
     },
@@ -25,8 +25,7 @@
         {
             "binding": "DB",
             "database_name": "faheemnaeem-ask",
-            // TODO: replace after `wrangler d1 create faheemnaeem-ask`
-            "database_id": "00000000-0000-0000-0000-000000000000",
+            "database_id": "887ba770-f78d-4f0c-b692-74b75968d695",
             "migrations_dir": "migrations"
         }
     ],
